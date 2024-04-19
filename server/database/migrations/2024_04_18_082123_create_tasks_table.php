@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('status');
             $table->date('deadLine');
+            $table->date('date_assignment');
             $table->foreign('idEmployee')->references('id')->on('employees');
             $table->timestamps();
             $table->softDeletes();

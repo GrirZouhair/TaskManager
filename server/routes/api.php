@@ -3,6 +3,8 @@
 use App\Http\Controllers\EmployeeAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TaskController;
+
 
 // Route for user login (POST method)
 Route::post('/user/login', [UserController::class, 'login']);
@@ -12,19 +14,31 @@ Route::post('/employee/login', [EmployeeAuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+
+    // Create (Store) Task
+    Route::post('/tasks', [TaskController::class, 'store']);
+
+    // Read (Get) Task
+    Route::get('/tasks/{id}', [TaskController::class, 'show']);
+
+    // Update Task
+    Route::put('/tasks/{id}', [TaskController::class, 'update']);
+
+    // Delete Task
+    Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
+
+
     // get all employees
     Route::get('/employees', [EmployeeAuthController::class, 'AllEmployees']);
-
-
     // get one employees
     Route::get('/employee/{id}', [EmployeeAuthController::class, 'OneEmployees']);
 
     // Route for creating a new user (POST method)
-    Route::post('/store/user', [UserController::class, 'store']);
-    Route::post('/store/employee', [EmployeeAuthController::class, 'store']);
+    Route::post('/user/store', [UserController::class, 'store']);
+    Route::post('/employee/store', [EmployeeAuthController::class, 'store']);
 
     // update
-    Route::put('/update/employee/{id}', [EmployeeAuthController::class, 'update']);
+    Route::put('/employee/update/{id}', [EmployeeAuthController::class, 'update']);
     Route::put('/user/update/{id}', [EmployeeAuthController::class, 'update']);
 
     // Route for user logout (POST method)
