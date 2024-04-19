@@ -5,15 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeAuthController extends Controller
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
     public function AllEmployees()
     {
         $employees = Employee::all();
@@ -37,38 +33,34 @@ class EmployeeAuthController extends Controller
 
     public function update(Request $request, $id)
     {
+        $requestData = $request->all();
 
-        $validated = $request->validate(
-            [
-                'full_name' => 'required|unique:employees|min:3',
-                'email' => 'required|email',
-                'password' => 'required|min:6',
-                'gender' => 'required|in:male,female,other',
-            ],
-            [
-                'full_name.required' => 'Please input Employee Name',
-                'full_name.unique' => 'The Employee Name has already been taken',
-                'full_name.min' => 'Employee Name must be at least :min characters',
-                'email.required' => 'Please input Employee Email',
-                'email.email' => 'Please enter a valid Email address',
-                'gender.required' => 'Please select Employee Gender',
-                'gender.in' => 'Invalid gender selected',
-                'password.required' => 'Please input Password',
-                'password.min' => 'Password must be at least :min characters',
-            ]
-        );
-        $update = Employee::find($id)->update([
-            "full_name" => $request->full_name,
-            "email" => $request->email,
-            "password" => $request->password,
-            "gender" => $request->gender,
+        $validator = Validator::make($requestData, [
+            'full_name' => ['required', 'unique:employees,full_name,' . $id, 'min:3'],
+            'email' => ['required', 'email', 'unique:employees,email,' . $id],
+            'password' => 'sometimes|required|min:6',
+            'gender' => 'required|in:male,female,other',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $update = Employee::find($id);
 
         if (!$update) {
             return response()->json([
-                'Messages' => 'Il a une erreur en la mise a jour essayer'
+                'Messages' => 'Employee not found'
             ], 404);
         }
+
+        $update->full_name = $requestData['full_name'];
+        $update->email = $requestData['email'];
+        $update->password = $requestData['password'] ? Hash::make($requestData['password']) : $update->password;
+        $update->gender = $requestData['gender'];
+
+        $update->save();
+
         return response()->json(['Message' => 'updated successfully'], 200);
     }
     public function delete($id)
@@ -82,24 +74,41 @@ class EmployeeAuthController extends Controller
         $employee->delete();
         return response()->json(['Message' => 'deleted successfully'], 200);
     }
-
     public function store(Request $request)
     {
-        $formFields = $request->validate([
-            'full_name' => 'required',
-            'gender' => 'required',
-            'email' => ['required', 'email', Rule::unique('employees', 'email')],
-            'password' => 'required|confirmed',
-        ]);
+        try {
+            // Validate the incoming request data
+            $validator = Validator::make($request->all(), [
+                'full_name' => 'required',
+                'gender' => 'required',
+                'email' => ['required', 'email', Rule::unique('employees', 'email')],
+                'password' => 'required|confirmed',
+            ]);
 
-        $formFields['password'] = bcrypt($formFields['password']);
-        $employee = Employee::create($formFields);
-        if ($employee) {
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            // Get the validated data
+            $validatedData = $validator->validated();
+
+            // Hash the password
+            $validatedData['password'] = bcrypt($validatedData['password']);
+
+            // Create a new employee record
+            $employee = Employee::create($validatedData);
+
+            // Return success response if employee creation is successful
             return response()->json(['message' => 'Account created successfully']);
-        } else {
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Return error response if a database query exception occurs
+            return response()->json(['message' => 'Database error: ' . $e->getMessage(), 'status' => 500]);
+        } catch (\Exception $e) {
+            // Return error response if an exception occurs
             return response()->json(['message' => 'Something went wrong, please try again', 'status' => 500]);
         }
     }
+
 
     public function login(REQUEST $request)
     {

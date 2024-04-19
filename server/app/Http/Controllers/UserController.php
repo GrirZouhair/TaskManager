@@ -5,15 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    use HasApiTokens, HasFactory, Notifiable;
 
     public function index()
     {
@@ -22,23 +19,84 @@ class UserController extends Controller
         ]);
     }
 
+
     public function store(Request $request)
     {
-        $formFields = $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'password' => 'required|confirmed',
         ]);
 
-        $pass = bcrypt($formFields['password']);
-        $user = User::create([
-            'email' => $request->email,
-            'password' => $pass,
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $validatedData = $validator->validated();
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        try {
+            $user = User::create($validatedData);
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'message' => 'Account created successfully',
+                'token' => $token,
+                'status' => 201,
+                'user' => $user
+            ]);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json([
+                'message' => 'Database error: ' . $e->getMessage(),
+                'status' => 500
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong, please try again',
+                'status' => 500
+            ]);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id)],
+            'password' => 'sometimes|required|confirmed',
         ]);
-        $token = $user->createToken('auth_token')->plainTextToken;
-        if ($user) {
-            return response()->json(['message' => 'Account created successfully', 'token' => $token, 'status' => 201, 'user' => $user]);
-        } else {
-            return response()->json(['message' => 'Something went wrong, please try again', 'status' => 500]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        try {
+            $user = User::findOrFail($id);
+
+            // Update email if provided and not empty
+            if ($request->has('email') && !empty($request->email)) {
+                $user->email = $request->email;
+            }
+
+            // Update password if provided and not empty
+            if ($request->has('password') && !empty($request->password)) {
+                $user->password = bcrypt($request->password);
+            }
+
+            $user->save();
+
+            return response()->json([
+                'message' => 'User updated successfully',
+                'user' => $user
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'User not found',
+                'status' => 404
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong, please try again',
+                'status' => 500
+            ]);
         }
     }
 
