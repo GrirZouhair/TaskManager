@@ -9,6 +9,9 @@ use App\Http\Controllers\TaskController;
 // Route for user login (POST method)
 Route::post('/user/login', [UserController::class, 'login']);
 
+// Route for creating a new user (POST method)
+Route::post('/user/store', [UserController::class, 'store']);
+
 // Route for employee login (POST method)
 Route::post('/employee/login', [EmployeeAuthController::class, 'login']);
 
@@ -33,8 +36,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // get one employees
     Route::get('/employee/{id}', [EmployeeAuthController::class, 'OneEmployees']);
 
-    // Route for creating a new user (POST method)
-    Route::post('/user/store', [UserController::class, 'store']);
     Route::post('/employee/store', [EmployeeAuthController::class, 'store']);
 
     // update
