@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Inter;
+    color: black;
+    font-weight:700;
+  }
+  
+  section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background: url(/public/Login.png);
+    background-size: cover;
+    background-position: center center;
+  }
+  .Images{
+    margin-bottom: 60px;
+    display: flex;
+    margin-left: 60px;
+  }
+  .img2{
+    width: 80px;
+  }
+  .img3{
+    width: 80px;
+  }
+  p{
+    position: relative;
+    top: 90px;
+    right: 70px;
+  }
+  .employeur{
+    position: relative;
+    left: -80px;
+  }
+  .center {
+    position: absolute;
+    top: 46.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(244, 241, 241);
+    width: 380px;
+    padding: 50px 30px;
+    border-radius: 10px;
+    box-shadow: 7px 7px 60px black;
+  }
+  input{
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: transparent;
+  }
+  .control input {
+    width: 100%;
+    display: block;
+    padding: 10px;
+    color: #222;
+    outline: none;
+    margin: 1em 0; 
+  }
+  .button {
+    color: white;
+    text-transform: uppercase;
+    font-size: 10px;
+    opacity: 0.7; 
+    transition: 0.3s ease;
+  }
+  #retour{
+    padding: 10px;
+    font-weight: 800;
+    margin-left: 20px;
+    border-radius: 10px;
+  }
+  #continue{
+    padding: 10px;
+    font-weight: 800;
+    margin-left: 90px;
+    border-radius: 10px;
+  }
+  button:hover{
+    background-color: #E6DAC9;
+    border-radius: 10px;
+  }
+  .password-control {
+    position: relative;
+  }
+  
+  .password-input-container {
+    display: flex;
+  }
+  
+  .password-input-container input[type="password"] {
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    width: calc(100%); 
+  }
+  
+  .password-input-container button {
+    position: absolute;
+    top: 62%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
