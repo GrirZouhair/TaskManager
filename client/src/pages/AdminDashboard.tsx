@@ -1,9 +1,13 @@
-import React from 'react'
-
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 function AdminDashboard() {
-  return (
-    <div>AdminDashboard</div>
-  )
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  });
+  return <div>AdminDashboard</div>;
 }
 
-export default AdminDashboard
+export default AdminDashboard;

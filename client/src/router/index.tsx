@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AdminDashboard from "../pages/AdminDashboard";
-import ClientDashboard from "../pages/ClientDashboard";
+import EmployeeDashboard from "../pages/EmployeeDashboard";
 import SignUp from "../pages/SignUp";
 import LogInPage from "../pages/LogInPage";
 
@@ -19,8 +19,8 @@ export const router = createBrowserRouter([
   },
  
   {
-    path: "/clientDashbord",
-    element: <ClientDashboard />,
+    path: "/employeeDashboard",
+    element: <EmployeeDashboard />,
   },
   {
     path: "*",
