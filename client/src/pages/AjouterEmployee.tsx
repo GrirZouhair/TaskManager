@@ -10,7 +10,7 @@ const AjouterEmployee: React.FC = () => {
     if (!localStorage.getItem("token")) {
       navigate("/");
     }
-  });
+  }, [navigate]);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>(new FormData());
@@ -19,9 +19,7 @@ const AjouterEmployee: React.FC = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     formData.set(name, value);
   };
@@ -34,23 +32,18 @@ const AjouterEmployee: React.FC = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       };
 
-      formData.append(
-        "password_confirmation",
-        formData.get("password") as string
-      );
+      formData.append("password_confirmation", formData.get("password") as string);
 
-      axiosClient.get("/sanctum/csrf-cookie");
-      const response = await axiosClient.post("/employee/store", formData, {
-        headers,
-      });
-      alert(response.data.message);
+      await axiosClient.get("/sanctum/csrf-cookie");
+      const response = await axiosClient.post("/employee/store", formData, { headers });
+      alert(response.data.message); // Assuming your response contains a message field
     } catch (error) {
-      console.error("Error in your login:", error);
+      console.error("Error in adding employee:", error);
     }
   };
 
   return (
-    <section>
+    <section className="ajouteEmployee-container">
       <div className="main-add"></div>
       <div className="center">
         <div className="Images">
@@ -63,12 +56,7 @@ const AjouterEmployee: React.FC = () => {
           </div>
           <div className="control">
             <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              required
-              onChange={handleInputChange}
-            />
+            <input type="email" name="email" required onChange={handleInputChange} />
           </div>
           <div className="control password-control">
             <label>Password</label>
@@ -100,22 +88,15 @@ const AjouterEmployee: React.FC = () => {
           </div>
           <div className="control selectGenre">
             <label>Genre</label>
-            <select
-              name="gender"
-              onChange={handleInputChange}
-            >
-              <option>select votre genre</option>
+            <select name="gender" onChange={handleInputChange}>
+              <option value="">Select votre genre</option>
               <option value="homme">Homme</option>
               <option value="femme">Femme</option>
             </select>
           </div>
           <div className="button">
-            <button id="retour" type="button">
-              Retourner
-            </button>
-            <button type="submit" id="continue">
-              Continue
-            </button>
+            <button id="retour" type="button">Retourner</button>
+            <button type="submit" id="continue">Continue</button>
           </div>
         </form>
       </div>
