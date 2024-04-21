@@ -1,114 +1,116 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Inter;
-    color: black;
-    font-weight: 700;
+  font-family: Inter;
+  color: black;
+  font-weight: 700;
 }
 
 .main-add {
-    position: relative;
-    left: 410px;
-    height: 100vh;
-    width: 65%;
-    background: url(/public/image17.png);
-    background-size: cover;
+  position: relative;
+  left: 410px;
+  height: 100vh;
+  width: 65%;
+  background: url(/public/image17.png);
+  background-size: cover;
 }
 
 .Images {
-    margin-bottom: 60px;
-    margin-left: 155px;
+  margin-bottom: 60px;
+  margin-left: 155px;
 }
 
 .img2 {
-    width: 80px;
-    position: relative;
-    top: 30px;
+  width: 80px;
+  position: relative;
+  top: 30px;
 }
 
 .center {
-    position: absolute;
-    top: 37%;
-    left: 20%;
-    transform: translate(-50%, -50%);
-    background: rgb(255, 255, 255);
-    width: 500px;
-    height: 520px;
-    padding: 50px;
-    border-radius: 10px;
+  margin: 0 auto;
+  background: rgb(255, 255, 255);
+  width: 500px;
+  height: 80%;
+  padding: 50px;
+  overflow: auto;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 input {
-    border: 1px solid black;
-    border-radius: 8px;
-    background-color: transparent;
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: transparent;
 }
 
 .control input {
-    width: 100%;
-    display: block;
-    padding: 10px;
-    color: #222;
-    outline: none;
-    margin: 1em 0;
+  width: 100%;
+  display: block;
+  padding: 10px;
+  color: #222;
+  outline: none;
+  margin: 1em 0;
 }
 
 .button {
-    color: white;
-    text-transform: uppercase;
-    font-size: 10px;
-    opacity: 0.7;
-    transition: 0.3s ease;
+  color: white;
+  text-transform: uppercase;
+  font-size: 10px;
+  opacity: 0.7;
+  transition: 0.3s ease;
 }
 
 #retour {
-    padding: 10px;
-    font-weight: 800;
-    margin-left: 60px;
-    border-radius: 10px;
+  padding: 10px;
+  font-weight: 800;
+  margin-left: 60px;
+  border-radius: 10px;
 }
 
 #continue {
-    padding: 10px;
-    font-weight: 800;
-    margin-left: 90px;
-    border-radius: 10px;
+  padding: 10px;
+  font-weight: 800;
+  margin-left: 90px;
+  border-radius: 10px;
 }
 
 button:hover {
-    background-color: #e6dac9;
-    border-radius: 10px;
+  background-color: #e6dac9;
+  border-radius: 10px;
 }
 
 .button {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .password-control {
-    position: relative;
+  position: relative;
 }
 
 .password-input-container {
-    display: flex;
+  display: flex;
 }
 
 .password-input-container input[type="password"] {
-    border-radius: 10px;
-    border: 1px solid black;
-    padding: 10px;
-    width: calc(100%);
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 10px;
+  width: calc(100%);
 }
 
 .password-input-container button {
-    position: absolute;
-    top: 60%;
-    right: 10px;
-    transform: translateY(-50%);
-    background: none;
+  position: absolute;
+  top: 60%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
 }
