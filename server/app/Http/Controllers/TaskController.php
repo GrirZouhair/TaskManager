@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+// use Carbon\Carbon;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 class TaskController extends Controller
 {
@@ -29,14 +32,20 @@ class TaskController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
+        Task::insert([
+            'created_at' => Carbon::now()
+        ]);
         $task = Task::create($validator->validated());
 
         return response()->json(['message' => 'Task created successfully', 'task' => $task]);
     }
     public function showTask($idEmpolyee)
     {
-        $task = Task::where('idEmployee', $idEmpolyee);
-
+        $task = DB::table('employees')
+            ->join('tasks', 'tasks.idEmployee', '=', 'employees.id')
+            ->select('idEmployee', 'tasks.id', 'email', 'full_name', 'gender', 'name', 'description', 'status', 'deadLine', 'tasks.created_at')
+            ->where('idEmployee', '=', $idEmpolyee)
+            ->get();
         return response()->json(['task' => $task]);
     }
     public function update(Request $request, $id)
@@ -57,16 +66,35 @@ class TaskController extends Controller
         }
 
         $task->update($validator->validated());
+        Task::find($id)->update([
+            'created_at' => Carbon::now()
+        ]);
 
         return response()->json(['message' => 'Task updated successfully', 'task' => $task]);
+    }
+    public function SoftDelete($id)
+    {
+        $delete = Task::find($id)->delete();
+        return response()->json(['message' => 'Task Soft Delete Successfully']);
+    }
+    public function Restore($id)
+    {
+        $delete = Task::withTrashed()->find($id)->restore();
+        return response()->json(['message' => 'Task Restore Successfully']);
     }
 
     public function destroy($id)
     {
-        $task = Task::findOrFail($id);
-
-        $task->delete();
-
-        return response()->json(['message' => 'Task deleted successfully']);
+        $delete = Task::onlyTrashed()->find($id)->forceDelete();
+        return response()->json(['message' => 'Task Deleted Successfully']);
     }
+
+    // public function destroy($id)
+    // {
+    //     $task = Task::findOrFail($id);
+
+    //     $task->delete();
+
+    //     return response()->json(['message' => 'Task deleted successfully']);
+    // }
 }

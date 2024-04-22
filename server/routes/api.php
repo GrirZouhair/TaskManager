@@ -19,10 +19,22 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
     // Create (Store) Task
-    Route::post('/tasks', [TaskController::class, 'store']);
+    Route::post('/tasks/store', [TaskController::class, 'store']);
+
+    // Get All Tasks
+    Route::get('/tasks/all', [TaskController::class, 'index']);
 
     // Read (Get) Task
     Route::get('/tasks/{id}', [TaskController::class, 'show']);
+
+    //get finished tasks
+    Route::get('/tasks/finished', [TaskController::class, 'finishedTask']);
+
+    //get unfinished tasks
+    Route::get('/tasks/unfinished', [TaskController::class, 'unFinishedTask']);
+
+    //get over dead line tasks
+    Route::get('/tasks/overDeadLine', [TaskController::class, 'OverDeadLine']);
 
     // Update Task
     Route::put('/tasks/{id}', [TaskController::class, 'update']);
