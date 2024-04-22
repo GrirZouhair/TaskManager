@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { axiosClient } from "../Api/axios";
-import "../Styles/AjouterEmployee.css";
+import { axiosClient } from "../../Api/axios";
+import "../../Styles/AjouterEmployee.css";
 
 const AjouterEmployee: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +19,9 @@ const AjouterEmployee: React.FC = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     formData.set(name, value);
   };
@@ -32,10 +34,15 @@ const AjouterEmployee: React.FC = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       };
 
-      formData.append("password_confirmation", formData.get("password") as string);
+      formData.append(
+        "password_confirmation",
+        formData.get("password") as string
+      );
 
       await axiosClient.get("/sanctum/csrf-cookie");
-      const response = await axiosClient.post("/employee/store", formData, { headers });
+      const response = await axiosClient.post("/employee/store", formData, {
+        headers,
+      });
       alert(response.data.message); // Assuming your response contains a message field
     } catch (error) {
       console.error("Error in adding employee:", error);
@@ -43,11 +50,10 @@ const AjouterEmployee: React.FC = () => {
   };
 
   return (
-    <section className="ajouteEmployee-container">
-      <div className="main-add"></div>
-      <div className="center">
+    <section className="grid-container">
+      <div className="centerAjoutForm">
         <div className="Images">
-          <img className="img2" src="Image141.png" alt="Image2" />
+          <img className="img2" src="image141.png" alt="Image2" />
         </div>
         <form onSubmit={handleAddEmployee}>
           <div className="control">
@@ -56,7 +62,12 @@ const AjouterEmployee: React.FC = () => {
           </div>
           <div className="control">
             <label>Email</label>
-            <input type="email" name="email" required onChange={handleInputChange} />
+            <input
+              type="email"
+              name="email"
+              required
+              onChange={handleInputChange}
+            />
           </div>
           <div className="control password-control">
             <label>Password</label>
@@ -87,19 +98,28 @@ const AjouterEmployee: React.FC = () => {
             </div>
           </div>
           <div className="control selectGenre">
-            <label>Genre</label>
-            <select name="gender" onChange={handleInputChange}>
+            <label className="form-lable">Genre</label>
+            <select
+              className="form-select"
+              name="gender"
+              onChange={handleInputChange}
+            >
               <option value="">Select votre genre</option>
               <option value="homme">Homme</option>
               <option value="femme">Femme</option>
             </select>
           </div>
           <div className="button">
-            <button id="retour" type="button">Retourner</button>
-            <button type="submit" id="continue">Continue</button>
+            <button id="retour" type="button">
+              Retourner
+            </button>
+            <button type="submit" id="continue">
+              Continue
+            </button>
           </div>
         </form>
       </div>
+      <div className="main-add"></div>
     </section>
   );
 };

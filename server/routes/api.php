@@ -19,7 +19,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
     // Create (Store) Task
-    Route::post('/tasks', [TaskController::class, 'store']);
+    Route::post('/tasks/store', [TaskController::class, 'store']);
 
     // Read (Get) Task
     Route::get('/tasks/{id}', [TaskController::class, 'show']);

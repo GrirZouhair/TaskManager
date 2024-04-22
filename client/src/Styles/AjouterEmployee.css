@@ -6,35 +6,17 @@
   box-sizing: border-box;
 }
 
-.ajouteEmployee-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-
-body {
-  font-family: Inter;
-  color: black;
-  font-weight: 700;
-}
-
 .main-add {
-  height: 100vh;
   background: url(/public/image17.png);
-  object-fit: cover;
-}
-
-.Images {
-  margin-bottom: 60px;
-  margin-left: 155px;
 }
 
 .img2 {
   width: 80px;
-  position: relative;
-  top: 30px;
+  margin: 0 auto;
+  display: block;
 }
 
-.center {
+.centerAjoutForm {
   background: rgb(255, 255, 255);
   height: 100%;
   padding: 50px;
