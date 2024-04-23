@@ -8,6 +8,7 @@ use App\Http\Controllers\TaskController;
 
 // Route for user login (POST method)
 Route::post('/user/login', [UserController::class, 'login']);
+Route::get('/user/checking', [UserController::class, 'check']);
 
 // Route for creating a new user (POST method)
 Route::post('/user/store', [UserController::class, 'store']);

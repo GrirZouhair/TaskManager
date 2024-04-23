@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function check()
+    {
+        return response()->json([
+            'message' => 'GET request received successfully'
+        ]);
+    }
 
     public function index()
     {
