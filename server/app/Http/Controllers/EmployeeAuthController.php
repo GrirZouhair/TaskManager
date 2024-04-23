@@ -20,6 +20,11 @@ class EmployeeAuthController extends Controller
         }
         return response()->json(['employee' => $employees], 200);
     }
+
+    public function firstFiveEmployees(){
+        $employees = Employee::all()->take(5);
+        return response()->json(['employees' => $employees], 200);
+    }
     public function OneEmployees($id)
     {
         $employee = Employee::find($id);

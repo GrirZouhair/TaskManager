@@ -24,17 +24,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Get All Tasks
     Route::get('/tasks/all', [TaskController::class, 'index']);
 
-    // Read (Get) Task
-    Route::get('/tasks/{id}', [TaskController::class, 'show']);
-
-    //get finished tasks
+    // Get finished Tasks
     Route::get('/tasks/finished', [TaskController::class, 'finishedTask']);
 
-    //get unfinished tasks
+    // Get unfinished Tasks
     Route::get('/tasks/unfinished', [TaskController::class, 'unFinishedTask']);
 
-    //get over dead line tasks
+    // get OverDeadLine Tasks
     Route::get('/tasks/overDeadLine', [TaskController::class, 'OverDeadLine']);
+
+    // Read (Get) Task
+    Route::get('/tasks/{id}', [TaskController::class, 'show']);
 
     // Update Task
     Route::put('/tasks/{id}', [TaskController::class, 'update']);
@@ -45,6 +45,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // get all employees
     Route::get('/employees', [EmployeeAuthController::class, 'AllEmployees']);
+    
+    // get one employees
+    Route::get('/firstFiveEmployees', [EmployeeAuthController::class, 'firstFiveEmployees']);
+
     // get one employees
     Route::get('/employee/{id}', [EmployeeAuthController::class, 'OneEmployees']);
 

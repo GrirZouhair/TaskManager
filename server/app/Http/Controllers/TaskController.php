@@ -13,9 +13,37 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
-        if (sizeof($tasks) == 0) return  response()->json(['Message' => 'Pas des tache']);
-        return response()->json(['tasks' => $tasks], 200);
+        $task = DB::table('employees')
+            ->join('tasks', 'tasks.idEmployee', '=', 'employees.id')
+            ->select('idEmployee', 'tasks.id', 'email', 'full_name', 'gender', 'name', 'description', 'status', 'deadLine', 'tasks.created_at')
+            ->get();
+        return response()->json(['task' => $task, 'tasksNomber' => sizeof($task)]);
+    }
+
+    public function finishedTask()
+    {
+        $tasks = Task::where('status', '=', 'fait');
+        return response()->json(['taskNomber' => sizeof($tasks), 'data' => $tasks]);
+    }
+
+    public function unFinishedTask()
+    {
+        $tasks = Task::where('status', '=', 'a faire')
+            ->orWhere('status', '=', 'faire');
+        return response()->json(['taskNomber' => sizeof($tasks), 'data' => $tasks]);
+    }
+    public function OverDeadLine()
+    {
+        $today = Carbon::now()->toDateString();
+
+        $tasks = DB::table('tasks')
+            ->join('employees', 'tasks.idEmployee', '=', 'employees.id')
+            ->select('tasks.id', 'tasks.name', 'tasks.description', 'tasks.status', 'tasks.deadLine', 'employees.id as idEmployee', 'employees.email', 'employees.full_name', 'employees.gender')
+            ->where('tasks.status', '!=', 'fait') // Filter tasks by status, change 'completed' to your actual completed status value
+            ->where('tasks.deadLine', '<', $today) // Filter tasks where deadline is before today
+            ->get();
+
+        return response()->json(['tasks' => $tasks, 'tasksNumber' => $tasks]);
     }
     public function store(Request $request)
     {

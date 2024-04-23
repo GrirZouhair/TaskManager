@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Employeurs from "../../components/Employeurs";
 import { useNavigate } from "react-router-dom";
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -7,7 +8,11 @@ function AdminDashboard() {
       navigate("/");
     }
   });
-  return <div>AdminDashboard</div>;
+  return (
+    <div>
+      <Employeurs />
+    </div>
+  );
 }
 
 export default AdminDashboard;
