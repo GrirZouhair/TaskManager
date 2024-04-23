@@ -27,6 +27,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Read (Get) Task
     Route::get('/tasks/{id}', [TaskController::class, 'show']);
 
+    //get finished tasks
+    Route::get('/tasks/finished', [TaskController::class, 'finishedTask']);
+
+    //get unfinished tasks
+    Route::get('/tasks/unfinished', [TaskController::class, 'unFinishedTask']);
+
+    //get over dead line tasks
+    Route::get('/tasks/overDeadLine', [TaskController::class, 'OverDeadLine']);
+
     // Update Task
     Route::put('/tasks/{id}', [TaskController::class, 'update']);
 
