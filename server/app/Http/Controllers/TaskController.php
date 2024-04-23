@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
-        if (sizeof($tasks) == 0) return  response()->json(['Message' => 'Pas des tache']);
-        return response()->json(['tasks' => $tasks], 200);
+        $task = DB::table('employees')
+            ->join('tasks', 'tasks.idEmployee', '=', 'employees.id')
+            ->select('idEmployee', 'tasks.id', 'email', 'full_name', 'gender', 'name', 'description', 'status', 'deadLine', 'tasks.created_at')
+            ->get();
+        return response()->json(['task' => $task]);
     }
     public function store(Request $request)
     {
@@ -35,8 +38,11 @@ class TaskController extends Controller
     }
     public function showTask($idEmpolyee)
     {
-        $task = Task::where('idEmployee', $idEmpolyee);
-
+        $task = DB::table('employees')
+            ->join('tasks', 'tasks.idEmployee', '=', 'employees.id')
+            ->select('idEmployee', 'tasks.id', 'email', 'full_name', 'gender', 'name', 'description', 'status', 'deadLine', 'tasks.created_at')
+            ->where('idEmployee', '=', $idEmpolyee)
+            ->get();
         return response()->json(['task' => $task]);
     }
     public function update(Request $request, $id)

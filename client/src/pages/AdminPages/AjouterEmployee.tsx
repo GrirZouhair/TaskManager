@@ -119,7 +119,7 @@ const AjouterEmployee: React.FC = () => {
           </div>
         </form>
       </div>
-      <div className="main-add"></div>
+      <img src="image17.png" className="w-100 h-100" alt="Background" />
     </section>
   );
 };
