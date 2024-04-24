@@ -6,11 +6,11 @@ import "../../Styles/AjouterEmployee.css";
 const AjouterEmployee: React.FC = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("token")) {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>(new FormData());

@@ -1,0 +1,29 @@
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #F7F7F8;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    display: block;
+    color: #000000;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+
+.sidebar a:hover {
+    background-color: #FFF5EE;
+}

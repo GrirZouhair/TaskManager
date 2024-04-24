@@ -40,10 +40,10 @@ const ChangePassword: React.FC = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/");
-        return;
-      }
+      // if (!token) {
+      //   navigate("/");
+      //   return;
+      // }
 
       const headers = {
         Accept: "application/json",

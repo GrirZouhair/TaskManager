@@ -13,11 +13,11 @@ function Employeurs() {
   const [employeurs, setEmployeurs] = useState<Employee[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("token")) {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
 
   const headers = {
     Accept: "application/json",

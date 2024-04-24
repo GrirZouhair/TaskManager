@@ -29,14 +29,14 @@ function AjouterTask() {
   });
   const [employees, setEmployees] = useState<Array<Employee>>();
 
-  useEffect(() => {
-    const headers = {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    };
-    axiosClient.get("/employees", { headers }).then((response) => {
-      setEmployees(response.data.employee);
-    });
-  }, []);
+  // useEffect(() => {
+  //   const headers = {
+  //     Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //   };
+  //   axiosClient.get("/employees", { headers }).then((response) => {
+  //     setEmployees(response.data.employee);
+  //   });
+  // }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -51,16 +51,16 @@ function AjouterTask() {
       Accept: "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
-    try{
-    //await axiosClient.get("/sanctum/csrf-cookie");
-    const response = await axiosClient.post("/tasks/store", formData, {
-      headers,
-    });
-    alert(response.data.message);
-  }catch (err) {
-    console.log(err);
-  }
-};
+    try {
+      //await axiosClient.get("/sanctum/csrf-cookie");
+      const response = await axiosClient.post("/tasks/store", formData, {
+        headers,
+      });
+      alert(response.data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="grid-container">
