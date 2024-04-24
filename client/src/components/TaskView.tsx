@@ -34,7 +34,7 @@ const TaskView = () => {
 
     const formatDateByDays = (dateString) => {
         const date = new Date(dateString);
-        return date.getDate(); // Returns the day of the month
+        return date.getDate();
     };
 
     const ToggleButton = () => {
@@ -56,6 +56,7 @@ const TaskView = () => {
 
     return (
         <div className="container">
+
             <div className="parent">
                 <div className="child">
                     <table>
