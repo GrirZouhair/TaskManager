@@ -48,8 +48,13 @@ function Employeurs() {
 
   return (
     <div className="parent">
-      <div className="child row align-items-center gap-2" style={{ backgroundColor: "#FFFFFF" }}>
-            <h3 className="pointer text-center">Employeurs</h3>
+      <div
+        className="child row align-items-center gap-2"
+        style={{ backgroundColor: "#FFFFFF" }}
+      >
+        <h3 className="pointer text-center" onClick={Redirect}>
+          Employeurs
+        </h3>
         {employeurs.length > 0 &&
           employeurs.map((employeur) => (
             <>
