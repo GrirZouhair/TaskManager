@@ -3,7 +3,7 @@ import Employeurs from "../../components/Employeurs";
 import { useNavigate } from "react-router-dom";
 import TaskView from "../../components/TaskView";
 import Sidebar from "../../components/SideBare";
-
+import StatisticsChart from "../../components/StatisticsChart";
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -13,12 +13,15 @@ function AdminDashboard() {
   //   }
   // });
   return (
-    <div className="d-flex align-items-center gap-5 h-100">
-      <Sidebar />
-      <TaskView />
-      {/* <Employeurs /> */}
+    <>
+      <div className="row mt-4">
+        <Sidebar />
+        {/* <Employeurs /> */}
+        <TaskView />
 
-    </div>
+      </div>
+      <StatisticsChart />
+    </>
   );
 }
 

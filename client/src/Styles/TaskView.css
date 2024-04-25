@@ -4,22 +4,3 @@
     align-items: center;
     height: 100vh;
 } */
-
-
-
-.toggle-button {
-    background-color: #ccc;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.toggle-button.checked {
-    background-color: #5cb85c;
-    color: white;
-}
-
-.toggle-button.checked span {
-    text-decoration: line-through;
-}

@@ -10,5 +10,5 @@ class Employee extends Model
 {
     use HasApiTokens;
     use HasFactory;
-    protected $fillable = ['Full_Name', 'email', 'password', 'gender'];
+    protected $fillable = ['full_name', 'email', 'password', 'gender'];
 }

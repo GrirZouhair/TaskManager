@@ -39,7 +39,7 @@ const AjouterEmployee: React.FC = () => {
         formData.get("password") as string
       );
 
-      await axiosClient.get("/sanctum/csrf-cookie");
+      //await axiosClient.get("/sanctum/csrf-cookie");
       const response = await axiosClient.post("/employee/store", formData, {
         headers,
       });
@@ -105,8 +105,8 @@ const AjouterEmployee: React.FC = () => {
               onChange={handleInputChange}
             >
               <option value="">Select votre genre</option>
-              <option value="homme">Homme</option>
-              <option value="femme">Femme</option>
+              <option value="male">Homme</option>
+              <option value="female">Femme</option>
             </select>
           </div>
           <div className="button">
