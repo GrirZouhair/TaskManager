@@ -34,7 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/tasks/overDeadLine', [TaskController::class, 'OverDeadLine']);
 
     // Read (Get) Task
-    Route::get('/tasks/{id}', [TaskController::class, 'show']);
+    Route::get('/tasks/{idEmpolyee}', [TaskController::class, 'showTask']);
 
     // Update Task
     Route::put('/tasks/{id}', [TaskController::class, 'update']);

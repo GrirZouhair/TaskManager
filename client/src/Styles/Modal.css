@@ -1,0 +1,77 @@
+/* Modal Container */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  overflow: auto; /* Add overflow for scrolling if modal content exceeds viewport */
+}
+
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Dialog */
+.modal-dialog {
+  width: 100%;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid #ccc;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  border-top: 1px solid #ccc;
+}
+
+/* Close Button */
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}

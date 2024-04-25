@@ -60,13 +60,11 @@ class TaskController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        Task::insert([
-            'created_at' => Carbon::now()
-        ]);
         $task = Task::create($validator->validated());
 
         return response()->json(['message' => 'Task created successfully', 'task' => $task]);
     }
+
     public function showTask($idEmpolyee)
     {
         $task = DB::table('employees')
@@ -74,8 +72,10 @@ class TaskController extends Controller
             ->select('idEmployee', 'tasks.id', 'email', 'full_name', 'gender', 'name', 'description', 'status', 'deadLine', 'tasks.created_at')
             ->where('idEmployee', '=', $idEmpolyee)
             ->get();
+
         return response()->json(['task' => $task]);
     }
+
     public function update(Request $request, $id)
     {
         $task = Task::findOrFail($id);

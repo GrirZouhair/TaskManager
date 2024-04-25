@@ -1,0 +1,8 @@
+.employee-container {
+        background-color: #F9F9F9;
+        margin: 12px;
+}
+
+.employee-page-container{
+    overflow: auto;
+}

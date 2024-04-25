@@ -4,6 +4,7 @@ import AjouterEmployee from "../pages/AdminPages/AjouterEmployee";
 import EmployeeDashboard from "../pages/EmployeePages/EmployeeDashboard";
 import AjouterTask from "../pages/AdminPages/AjouterTask";
 import ChangePassword from "../pages/AdminPages/ChangePassword";
+import ManageEmployees from "../pages/AdminPages/ManageEmployees";
 import SignUp from "../pages/AdminPages/SignUp";
 import LogInPage from "../pages/LogInPage";
 import ChangerEmail from "../pages/AdminPages/ChangerEmail";
@@ -37,7 +38,10 @@ export const router = createBrowserRouter([
     path: "/adminDashbord",
     element: <AdminDashboard />,
   },
-
+  {
+    path: "/manageEmployees",
+    element: <ManageEmployees />,
+  },
   {
     path: "/employeeDashboard",
     element: <EmployeeDashboard />,

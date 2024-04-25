@@ -21,7 +21,8 @@ class EmployeeAuthController extends Controller
         return response()->json(['employee' => $employees], 200);
     }
 
-    public function firstFiveEmployees(){
+    public function firstFiveEmployees()
+    {
         $employees = Employee::all()->take(5);
         return response()->json(['employees' => $employees], 200);
     }
@@ -41,7 +42,7 @@ class EmployeeAuthController extends Controller
         $requestData = $request->all();
 
         $validator = Validator::make($requestData, [
-            'full_name' => ['required', 'unique:employees,full_name,' . $id, 'min:3'],
+            'full_name' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:employees,email,' . $id],
             'password' => 'sometimes|required|min:6',
             'gender' => 'required|in:male,female,other',
@@ -58,10 +59,11 @@ class EmployeeAuthController extends Controller
                 'Messages' => 'Employee not found'
             ], 404);
         }
-
+        if ($request->has('password')) {
+            $update->password = $requestData['password'] ? Hash::make($requestData['password']) : $update->password;
+        }
         $update->full_name = $requestData['full_name'];
         $update->email = $requestData['email'];
-        $update->password = $requestData['password'] ? Hash::make($requestData['password']) : $update->password;
         $update->gender = $requestData['gender'];
 
         $update->save();
