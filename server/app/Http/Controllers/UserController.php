@@ -60,8 +60,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id)],
-            'password' => 'sometimes|required|confirmed',
+            'email' => ['email', Rule::unique('users', 'email')->ignore($id)],
+            'password' => 'sometimes|confirmed',
         ]);
 
         if ($validator->fails()) {
@@ -77,7 +77,7 @@ class UserController extends Controller
             }
 
             // Update password if provided and not empty
-            if ($request->has('password') && !empty($request->password)) {
+            if ($request->has('') && !empty($request->password)) {
                 $user->password = bcrypt($request->password);
             }
 

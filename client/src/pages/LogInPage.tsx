@@ -26,17 +26,19 @@ const ImageDescription: React.FC = () => {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(url == '') return alert('Please choose a role');
+    if (url == "") return alert("Please choose a role");
     try {
       const data = {
         email: email,
-        password: password
-      }
+        password: password,
+      };
       axiosClient.get("/sanctum/csrf-cookie");
       const response = await axiosClient.post(url, data);
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", response.data.user);
-      url == "/user/login" ? navigate('adminDashbord') : navigate('employeeDashboard')
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      url == "/user/login"
+        ? navigate("adminDashbord")
+        : navigate("employeeDashboard");
     } catch (error) {
       console.error("Error in your login:", error);
     }
