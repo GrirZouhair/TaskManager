@@ -45,7 +45,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // get all employees
     Route::get('/employees', [EmployeeAuthController::class, 'AllEmployees']);
-    
+
     // get one employees
     Route::get('/firstFiveEmployees', [EmployeeAuthController::class, 'firstFiveEmployees']);
 
@@ -56,7 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // update
     Route::put('/employee/update/{id}', [EmployeeAuthController::class, 'update']);
-    Route::put('/user/update/{id}', [EmployeeAuthController::class, 'update']);
+    Route::put('/user/update/{id}', [UserController::class, 'update']);
 
     // Route for user logout (POST method)
     Route::post('/user/logout', [UserController::class, 'logout']);

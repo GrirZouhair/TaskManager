@@ -1,15 +1,24 @@
 .sidebar {
+<<<<<<< HEAD
     height: 100%;
     width: 250px;
     position: fixed;
     top: 0;
     left: 0;
+=======
+    height: 100vh;
+    width: 250px;
+>>>>>>> bc844e1cbbae224afd5ecdd489f9e3f23a7d5d57
     background-color: #F7F7F8;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
+<<<<<<< HEAD
     padding-top: 20px;
+=======
+    padding: 22px 20px;
+>>>>>>> bc844e1cbbae224afd5ecdd489f9e3f23a7d5d57
 }
 
 .sidebar a {
