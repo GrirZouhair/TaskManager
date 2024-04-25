@@ -13,11 +13,10 @@ function AdminDashboard() {
   //   }
   // });
   return (
-    <div className="d-flex align-items-center gap-5 h-100">
+    <div className="row mt-4">
       <Sidebar />
-      {/* <Employeurs /> */}
-      {/* <TaskView /> */}
-
+      <Employeurs />
+      <TaskView /> 
     </div>
   );
 }

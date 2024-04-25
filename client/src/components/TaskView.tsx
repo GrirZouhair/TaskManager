@@ -13,11 +13,11 @@ const TaskView = () => {
       description: "judo",
       status: "a faire",
       deadLine: "2024-04-23",
-      created_at: "2024-04-22 12:25:05"
-    }
+      created_at: "2024-04-22 12:25:05",
+    },
   ]);
 
-  const formatDateByDays = (dateString) => {
+  const formatDateByDays = (dateString: any) => {
     const date = new Date(dateString);
     return date.getDate();
   };
@@ -40,7 +40,7 @@ const TaskView = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container col-4">
       <div className="parent">
         <div className="child">
           <table>
