@@ -1,36 +1,54 @@
-import React from 'react';
-import '../Styles/SideBare.css';
-import img__add_emp from "../assets/image 14.png";
-import img__task from "../assets/image 15.png";
-import img__password from "../assets/image 13.png";
-import img__email from "../assets/image 12.png";
-import img__logout from "../assets/image 11.png";
-const Sidebar = () => {
-    return (
-        <div className="sidebar">
-            <a href="#">
-                <img src={img__add_emp} alt="" />
-                <span>Ajoute Employeurs</span>
-            </a>
-            <a href="#">
-                <img src={img__task} alt="" />
-                <span>Assigner Une Tâche</span>
-            </a>
-            <a href="#">
-                <img src={img__password} alt="" />
-                <span>Change Password</span>
-            </a>
-            <a href="#">
-                <img src={img__email} alt="" />
-                <span>Change Email</span>
-            </a>
-            <a href="#">
-                <img src={img__logout} alt="" />
-                <span>Se Déconnecté</span>
-            </a>
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faBars,
+    faTimes,
+    faTasks,
+    faKey,
+    faEnvelope,
+    faUser
+} from "@fortawesome/free-solid-svg-icons";
 
+import "../Styles/SideBare.css";
+import { useNavigate } from "react-router-dom";
+export default function Sidebar() {
+    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleTrigger = () => setIsOpen(!isOpen);
+
+    return (
+        <div className="App">
+            <div className="page">
+
+
+                <div className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
+                    <div className="trigger" onClick={handleTrigger}>
+                        <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
+                    </div>
+
+                    <div className="sidebar-position" onClick={() => navigate('/ajouterEmployee')}>
+                        <FontAwesomeIcon icon={faUser} />
+                        <span>Ajoute Employeurs</span>
+                    </div>
+                    <div className="sidebar-position" onClick={() => navigate('/ajouterTask')}>
+                        <FontAwesomeIcon icon={faTasks} />
+                        <span>Assigner Une Tâche</span>
+                    </div>
+                    <div className="sidebar-position" onClick={() => navigate('/changePassword')}>
+                        <FontAwesomeIcon icon={faKey} />
+                        <span>Change Password</span>
+                    </div>
+
+                    <div className="sidebar-position" onClick={() => navigate('/changeEmail')}>
+                        <FontAwesomeIcon icon={faEnvelope} />
+                        <span>change Email</span>
+                    </div>
+                </div>
+            </div>
         </div>
     );
-};
+}
 
-export default Sidebar;
+

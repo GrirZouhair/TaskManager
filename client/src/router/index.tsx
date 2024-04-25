@@ -6,6 +6,7 @@ import AjouterTask from "../pages/AdminPages/AjouterTask";
 import ChangePassword from "../pages/AdminPages/ChangePassword";
 import SignUp from "../pages/AdminPages/SignUp";
 import LogInPage from "../pages/LogInPage";
+import ChangerEmail from "../pages/AdminPages/ChangerEmail";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
   {
     path: "/changePassword",
     element: <ChangePassword />,
+  },
+  {
+    path: '/changeEmail',
+    element: <ChangerEmail />
   },
   {
     path: "/ajouterTask",
@@ -39,6 +44,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <p>not Found</p>, // replace with  something else like page to show the error
+    element: <p>not Found</p>,
   },
 ]);
