@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { axiosClient } from "../Api/axios";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IoPerson } from "react-icons/io5";
 
 interface Employee {
@@ -48,13 +48,8 @@ function Employeurs() {
 
   return (
     <div className="parent">
-      <div
-        className="child row align-items-center gap-2"
-        style={{ backgroundColor: "#FFFFFF" }}
-      >
-        <h3 className="pointer text-center" onClick={Redirect}>
-          Employeurs
-        </h3>
+      <div className="child row align-items-center gap-2" style={{ backgroundColor: "#FFFFFF" }}>
+            <h3 className="pointer text-center">Employeurs</h3>
         {employeurs.length > 0 &&
           employeurs.map((employeur) => (
             <>
