@@ -35,7 +35,7 @@ const ImageDescription: React.FC = () => {
       axiosClient.get("/sanctum/csrf-cookie");
       const response = await axiosClient.post(url, data);
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      url == "/user/login" ? localStorage.setItem("user", JSON.stringify(response.data.user)) :  localStorage.setItem("employee", JSON.stringify(response.data.employee));
       url == "/user/login"
         ? navigate("adminDashbord")
         : navigate("employeeDashboard");

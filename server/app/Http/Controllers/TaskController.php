@@ -83,7 +83,7 @@ class TaskController extends Controller
             'description' => 'required',
             'status' => 'required',
             'deadLine' => 'required|date',
-            'date_assignment' => 'required|date',
+            'date_assignment' => 'sometimes|required|date',
         ]);
 
         if ($validator->fails()) {

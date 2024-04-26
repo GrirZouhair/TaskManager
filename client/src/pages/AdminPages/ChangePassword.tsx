@@ -2,6 +2,7 @@ import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { AxiosResponse } from "axios";
 import { axiosClient } from "../../Api/axios";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../../components/SideBare";
 import "../../Styles/ChangePassword.css";
 
 const ChangePassword: React.FC = () => {
@@ -76,88 +77,91 @@ const ChangePassword: React.FC = () => {
   }, [navigate]);
 
   return (
-    <section className="row">
-      <div className="col-12 col-md-5 d-flex flex-column p-5 justify-content-center">
-        <div className="img-content">
-          <img className="img" src="Image14.png" alt="14" />
-        </div>
-        <form onSubmit={handleSubmit}>
-          {[
-            {
-              label: "Mot de passe actuel",
-              name: "actuelPassword",
-              value: formData.actuelPassword,
-            },
-            {
-              label: "Nouveau mot de passe",
-              name: "password",
-              value: formData.password,
-            },
-            {
-              label: "Confirmer nouveau mot de passe",
-              name: "password_confirmation",
-              value: formData.password_confirmation,
-            },
-          ].map((input) => (
-            <div className="control" key={input.name}>
-              <label htmlFor={input.name}>{input.label}</label>
-              <div className="password-input">
-                <input
-                  type={
-                    input.name === "actuelPassword"
-                      ? showActuelPassword
+    <div className="row">
+      <Sidebar />
+      <section className="row col-10">
+        <div className="col-12 col-md-5 d-flex flex-column p-5 justify-content-center">
+          <div className="img-content">
+            <img className="img" src="Image14.png" alt="14" />
+          </div>
+          <form onSubmit={handleSubmit}>
+            {[
+              {
+                label: "Mot de passe actuel",
+                name: "actuelPassword",
+                value: formData.actuelPassword,
+              },
+              {
+                label: "Nouveau mot de passe",
+                name: "password",
+                value: formData.password,
+              },
+              {
+                label: "Confirmer nouveau mot de passe",
+                name: "password_confirmation",
+                value: formData.password_confirmation,
+              },
+            ].map((input) => (
+              <div className="control" key={input.name}>
+                <label htmlFor={input.name}>{input.label}</label>
+                <div className="password-input">
+                  <input
+                    type={
+                      input.name === "actuelPassword"
+                        ? showActuelPassword
+                          ? "text"
+                          : "password"
+                        : input.name === "password"
+                        ? showNewPassword
+                          ? "text"
+                          : "password"
+                        : showConfirmNewPassword
                         ? "text"
                         : "password"
+                    }
+                    id={input.name}
+                    name={input.name}
+                    value={input.value}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="show-hide-button"
+                    onClick={() => togglePasswordVisibility(input.name)}
+                  >
+                    {input.name === "actuelPassword"
+                      ? showActuelPassword
+                        ? "Hide"
+                        : "Show"
                       : input.name === "password"
                       ? showNewPassword
-                        ? "text"
-                        : "password"
+                        ? "Hide"
+                        : "Show"
                       : showConfirmNewPassword
-                      ? "text"
-                      : "password"
-                  }
-                  id={input.name}
-                  name={input.name}
-                  value={input.value}
-                  onChange={handleInputChange}
-                  required
-                />
-                <button
-                  type="button"
-                  className="show-hide-button"
-                  onClick={() => togglePasswordVisibility(input.name)}
-                >
-                  {input.name === "actuelPassword"
-                    ? showActuelPassword
                       ? "Hide"
-                      : "Show"
-                    : input.name === "password"
-                    ? showNewPassword
-                      ? "Hide"
-                      : "Show"
-                    : showConfirmNewPassword
-                    ? "Hide"
-                    : "Show"}
-                </button>
+                      : "Show"}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-          <div className="button">
-            <button type="button" id="retour">
-              Retourner
-            </button>
-            <button type="submit" id="continue">
-              Continue
-            </button>
-          </div>
-        </form>
-      </div>
-      <img
-        src="/public/Image201.png"
-        className="main-psw col-md-5 d-md-block d-none"
-      />
-    </section>
+            <div className="button">
+              <button type="button" id="retour">
+                Retourner
+              </button>
+              <button type="submit" id="continue">
+                Continue
+              </button>
+            </div>
+          </form>
+        </div>
+        <img
+          src="/public/Image201.png"
+          className="main-psw col-md-5 d-md-block d-none"
+        />
+      </section>
+    </div>
   );
 };
 

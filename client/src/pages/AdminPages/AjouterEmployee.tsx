@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosClient } from "../../Api/axios";
+import Sidebar from "../../components/SideBare";
 import "../../Styles/AjouterEmployee.css";
 
 const AjouterEmployee: React.FC = () => {
@@ -50,7 +51,9 @@ const AjouterEmployee: React.FC = () => {
   };
 
   return (
-    <section className="grid-container">
+    <div className="row">
+      <Sidebar />
+    <section className="grid-container col-10">
       <div className="centerAjoutForm">
         <div className="Images">
           <img className="img2" src="image141.png" alt="Image2" />
@@ -121,6 +124,7 @@ const AjouterEmployee: React.FC = () => {
       </div>
       <img src="image17.png" className="w-100 h-100" alt="Background" />
     </section>
+    </div>
   );
 };
 
