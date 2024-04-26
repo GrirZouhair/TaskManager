@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+.main-header {
+    display: inline-flex;
+    margin-left: 450px;
+}
+
+img {
+    width: 50px;
+    height: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+    
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.div1,
+div.div2,
+div.div3,
+div.div4 {
+    border: 5px solid rgb(207, 206, 206);
+    width: 170px;
+    height: 80px;
+    margin: 20px;
+}
+
+h4 {
+    font-size: 9px;
+    width: 130px;
+    margin-bottom: 35px;
+}
+
+p {
+    font-size: 9px;
+    margin-top: 50px; 
+    position: relative;
+    right: 40%;
+    font-weight: 900;
+}
