@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\EmployeeAuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\EmployeeAuthController;
 
 
 // Route for user login (POST method)
@@ -14,6 +15,9 @@ Route::post('/user/store', [UserController::class, 'store']);
 
 // Route for employee login (POST method)
 Route::post('/employee/login', [EmployeeAuthController::class, 'login']);
+
+// test email
+Route::get('/email/{email}/{employee}/{task}/{deadLine}', [EmailController::class,'send']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
