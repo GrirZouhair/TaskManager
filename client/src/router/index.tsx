@@ -7,7 +7,7 @@ import ChangePassword from "../pages/AdminPages/ChangePassword";
 import ManageEmployees from "../pages/AdminPages/ManageEmployees";
 import SignUp from "../pages/AdminPages/SignUp";
 import LogInPage from "../pages/LogInPage";
-import ChangerEmail from "../pages/AdminPages/ChangerEmail";
+import ChangeEmail from "../pages/AdminPages/ChangeEmail";
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/changeEmail',
-    element: <ChangerEmail />
+    element: <ChangeEmail />
   },
   {
     path: "/ajouterTask",

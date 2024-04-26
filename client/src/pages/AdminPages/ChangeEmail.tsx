@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../../components/SideBare";
 import "../../Styles/ChangeEmail.css";
 
 const ChangeEmail: React.FC = () => {
@@ -55,7 +56,9 @@ const ChangeEmail: React.FC = () => {
   }, [navigate]);
 
   return (
-    <section className="container">
+    <>
+    <Sidebar />
+    <section className="container col-10">
       <div className="center">
         <div className="img-content">
           <img className="img" src="Image142.png" alt="14" />
@@ -112,6 +115,7 @@ const ChangeEmail: React.FC = () => {
       </div>
       <div className="main-psw"></div>
     </section>
+    </>
   );
 };
 

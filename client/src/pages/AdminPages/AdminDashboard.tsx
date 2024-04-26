@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TaskView from "../../components/TaskView";
 import Sidebar from "../../components/SideBare";
 import StatisticsChart from "../../components/StatisticsChart";
+import InfosAboutTasks from "../../components/InfosAboutTasks";
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -14,11 +15,11 @@ function AdminDashboard() {
   // });
   return (
     <>
+      <InfosAboutTasks />
       <div className="row mt-4 gap-5">
         <Sidebar />
-        {/* <Employeurs /> */}
+        <Employeurs />
         <TaskView />
-
       </div>
       <StatisticsChart />
     </>
