@@ -16,8 +16,8 @@ function AdminDashboard() {
     <>
       <div className="row mt-4">
         <Sidebar />
-        {/* <Employeurs /> */}
-        <TaskView />
+        <Employeurs />
+        {/* <TaskView /> */}
 
       </div>
       <StatisticsChart />
