@@ -14,10 +14,10 @@ function AdminDashboard() {
   // });
   return (
     <>
-      <div className="row mt-4">
+      <div className="row mt-4 gap-5">
         <Sidebar />
-        <Employeurs />
-        {/* <TaskView /> */}
+        {/* <Employeurs /> */}
+        <TaskView />
 
       </div>
       <StatisticsChart />

@@ -88,7 +88,7 @@ const TaskView = () => {
   };
 
   return (
-    <div className="parent" style={{ width: "800px" }}>
+    <div className="parent col-4" >
       <div className="child" style={{ backgroundColor: "#FFFFFF", padding: "20px", borderRadius: "10px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)" }}>
         <h3 className="pointer text-center mb-4">Tasks</h3>
         {tasks.length > 0 && (

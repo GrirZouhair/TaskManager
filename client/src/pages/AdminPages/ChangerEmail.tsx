@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import Sidebar from "../../components/SideBare";
 
 function ChangerEmail() {
-    return (
-        <div>
-            Change Email Component
-        </div>
-    )
+  return (
+    <div className="row">
+      <Sidebar />
+      <div className="col-10">Change Email Component</div>
+    </div>
+  );
 }
 
-export default ChangerEmail
+export default ChangerEmail;

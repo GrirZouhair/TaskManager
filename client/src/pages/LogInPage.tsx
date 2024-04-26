@@ -35,7 +35,7 @@ const ImageDescription: React.FC = () => {
       axiosClient.get("/sanctum/csrf-cookie");
       const response = await axiosClient.post(url, data);
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      url == "/user/login" ? localStorage.setItem("user", JSON.stringify(response.data.user)) : localStorage.setItem("employee", JSON.stringify(response.data.employee));
       url == "/user/login"
         ? navigate("adminDashbord")
         : navigate("employeeDashboard");
@@ -64,7 +64,7 @@ const ImageDescription: React.FC = () => {
             alt="Image2"
             onClick={() => handleSpaceClick("admin")}
           />
-          <p>Admin</p>
+          <p className="admin">Admin</p>
           <img
             className="img3"
             src="Image3.png"
