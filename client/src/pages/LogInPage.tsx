@@ -98,8 +98,8 @@ const ImageDescription: React.FC = () => {
             </div>
           </div>
           <div className="button">
-            <button id="retour">Retourner</button>
-            <button type="submit" id="continue">
+            <button role="button" className="button-56">Retourner</button>
+            <button type="submit" role="button" className="button-56">
               Continue
             </button>
           </div>
