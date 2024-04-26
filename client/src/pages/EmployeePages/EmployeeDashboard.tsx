@@ -11,58 +11,10 @@ interface Task {
   deadLine: string;
   created_at: string;
 }
-import { useEffect, useState } from "react";
-import { axiosClient } from "../../Api/axios";
-import "../../Styles/EmployeeDashboard.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-interface Task {
-  id: number;
-  name: string;
-  description: string;
-  status: string;
-  deadLine: string;
-  created_at: string;
-}
 
 function ClientDashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  let status = '';
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const idEmployee = JSON.parse(localStorage.getItem("employee") || "{}");
-
-        const response = await axiosClient.get(`/tasks/${idEmployee.id}`, {
-          headers,
-        });
-        setTasks(response.data.task);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
-
-    fetchTasks();
-  }, [status]);
-
-  const handelChange = async (e: any, task: Task) => {
-    status = e.target.value;
-    const updatedTask = { ...task, status: status };
-    console.log(updatedTask);
-    try {
-      await axiosClient
-        .put(`tasks/${updatedTask.id}`, updatedTask, { headers })
-        .then((response) => alert(response.data.message));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const [tasks, setTasks] = useState<Task[]>([]);
-  let status = '';
+  let status = "";
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
