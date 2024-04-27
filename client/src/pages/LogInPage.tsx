@@ -1,9 +1,13 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { axiosClient } from "../Api/axios";
 import "../Styles/Loginpage.css";
+
+interface UserData {
+  email: string;
+  password: string;
+}
 
 const ImageDescription: React.FC = () => {
   const [url, setUrl] = useState<string>("");
@@ -12,45 +16,35 @@ const ImageDescription: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
+  const handleSpaceClick = (role: string) => {
+    setUrl(role === "admin" ? "/user/login" : "/employee/login");
   };
 
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
-  };
 
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
-  };
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (url == "") return alert("Please choose a role");
+    if (url === "") return alert("Please choose a role");
+
     try {
-      const data = {
-        email: email,
-        password: password,
-      };
+      const data: UserData = { email, password };
       axiosClient.get("/sanctum/csrf-cookie");
       const response = await axiosClient.post(url, data);
       localStorage.setItem("token", response.data.token);
-      url == "/user/login" ? localStorage.setItem("user", JSON.stringify(response.data.user)) : localStorage.setItem("employee", JSON.stringify(response.data.employee));
-      url == "/user/login"
-        ? navigate("adminDashbord")
-        : navigate("employeeDashboard");
+      const storageKey = url === "/user/login" ? "user" : "employee";
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify(response.data[storageKey])
+      );
+      navigate(url === "/user/login" ? "adminDashbord" : "employeeDashboard");
     } catch (error) {
       console.error("Error in your login:", error);
-    }
-  };
-
-  const handleSpaceClick = (role: string) => {
-    if (role === "admin") {
-      setUrl("/user/login");
-    } else if (role === "employee") {
-      setUrl("/employee/login");
-    } else {
-      console.error("Unknown role");
     }
   };
 
@@ -98,7 +92,9 @@ const ImageDescription: React.FC = () => {
             </div>
           </div>
           <div className="button">
-            <button role="button" className="button-56">Retourner</button>
+            <button role="button" className="button-56">
+              Retourner
+            </button>
             <button type="submit" role="button" className="button-56">
               Continue
             </button>
