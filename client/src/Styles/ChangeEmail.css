@@ -11,56 +11,20 @@ body {
   font-weight: 800;
 }
 
-.container {
+.img-content {
   display: flex;
-  height: 100vh;
-}
-
-.main-psw {
-  flex: 1;
-  background: url(/Image20.png);
-  background-position: left;
-  background-repeat: no-repeat;
-  background-size: 80%; 
-  max-width: 620px;
+  justify-content: center;
+  margin-bottom: 1rem; 
 }
 
 .img {
-  width: 80px;
-  margin: 0 auto;
-  display: block;
-}
-
-.center {
-  background: white;
-  width: 400px;
-  padding: 50px 30px;
-  border-radius: 10px;
-  margin: 50px auto;
-}
-
-input {
-  border: 1px solid black;
-  border-radius: 8px;
-  background-color: transparent;
-  width: 100%;
-  display: block;
-  padding: 10px;
-  color: #222;
-  outline: none;
-  margin: 1em 0;
+  width: 100%; 
+  max-width: 200px;
+  height: auto; 
 }
 
 .control {
-  margin-top: 25px;
-}
-
-.button {
-  color: white;
-  text-transform: uppercase;
-  font-size: 10px;
-  opacity: 0.7;
-  transition: 0.3s ease;
+  margin: 1em 0; 
 }
 
 #retour {
@@ -73,14 +37,11 @@ input {
 #continue {
   padding: 10px;
   font-weight: 800;
-  margin-left: 40px;
+  margin-left: 45px;
   border-radius: 10px;
 }
 
 button:hover {
   background-color: #e6dac9;
   border-radius: 10px;
-}
-button {
-    margin-top: 10px;
 }

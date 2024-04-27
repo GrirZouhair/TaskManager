@@ -1,28 +1,24 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { AxiosResponse } from "axios";
+import { axiosClient } from "../../Api/axios";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/SideBare";
-import "../../Styles/ChangeEmail.css";
+import "../../Styles/ChangePassword.css";
 
 const ChangeEmail: React.FC = () => {
-  const [actuelEmail, setActuelEmail] = useState<string>("");
-  const [newEmail, setNewEmail] = useState<string>("");
-  const [confirmNewEmail, setConfirmNewEmail] = useState<string>("");
+  const [formData, setFormData] = useState({
+    actuelEmail: "",
+    email: "",
+    email_confirmation: "",
+  });
   const navigate = useNavigate();
 
-  const handleActuelEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setActuelEmail(e.target.value);
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleNewEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewEmail(e.target.value);
-  };
-
-  const handleConfirmNewEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmNewEmail(e.target.value);
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
@@ -31,18 +27,23 @@ const ChangeEmail: React.FC = () => {
         return;
       }
 
+      if (formData.email !== formData.email_confirmation) {
+        return alert("Email mismatch");
+      }
       const headers = {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       };
-
-      const formData = new FormData();
-      formData.append("actuelEmail", actuelEmail);
-      formData.append("newEmail", newEmail);
-      formData.append("confirmNewEmail", confirmNewEmail);
-
-      await axios.get("url");
-      const response = await axios.post("url", formData, { headers });
+      const userItem = localStorage.getItem("user");
+      const id = userItem ? JSON.parse(userItem).id : null;
+      if (!id) {
+        navigate("/");
+        return;
+      }
+      const response = await axiosClient.put<
+        string,
+        AxiosResponse<{ message: string }>
+      >(`/user/update/${id}`, formData, { headers });
       alert(response.data.message);
     } catch (error) {
       console.error("Erreur lors de la soumission du formulaire :", error);
@@ -56,66 +57,62 @@ const ChangeEmail: React.FC = () => {
   }, [navigate]);
 
   return (
-    <>
-    <Sidebar />
-    <section className="container col-10">
-      <div className="center">
-        <div className="img-content">
-          <img className="img" src="Image142.png" alt="14" />
+    <div className="row">
+      <Sidebar />
+      <section className="row col-10">
+        <div className="col-12 col-md-5 d-flex flex-column p-5 justify-content-center">
+          <div className="img-content">
+            <img className="img" src="Image142.png" alt="14" />
+          </div>
+          <form onSubmit={handleSubmit}>
+            {[
+              {
+                label: "Email actuel",
+                name: "actuelEmail",
+                value: formData.actuelEmail,
+              },
+              {
+                label: "Nouveau email",
+                name: "email",
+                value: formData.email,
+              },
+              {
+                label: "Confirmer email",
+                name: "email_confirmation",
+                value: formData.email_confirmation,
+              },
+            ].map((input) => (
+              <div className="control" key={input.name}>
+                <label htmlFor={input.name}>{input.label}</label>
+                <input
+                  type={
+                    input.name === "actuelEmail" ? "email" : "email"
+                  }
+                  id={input.name}
+                  name={input.name}
+                  value={input.value}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            ))}
+
+            <div className="button">
+              <button type="button" id="retour">
+                Retourner
+              </button>
+              <button type="submit" id="continue">
+                Continue
+              </button>
+            </div>
+          </form>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="control">
-            <label htmlFor="actuelEmail">Email actuel</label>
-            <div className="email-input">
-              <input
-                type="email"
-                id="actuelEmail"
-                name="actuelEmail"
-                value={actuelEmail}
-                onChange={handleActuelEmailChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="control">
-            <label htmlFor="newEmail">Nouvel email</label>
-            <div className="email-input">
-              <input
-                type="email"
-                id="newEmail"
-                name="newEmail"
-                value={newEmail}
-                onChange={handleNewEmailChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="control">
-            <label htmlFor="confirmNewEmail">Confirmer nouvel email</label>
-            <div className="email-input">
-              <input
-                type="email"
-                id="confirmNewEmail"
-                name="confirmNewEmail"
-                value={confirmNewEmail}
-                onChange={handleConfirmNewEmailChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="button">
-            <button type="button" id="retour">
-              Retourner
-            </button>
-            <button type="submit" id="continue">
-              Continue
-            </button>
-          </div>
-        </form>
-      </div>
-      <div className="main-psw"></div>
-    </section>
-    </>
+        <img
+          src="/public/Image20.png"
+          className="main-psw col-md-5 d-md-block d-none"
+        />
+      </section>
+    </div>
   );
 };
 
