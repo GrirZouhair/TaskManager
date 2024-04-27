@@ -36,13 +36,16 @@ const ImageDescription: React.FC = () => {
       const data: UserData = { email, password };
       axiosClient.get("/sanctum/csrf-cookie");
       const response = await axiosClient.post(url, data);
-      localStorage.setItem("token", response.data.token);
-      const storageKey = url === "/user/login" ? "user" : "employee";
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify(response.data[storageKey])
-      );
-      navigate(url === "/user/login" ? "adminDashbord" : "employeeDashboard");
+      if (response.data.status === 200) {
+        localStorage.setItem("token", response.data.token);
+        const storageKey = url === "/user/login" ? "user" : "employee";
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify(response.data[storageKey])
+        );
+        navigate(url === "/user/login" ? "adminDashbord" : "employeeDashboard");
+      }
+      return alert(response.data.message);
     } catch (error) {
       console.error("Error in your login:", error);
     }
