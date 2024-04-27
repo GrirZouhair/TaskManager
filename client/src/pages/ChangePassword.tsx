@@ -1,9 +1,10 @@
 import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { AxiosResponse } from "axios";
-import { axiosClient } from "../../Api/axios";
+import { axiosClient } from "../Api/axios";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/SideBare";
-import "../../Styles/ChangePassword.css";
+import Sidebar from "../components/SideBare";
+import { useLogedInContext } from "../provider/logedInUser";
+import "../Styles/ChangePassword.css";
 
 const ChangePassword: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const ChangePassword: React.FC = () => {
   const [showActuelPassword, setShowActuelPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+  const { logedIn }: any = useLogedInContext();
   const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +55,7 @@ const ChangePassword: React.FC = () => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       };
-      const userItem = localStorage.getItem("user");
+      const userItem = localStorage.getItem(logedIn);
       const id = userItem ? JSON.parse(userItem).id : null;
       if (!id) {
         // Handle the case where id is null, maybe redirect or show an error message
@@ -63,7 +65,14 @@ const ChangePassword: React.FC = () => {
       const response = await axiosClient.put<
         string,
         AxiosResponse<{ message: string }>
-      >(`/user/update/${id}`, formData, { headers });
+      >(
+        `/${logedIn}/update/${id}`,
+        {
+          password: formData.password,
+          password_confirmation: formData.password_confirmation,
+        },
+        { headers }
+      );
       alert(response.data.message);
     } catch (error) {
       console.error("Erreur lors de la soumission du formulaire :", error);

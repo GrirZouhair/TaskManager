@@ -3,7 +3,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { axiosClient } from "../Api/axios";
 import "../Styles/Loginpage.css";
-import swal from 'sweetalert';
+import { useLogedInContext } from "../provider/logedInUser";
+import swal from "sweetalert";
 
 interface UserData {
   email: string;
@@ -15,12 +16,12 @@ const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { setlogedIN }: any = useLogedInContext();
   const navigate = useNavigate();
-
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
-
   const handleSpaceClick = (role: string) => {
-    setUrl(role === "admin" ? "/user/login" : "/employee/login");
+    setlogedIN(role);
+    setUrl(role === "user" ? "/user/login" : "/employee/login");
   };
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -31,7 +32,7 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (url === "") {
       swal({
         title: "Read the alert!",
@@ -46,12 +47,10 @@ const LoginPage: React.FC = () => {
       });
       return;
     }
-    
-    
 
     try {
       const data: UserData = { email, password };
-      await axiosClient.get("/sanctum/csrf-cookie");
+      axiosClient.get("/sanctum/csrf-cookie");
       const response = await axiosClient.post(url, data);
       if (response.data.status === 200) {
         localStorage.setItem("token", response.data.token);
@@ -62,6 +61,7 @@ const LoginPage: React.FC = () => {
         );
         navigate(url === "/user/login" ? "adminDashbord" : "employeeDashboard");
       }
+      alert(response.data.message);
     } catch (error) {
       console.error("Error in your login:", error);
     }
@@ -75,7 +75,7 @@ const LoginPage: React.FC = () => {
             className="img2"
             src="Image2.png"
             alt="Image2"
-            onClick={() => handleSpaceClick("admin")}
+            onClick={() => handleSpaceClick("user")}
           />
           <p className="admin">Admin</p>
           <img

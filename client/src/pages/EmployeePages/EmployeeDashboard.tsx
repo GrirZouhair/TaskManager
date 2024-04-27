@@ -25,6 +25,7 @@ function ClientDashboard() {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
+  const employee = JSON.parse(localStorage.getItem("employee") || "{}");
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -50,6 +51,53 @@ function ClientDashboard() {
 
     fetchTasks();
   }, [sortBy, sortOrder]); // Update tasks when sortBy or sortOrder changes
+
+  useEffect(() => {
+    checkDeadlines(tasks);
+  }, [tasks]);
+
+  const checkDeadlines = (tasks: Task[]) => {
+    const today = new Date();
+
+    const deadlineApproachingTasks = tasks.filter((task) => {
+      const deadlineDate = new Date(task.deadLine);
+      const timeDifference = deadlineDate.getTime() - today.getTime();
+      const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      return daysDifference <= 2; // Change this threshold as needed
+    });
+    if (deadlineApproachingTasks.length > 0) {
+      console.log("Deadlines approaching for the following tasks:");
+      deadlineApproachingTasks.forEach((task) => {
+        console.log(`Task Name: ${task.name}, Deadline: ${task.deadLine}`);
+        task.status !== "fait" &&
+          emailjs
+            .send(
+              "service_l2cwpth",
+              "template_1zchqgc",
+              {
+                task_id: task.id,
+                to_name: employee.full_name,
+                taskName: task.name,
+                deadLine: task.deadLine,
+                email: employee.email,
+              },
+              {
+                publicKey: "b928A0_fmCGD2jNFH",
+              }
+            )
+            .then(
+              () => {
+                console.log("SUCCESS!");
+              },
+              (error) => {
+                console.log("FAILED...", error.text);
+              }
+            );
+      });
+    } else {
+      console.log("No deadlines approaching.");
+    }
+  };
 
   const handleSort = (field: string) => {
     if (field === sortBy) {

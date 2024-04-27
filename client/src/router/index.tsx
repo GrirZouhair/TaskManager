@@ -3,11 +3,11 @@ import AdminDashboard from "../pages/AdminPages/AdminDashboard";
 import AjouterEmployee from "../pages/AdminPages/AjouterEmployee";
 import EmployeeDashboard from "../pages/EmployeePages/EmployeeDashboard";
 import AjouterTask from "../pages/AdminPages/AjouterTask";
-import ChangePassword from "../pages/AdminPages/ChangePassword";
+import ChangePassword from "../pages/ChangePassword";
 import ManageEmployees from "../pages/AdminPages/ManageEmployees";
 import SignUp from "../pages/AdminPages/SignUp";
 import LogInPage from "../pages/LogInPage";
-import ChangeEmail from "../pages/AdminPages/ChangeEmail";
+import ChangeEmail from "../pages/ChangeEmail";
 
 export const router = createBrowserRouter([
   {
@@ -19,8 +19,8 @@ export const router = createBrowserRouter([
     element: <ChangePassword />,
   },
   {
-    path: '/changeEmail',
-    element: <ChangeEmail />
+    path: "/changeEmail",
+    element: <ChangeEmail />,
   },
   {
     path: "/ajouterTask",

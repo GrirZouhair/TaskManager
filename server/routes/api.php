@@ -17,7 +17,7 @@ Route::post('/user/store', [UserController::class, 'store']);
 Route::post('/employee/login', [EmployeeAuthController::class, 'login']);
 
 // test email
-Route::get('/email/{email}/{employee}/{task}/{deadLine}', [EmailController::class,'send']);
+Route::get('/email/{email}/{employee}/{task}/{deadLine}', [EmailController::class, 'send']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -60,10 +60,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/user/logout', [UserController::class, 'logout']);
 
     // Route for employee logout (POST method)
-    Route::post('/employee/logout', [UserController::class, 'logout']);
+    Route::post('/employee/logout', [EmployeeAuthController::class, 'logout']);
 
 
     // delete
-    Route::delete('/user/delete/{id}', [EmployeeAuthController::class, 'delete']);
+    Route::delete('/user/delete/{id}', [UserController::class, 'delete']);
     Route::delete('/employee/delete/{id}', [EmployeeAuthController::class, 'delete']);
 });

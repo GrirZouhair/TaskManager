@@ -42,10 +42,10 @@ class EmployeeAuthController extends Controller
         $requestData = $request->all();
 
         $validator = Validator::make($requestData, [
-            'full_name' => ['required', 'min:3'],
-            'email' => ['required', 'email', 'unique:employees,email,' . $id],
-            'password' => 'sometimes|required|min:6',
-            'gender' => 'required|in:male,female,other',
+            'full_name' => ['min:3'],
+            'email' => ['email', 'unique:employees,email,' . $id],
+            'password' => 'min:3',
+            'gender' => 'in:male,female,other',
         ]);
 
         if ($validator->fails()) {
@@ -56,19 +56,25 @@ class EmployeeAuthController extends Controller
 
         if (!$update) {
             return response()->json([
-                'Messages' => 'Employee not found'
+                'message' => 'Employee not found'
             ], 404);
         }
         if ($request->has('password')) {
-            $update->password = $requestData['password'] ? Hash::make($requestData['password']) : $update->password;
+            $update->password = Hash::make($requestData['password']);
         }
-        $update->full_name = $requestData['full_name'];
-        $update->email = $requestData['email'];
-        $update->gender = $requestData['gender'];
+        if ($request->has('email')) {
+            $update->email = $requestData['email'];
+        }
+        if ($request->has('full_name')) {
+            $update->full_name = $requestData['full_name'];
+        }
+        if ($request->has('gender')) {
+            $update->gender = $requestData['gender'];
+        }
 
         $update->save();
 
-        return response()->json(['Message' => 'updated successfully'], 200);
+        return response()->json(['message' => 'Employee updated successfully', 'update' => $update], 200);
     }
     public function delete($id)
     {

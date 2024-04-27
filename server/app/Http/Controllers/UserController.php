@@ -77,7 +77,7 @@ class UserController extends Controller
             }
 
             // Update password if provided and not empty
-            if ($request->has('') && !empty($request->password)) {
+            if ($request->has('password') && !empty($request->password)) {
                 $user->password = bcrypt($request->password);
             }
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { AxiosResponse } from "axios";
-import { axiosClient } from "../../Api/axios";
+import { axiosClient } from "../Api/axios";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/SideBare";
-import "../../Styles/ChangePassword.css";
+import Sidebar from "../components/SideBare";
+import { useLogedInContext } from "../provider/logedInUser";
+import "../Styles/ChangePassword.css";
 
 const ChangeEmail: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const ChangeEmail: React.FC = () => {
     email: "",
     email_confirmation: "",
   });
+  const { logedIn }: String = useLogedInContext();
   const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +36,7 @@ const ChangeEmail: React.FC = () => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       };
-      const userItem = localStorage.getItem("user");
+      const userItem = localStorage.getItem(logedIn);
       const id = userItem ? JSON.parse(userItem).id : null;
       if (!id) {
         navigate("/");
@@ -43,8 +45,10 @@ const ChangeEmail: React.FC = () => {
       const response = await axiosClient.put<
         string,
         AxiosResponse<{ message: string }>
-      >(`/user/update/${id}`, formData, { headers });
+      >(`/${logedIn}/update/${id}`, { email: formData.email }, { headers });
+      localStorage.setItem(logedIn, response.data[`${logedIn}`]);
       alert(response.data.message);
+      console.log(response.data);
     } catch (error) {
       console.error("Erreur lors de la soumission du formulaire :", error);
     }
@@ -85,9 +89,7 @@ const ChangeEmail: React.FC = () => {
               <div className="control" key={input.name}>
                 <label htmlFor={input.name}>{input.label}</label>
                 <input
-                  type={
-                    input.name === "actuelEmail" ? "email" : "email"
-                  }
+                  type={input.name === "actuelEmail" ? "email" : "email"}
                   id={input.name}
                   name={input.name}
                   value={input.value}
