@@ -31,7 +31,7 @@ class EmployeeAuthController extends Controller
         $employee = Employee::find($id);
         if ($employee == null) {
             return response()->json([
-                'Messages' => 'Employee pas trouvée'
+                'message' => 'Employee pas trouvée'
             ], 404);
         }
         return response()->json(['employee' => $employee], 200);

@@ -3,10 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDownUpAcrossLine } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "../../components/SideBare";
 import { fetchTasks } from "../../functions/getTasks";
-import { IoPerson } from "react-icons/io5";
-import { FaTasks } from "react-icons/fa";
-import { FaUserEdit } from "react-icons/fa";
+import { axiosClient } from "../../Api/axios";
+import { headers } from "../../functions/getHeaders";
+import { BsFillPersonVcardFill } from "react-icons/bs";
+import { FiEdit } from "react-icons/fi";
 import { TiDelete } from "react-icons/ti";
+import UpdateTaskDialog from "../../components/UpdateTaskDialog";
+import EmployeesTasks from "../../components/TasksForEmployee"; // Import EmployeesTasks component
 
 interface Task {
   id: number;
@@ -15,6 +18,7 @@ interface Task {
   status: string;
   deadLine: string;
   created_at: string;
+  idEmployee: number;
 }
 
 function ManageTasks() {
@@ -25,6 +29,11 @@ function ManageTasks() {
   }>({ field: "", order: "asc" });
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [showEmployeesTasks, setShowEmployeesTasks] = useState(false);
+  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+  const [keepTrachChanges, setKeepTrachChanges] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +41,7 @@ function ManageTasks() {
       setTasks(tasks);
     };
     fetchData();
-  }, []);
+  }, [keepTrachChanges]);
 
   const shourtenDescription = (desc: string) => {
     return desc.substring(0, 20) + " ...";
@@ -52,6 +61,26 @@ function ManageTasks() {
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedStatus(e.target.value);
+  };
+
+  const handleEditTask = (task: Task) => {
+    setSelectedTask(task);
+    setShowUpdateModal(true);
+  };
+
+  const handleEmployeesTasks = (task: Task) => {
+    setSelectedTaskId(task.idEmployee);
+    setShowEmployeesTasks(true);
+  };
+
+  const handleDelete = (id: number) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?")) {
+      axiosClient
+        .delete(`/tasks/${id}`, { headers })
+        .then((res) => alert(res.data.message))
+        .catch((error) => console.error("Error deleting task:", error));
+      setKeepTrachChanges((prev) => !prev);
+    }
   };
 
   const filteredTasks = tasks.filter(
@@ -133,19 +162,17 @@ function ManageTasks() {
                     <td>{task.status}</td>
                     <td>{task.deadLine}</td>
                     <td className="d-flex gap-4">
-                      <FaTasks
+                      <BsFillPersonVcardFill
                         className="col-2 icon pointer text-info"
-                        // onClick={() => handleEmployeesTasks(employee)}
+                        onClick={() => handleEmployeesTasks(task)}
                       />
-
-                      <FaUserEdit
+                      <FiEdit
                         className="col-2 icon pointer text-primary"
-                        // onClick={() => handleEditUser(employee)}
+                        onClick={() => handleEditTask(task)}
                       />
-
                       <TiDelete
                         className="col-2 icon pointer text-danger"
-                        //onClick={() => handleDelete(employee.id)}
+                        onClick={() => handleDelete(task.id)}
                       />
                     </td>
                   </tr>
@@ -155,6 +182,22 @@ function ManageTasks() {
           )}
         </div>
       </div>
+      {showUpdateModal && (
+        <UpdateTaskDialog
+          show={showUpdateModal}
+          handleClose={() => setShowUpdateModal(false)}
+          task={selectedTask}
+          setKeepTrachChanges={setKeepTrachChanges}
+        />
+      )}
+      {showEmployeesTasks && (
+        <EmployeesTasks
+          show={showEmployeesTasks}
+          handleClose={() => setShowEmployeesTasks(false)}
+          idEmployee={selectedTaskId}
+          headers={headers}
+        />
+      )}
     </div>
   );
 }

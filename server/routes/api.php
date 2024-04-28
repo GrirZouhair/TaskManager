@@ -28,6 +28,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Get All Tasks
     Route::get('/tasks/all', [TaskController::class, 'index']);
 
+    // Get Task by id
+    Route::get('/tasks/find/{id}', [TaskController::class, 'find']);
+
     // get OverDeadLine Tasks
     Route::get('/tasks/tasksStatictis', [TaskController::class, 'tasksStatictis']);
 

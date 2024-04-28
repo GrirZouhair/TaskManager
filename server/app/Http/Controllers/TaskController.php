@@ -73,6 +73,17 @@ class TaskController extends Controller
         return response()->json(['task' => $task]);
     }
 
+    public function find($id)
+    {
+        $task = Task::findOrFail($id);
+        if (!$task) {
+            return response()->json([
+                'message' => 'Task not found'
+            ], 404);
+        }
+        return response()->json(['task' => $task], 200);
+    }
+
     public function update(Request $request, $id)
     {
         $task = Task::findOrFail($id);
@@ -110,16 +121,19 @@ class TaskController extends Controller
 
     public function destroy($id)
     {
-        $delete = Task::onlyTrashed()->find($id)->forceDelete();
-        return response()->json(['message' => 'Task Deleted Successfully']);
+        try {
+            $task = Task::findOrFail($id);
+            if (!$task) {
+                return response()->json([
+                    'message' => 'Task not found'
+                ], 404);
+            }
+            $task->delete();
+            return response()->json(['message' => 'Task deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error deleting task ' . $e->getMessage(),
+            ], 500);
+        }
     }
-
-    // public function destroy($id)
-    // {
-    //     $task = Task::findOrFail($id);
-
-    //     $task->delete();
-
-    //     return response()->json(['message' => 'Task deleted successfully']);
-    // }
 }
