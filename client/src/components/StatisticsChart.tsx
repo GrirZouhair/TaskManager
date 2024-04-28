@@ -1,7 +1,7 @@
 import Chart from "chart.js/auto";
 import { ChartConfiguration, ChartData } from "chart.js";
 import { useEffect, useState } from "react";
-import { axiosClient } from "../Api/axios";
+import { fetchData } from "../functions/getStatistics";
 
 interface TaskStatistics {
   OverDeadLine: number;
@@ -11,30 +11,16 @@ interface TaskStatistics {
 }
 
 function StatisticsChart() {
-  const [tasksStatistics, setTaskStatistics] = useState<TaskStatistics | null>(null);
-
-  const headers: Record<string, string> = {
-    Accept: "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
+  const [tasksStatistics, setTaskStatistics] = useState<TaskStatistics | null>(
+    null
+  );
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axiosClient.get("/tasks/tasksStatictis", {
-          headers,
-        });
-        setTaskStatistics({
-          OverDeadLine: res.data.OverDeadLine.number,
-          finishedTask: res.data.finishedTask.number,
-          unFinishedTask: res.data.unFinishedTask.number,
-          numberOfTasks: res.data.numberOfTasks,
-        });
-      } catch (error) {
-        console.error("Error fetching statistics:", error);
-      }
+    const fetch = async () => {
+      const data: any = await fetchData();
+      setTaskStatistics(data);
     };
-    fetchData();
+    fetch();
   }, []);
 
   useEffect(() => {
@@ -89,7 +75,7 @@ function StatisticsChart() {
           backgroundColor: "#fff",
           bodyFontColor: "#333",
           callbacks: {
-            label: (context) => `${context.label}: ${context.data[0]}`,
+            label: (context: any) => `${context.label}: ${context.data[0]}`,
           },
         },
       },

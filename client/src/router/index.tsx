@@ -5,6 +5,7 @@ import EmployeeDashboard from "../pages/EmployeePages/EmployeeDashboard";
 import AjouterTask from "../pages/AdminPages/AjouterTask";
 import ChangePassword from "../pages/ChangePassword";
 import ManageEmployees from "../pages/AdminPages/ManageEmployees";
+import ManageTasks from "../pages/AdminPages/ManageTasks";
 import SignUp from "../pages/AdminPages/SignUp";
 import LogInPage from "../pages/LogInPage";
 import ChangeEmail from "../pages/ChangeEmail";
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
   {
     path: "/manageEmployees",
     element: <ManageEmployees />,
+  },
+  {
+    path: "/manageTasks",
+    element: <ManageTasks />,
   },
   {
     path: "/employeeDashboard",

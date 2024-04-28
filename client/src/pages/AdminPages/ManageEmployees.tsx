@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { axiosClient } from "../../Api/axios";
-import BackHome from "../../components/BackHome";
+import SideBare from "../../components/SideBare";
 import { IoPerson } from "react-icons/io5";
 import { FaTasks } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
@@ -86,8 +86,8 @@ function ManageEmployees() {
 
   return (
     <div className="row">
-      <BackHome />
-      <div className="col-12 employee-page-container">
+      <SideBare />
+      <div className="col-10 employee-page-container p-4">
         <div className="input-group mb-3">
           <input
             type="text"

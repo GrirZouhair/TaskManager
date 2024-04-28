@@ -9,6 +9,7 @@ import {
   faEnvelope,
   faUser,
   faSignOutAlt,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLogedInContext } from "../provider/logedInUser";
 import { LogOut } from "../functions/logOut";
@@ -30,11 +31,20 @@ export default function Sidebar() {
 
           <div
             className="sidebar-position"
+            onClick={() => navigate("/adminDashbord")}
+          >
+            <FontAwesomeIcon icon={faHome} />
+            <span>Home</span>
+          </div>
+
+          <div
+            className="sidebar-position"
             onClick={() => navigate("/ajouterEmployee")}
           >
             <FontAwesomeIcon icon={faUser} />
             <span>Ajoute Employeurs</span>
           </div>
+
           <div
             className="sidebar-position"
             onClick={() => navigate("/ajouterTask")}
