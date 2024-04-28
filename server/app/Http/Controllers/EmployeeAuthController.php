@@ -136,10 +136,11 @@ class EmployeeAuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
+        auth()->user()->tokens()->delete();
 
         return response([
-            'message' => 'Logged out sucesfully'
+            'message' => 'Logged out sucesfully',
+            'status' => 200
         ]);
     }
 }

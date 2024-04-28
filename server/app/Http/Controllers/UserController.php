@@ -100,24 +100,34 @@ class UserController extends Controller
         }
     }
 
-    public function login(REQUEST $request)
+    public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
-            $token = $user->createToken('auth_token')->plainTextToken;
-            return response()->json(['message' => 'logged in successfully', 'token' => $token, 'status' => 200, 'user' => $user]);
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
+        $token = $user->createToken('auth_token')->plainTextToken;
+        $request->session()->regenerate();
 
-        return response()->json(['message' => 'invalid cedintial', 'status' => 404]);
+        return response()->json([
+            'message' => 'Logged in successfully',
+            'token' => $token,
+            'user' => $user,
+            'status' => 200
+        ]);
     }
+
+
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
+        auth()->user()->tokens()->delete();
 
         return response([
-            'message' => 'Logged out sucesfully'
+            'message' => 'Logged out successfully',
+            'status' => 200
         ]);
     }
 }

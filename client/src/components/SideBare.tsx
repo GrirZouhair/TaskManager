@@ -8,14 +8,16 @@ import {
   faKey,
   faEnvelope,
   faUser,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { useLogedInContext } from "../provider/logedInUser";
+import { LogOut } from "../functions/logOut";
 import "../Styles/SideBare.css";
 import { useNavigate } from "react-router-dom";
 export default function Sidebar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-
+  const { logedIn }: any = useLogedInContext();
   const handleTrigger = () => setIsOpen(!isOpen);
 
   return (
@@ -54,6 +56,11 @@ export default function Sidebar() {
           >
             <FontAwesomeIcon icon={faEnvelope} />
             <span>change Email</span>
+          </div>
+
+          <div className="sidebar-position" onClick={() => LogOut(logedIn)}>
+            <FontAwesomeIcon icon={faSignOutAlt} />
+            <span>Logout</span>
           </div>
         </div>
       </div>
