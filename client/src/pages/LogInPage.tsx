@@ -3,13 +3,14 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { axiosClient } from "../Api/axios";
 import "../Styles/Loginpage.css";
+import swal from 'sweetalert';
 
 interface UserData {
   email: string;
   password: string;
 }
 
-const ImageDescription: React.FC = () => {
+const LoginPage: React.FC = () => {
   const [url, setUrl] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
@@ -30,11 +31,27 @@ const ImageDescription: React.FC = () => {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (url === "") return alert("Please choose a role");
+    
+    if (url === "") {
+      swal({
+        title: "Read the alert!",
+        text: "Please choose a role",
+        icon: "warning",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
+      return;
+    }
+    
+    
 
     try {
       const data: UserData = { email, password };
-      axiosClient.get("/sanctum/csrf-cookie");
+      await axiosClient.get("/sanctum/csrf-cookie");
       const response = await axiosClient.post(url, data);
       if (response.data.status === 200) {
         localStorage.setItem("token", response.data.token);
@@ -45,7 +62,6 @@ const ImageDescription: React.FC = () => {
         );
         navigate(url === "/user/login" ? "adminDashbord" : "employeeDashboard");
       }
-      return alert(response.data.message);
     } catch (error) {
       console.error("Error in your login:", error);
     }
@@ -95,10 +111,10 @@ const ImageDescription: React.FC = () => {
             </div>
           </div>
           <div className="button">
-            <button role="button" className="button-56">
+            <button type="button" className="button-56">
               Retourner
             </button>
-            <button type="submit" role="button" className="button-56">
+            <button type="submit" className="button-56">
               Continue
             </button>
           </div>
@@ -108,4 +124,4 @@ const ImageDescription: React.FC = () => {
   );
 };
 
-export default ImageDescription;
+export default LoginPage;
