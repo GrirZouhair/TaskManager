@@ -13,6 +13,6 @@ export const fetchData = async () => {
       numberOfTasks: res.data.numberOfTasks,
     };
   } catch (error) {
-    console.error("Error fetching statistics:", error);
+    console.error("Erreur lors de la récupération des statistiques:", error);
   }
 };

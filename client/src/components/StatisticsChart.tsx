@@ -42,10 +42,10 @@ function StatisticsChart() {
     }
 
     const chartData: ChartData = {
-      labels: ["Over Deadline", "Finished", "Unfinished"],
+      labels: ["En retard", "Terminé", "Inachevé"],
       datasets: [
         {
-          label: "Tasks Statistics",
+          label: "Statistiques des tâches",
           data: [
             tasksStatistics.OverDeadLine,
             tasksStatistics.finishedTask,

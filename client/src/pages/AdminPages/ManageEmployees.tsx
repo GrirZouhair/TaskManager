@@ -44,7 +44,7 @@ function ManageEmployees() {
         });
         setEmployeurs(res.data.employee);
       } catch (error) {
-        console.error("Error fetching employees:", error);
+        console.error("Erreur lors de la récupération des employés :", error);
         // Retry the request after a delay (e.g., 5 seconds)
         setTimeout(fetchEmployees, 5000);
         swal({
@@ -166,7 +166,7 @@ function ManageEmployees() {
             </div>
           ))
         ) : (
-          <div className="text-center">No employees found.</div>
+          <div className="text-center">Aucun employé trouvé.</div>
         )}
         {showUpdateDialog && (
           <UpdateUserDialog

@@ -5,7 +5,6 @@ import { axiosClient } from "../Api/axios";
 import "../Styles/Loginpage.css";
 import { useLogedInContext } from "../provider/logedInUser";
 import swal from "sweetalert";
-
 interface UserData {
   email: string;
   password: string;
@@ -35,8 +34,8 @@ const LoginPage: React.FC = () => {
 
     if (url === "") {
       swal({
-        title: "Read the alert!",
-        text: "Please choose a role",
+        title: "Lire l'alerte !",
+        text: "Veuillez choisir un rôle",
         icon: "warning",
         buttons: {
           confirm: {
@@ -106,7 +105,7 @@ const LoginPage: React.FC = () => {
             alt="Image3"
             onClick={() => handleSpaceClick("employee")}
           />
-          <p className="employeur">Employee</p>
+          <p className="employeur">Employé</p>
         </div>
         <form onSubmit={handleLogin}>
           <div className="control">
@@ -119,7 +118,7 @@ const LoginPage: React.FC = () => {
             />
           </div>
           <div className="control password-control">
-            <label>Password</label>
+            <label>Mot de Passe</label>
             <div className="password-input-container">
               <input
                 type={showPassword ? "text" : "password"}
@@ -137,10 +136,12 @@ const LoginPage: React.FC = () => {
               Retourner
             </button>
             <button type="submit" className="button-56">
-              Continue
+              Continuer
             </button>
           </div>
         </form>
+        <div className="link" onClick={() => navigate('/register')}
+        >non inscrit <span>créer un compte</span></div>
       </div>
     </section>
   );

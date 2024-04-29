@@ -82,7 +82,7 @@ const UpdateTaskDialog: React.FC<Props> = ({
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Update Task</h5>
+            <h5 className="modal-title">Mettre à jour la tâche</h5>
             <button
               type="button"
               className="btn-close"
@@ -94,7 +94,7 @@ const UpdateTaskDialog: React.FC<Props> = ({
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="name" className="form-label">
-                  Task Name
+                  Nom de la tâche
                 </label>
                 <input
                   type="text"
@@ -119,7 +119,7 @@ const UpdateTaskDialog: React.FC<Props> = ({
               </div>
               <div className="mb-3">
                 <label htmlFor="status" className="form-label">
-                  Status
+                  Statut
                 </label>
                 <select
                   className="form-select"
@@ -128,7 +128,7 @@ const UpdateTaskDialog: React.FC<Props> = ({
                   value={formData.status}
                   onChange={handleChange}
                 >
-                  <option value="">selecter une etat</option>
+                  <option value="">Sélectionner un état</option>
                   <option value="a faire">a faire</option>
                   <option value="faire">faire</option>
                   <option value="fait">fait</option>
@@ -136,7 +136,7 @@ const UpdateTaskDialog: React.FC<Props> = ({
               </div>
               <div className="mb-3">
                 <label htmlFor="deadLine" className="form-label">
-                  Deadline
+                  Date limite
                 </label>
                 <input
                   type="date"
@@ -148,7 +148,7 @@ const UpdateTaskDialog: React.FC<Props> = ({
                 />
               </div>
               <button type="submit" className="btn btn-primary">
-                Update
+                Mettre à jour
               </button>
             </form>
           </div>

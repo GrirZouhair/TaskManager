@@ -43,6 +43,7 @@ const UpdateUserDialog: React.FC<Props> = ({
       Accept: "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
+
     try {
       await axiosClient
         .put(`/employee/update/${user.id}`, formData, { headers })
@@ -82,7 +83,7 @@ const UpdateUserDialog: React.FC<Props> = ({
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Update Employee</h5>
+            <h5 className="modal-title">Mettre à jour l'employé</h5>
             <button
               type="button"
               className="btn-close"
@@ -94,7 +95,7 @@ const UpdateUserDialog: React.FC<Props> = ({
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="full_name" className="form-label">
-                  Nom Complete
+                  Nom Complet
                 </label>
                 <input
                   type="text"
@@ -120,7 +121,7 @@ const UpdateUserDialog: React.FC<Props> = ({
               </div>
               <div className="mb-3">
                 <label htmlFor="gender" className="form-label">
-                  Gender
+                  Genre
                 </label>
                 <select
                   className="form-select"
@@ -128,13 +129,13 @@ const UpdateUserDialog: React.FC<Props> = ({
                   name="gender"
                   onChange={handleChange}
                 >
-                  <option value="">Select your gender</option>
+                  <option value="">Sélectionnez votre sexe</option>
                   <option value="male">Homme</option>
                   <option value="female">Femme</option>
                 </select>
               </div>
               <button type="submit" className="btn btn-primary">
-                Update
+                Mettre à jour
               </button>
             </form>
           </div>

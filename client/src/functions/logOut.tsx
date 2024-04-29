@@ -12,7 +12,7 @@ export const LogOut = (logedIn: string) => {
     })
     .catch((error) => {
       console.error(
-        "Logout error:",
+        "Erreur de déconnexion:",
         error.response ? error.response.data : error.message
       );
     });

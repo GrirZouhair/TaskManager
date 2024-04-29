@@ -69,24 +69,24 @@ const EmployeesTasks: React.FC<EmployeesTasksProps> = ({
           </div>
           <div className="modal-body">
             <div>
-              <h6>Employee Information:</h6>
+              <h6>Informations sur l'employé:</h6>
               {employee ? (
                 <ul className="list-group">
                   <li className="list-group-item">
                     <strong>ID:</strong> {employee.id}
                   </li>
                   <li className="list-group-item">
-                    <strong>Name:</strong> {employee.full_name}
+                    <strong>Nom:</strong> {employee.full_name}
                   </li>
                   <li className="list-group-item">
                     <strong>Email:</strong> {employee.email}
                   </li>
                   <li className="list-group-item">
-                    <strong>Gender:</strong> {employee.gender}
+                    <strong>Genre:</strong> {employee.gender}
                   </li>
                 </ul>
               ) : (
-                <div>No employee found for this task.</div>
+                <div>Aucun employé trouvé pour cette tâche.</div>
               )}
             </div>
           </div>

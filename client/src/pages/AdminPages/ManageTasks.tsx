@@ -91,6 +91,13 @@ function ManageTasks() {
 
   const handleDelete = (id: number) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?")) {
+      axiosClient
+        .delete(`/tasks/${id}`, { headers })
+        .then((res) => alert(res.data.message))
+        .catch((error) =>
+          console.error("Erreur lors de la suppression de la tâche :", error)
+        );
+      setKeepTrachChanges((prev) => !prev);
       try {
         axiosClient
           .delete(`/tasks/${id}`, { headers })
@@ -188,9 +195,9 @@ function ManageTasks() {
                 <tr>
                   <th scope="col">Nom</th>
                   <th scope="col">Description</th>
-                  <th scope="col">Date de assinement </th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Deadline</th>
+                  <th scope="col">Date d'assignation </th>
+                  <th scope="col">Statut</th>
+                  <th scope="col">Date limite</th>
                   <th scope="col"></th>
                 </tr>
               </thead>

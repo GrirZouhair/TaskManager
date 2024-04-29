@@ -45,7 +45,7 @@ function ClientDashboard() {
 
         setTasks(sortedTasks);
       } catch (error) {
-        console.error("Error fetching tasks:", error);
+        console.error("Erreur lors de la récupération des tâches :", error);
       }
     };
 
@@ -65,7 +65,7 @@ function ClientDashboard() {
       return daysDifference <= 2; // Change this threshold as needed
     });
     if (deadlineApproachingTasks.length > 0) {
-      console.log("Deadlines approaching for the following tasks:");
+      console.log("Échéances approchantes pour les tâches suivantes:");
       deadlineApproachingTasks.forEach((task) => {
         console.log(`Task Name: ${task.name}, Deadline: ${task.deadLine}`);
         task.status !== "fait" &&
@@ -94,7 +94,7 @@ function ClientDashboard() {
             );
       });
     } else {
-      console.log("No deadlines approaching.");
+      console.log("Aucune échéance approchante.");
     }
   };
 
@@ -118,10 +118,10 @@ function ClientDashboard() {
         headers,
       });
       setKeepTrackChanges((prev) => !prev);
-      alert("Task status updated successfully!");
+      alert("Statut de la tâche mis à jour avec succès !");
       // You may want to refetch tasks here or update the specific task in the tasks array
     } catch (error) {
-      console.log("Error updating task:", error);
+      console.log("Erreur lors de la mise à jour de la tâche :", error);
     }
   };
 
@@ -143,25 +143,25 @@ function ClientDashboard() {
               className="col-4 text-center pointer"
               onClick={() => handleSort("name")}
             >
-              Tache <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
+              Tâche <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
             </div>
             <div
               className="col-2 text-center pointer"
               onClick={() => handleSort("created_at")}
             >
-              in <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
+              Dans <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
             </div>
             <div
               className="col-2 text-center pointer"
               onClick={() => handleSort("status")}
             >
-              Status <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
+              Statut<FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
             </div>
             <div
               className="col-1 text-center pointer"
               onClick={() => handleSort("deadLine")}
             >
-              Out <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
+              Hors <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
             </div>
           </div>
           {tasks.map((task) => (
@@ -196,7 +196,7 @@ function ClientDashboard() {
           ))}
         </div>
       ) : (
-        <p>Aucune tache pour le moment</p>
+        <p>Aucune tâche pour le moment.</p>
       )}
     </div>
   );

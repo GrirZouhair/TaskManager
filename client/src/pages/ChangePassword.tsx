@@ -191,7 +191,7 @@ const ChangePassword: React.FC = () => {
                 Retourner
               </button>
               <button type="submit" id="continue">
-                Continue
+                Continuer
               </button>
             </div>
           </form>

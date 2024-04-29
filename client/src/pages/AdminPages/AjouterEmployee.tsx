@@ -66,7 +66,7 @@ const AjouterEmployee: React.FC = () => {
         },
       });
     } catch (error) {
-      console.error("Error in adding employee:", error);
+      console.error("Erreur lors de l'ajout de l'employé :", error);
       swal({
         title: "Error!",
         text: "something went wrong try again",
@@ -157,7 +157,6 @@ const AjouterEmployee: React.FC = () => {
             </div>
           </form>
         </div>
-        <img src="image17.png" className="w-100 h-100" alt="Background" />
       </section>
     </div>
   );

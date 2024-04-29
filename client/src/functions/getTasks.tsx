@@ -8,7 +8,7 @@ export const fetchTasks = async () => {
     });
     return res.data.task;
   } catch (error) {
-    console.error("Error fetching employees:", error);
+    console.error("Erreur lors de la récupération des employés:", error);
   }
 };
 

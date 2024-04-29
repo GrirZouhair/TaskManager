@@ -107,7 +107,7 @@ function AjouterTask() {
             <img src={TasksImage} className="img2" alt="Tasks" />
           </div>
           <div className="form-group mt-4">
-            <label className="form-label">Nom de Tâche</label>
+            <label className="form-label">Nom de la tâche</label>
             <input
               type="text"
               className="form-control"
@@ -117,7 +117,7 @@ function AjouterTask() {
           </div>
 
           <div className="form-group mt-4">
-            <label className="form-label">Tâche description</label>
+            <label className="form-label">Description de la tâche</label>
             <input
               type="text"
               className="form-control"
@@ -157,7 +157,7 @@ function AjouterTask() {
               Retourner
             </button>
             <button type="submit" id="continue" onClick={handelSubmit}>
-              Continue
+              Continuer
             </button>
           </div>
         </div>

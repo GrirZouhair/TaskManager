@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Knewave&display=swap');
 
 * {
   margin: 0;
@@ -88,7 +88,7 @@ p {
   transform: translate(-50%, -50%);
   background: rgb(244, 241, 241);
   width: 380px;
-  padding: 50px 30px;
+  padding: 50px 30px 70px;
   border-radius: 10px;
   box-shadow: 7px 7px 60px black;
 }
@@ -190,6 +190,18 @@ input {
 
 .button-56:hover {
   outline: 0;
+}
+
+span {
+  color: #C35959;
+  cursor: pointer;
+}
+
+.link {
+  font-family: Knewave;
+  position: absolute;
+  bottom: 10px;
+  margin-left: 3rem;
 }
 
 @media (min-width: 768px) {
