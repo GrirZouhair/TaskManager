@@ -9,6 +9,7 @@ import {
 import emailjs from "@emailjs/browser";
 import HeaderEmployee from "../../components/HeaderEmployee";
 import EmployeeAlertMessage from "../../components/EmployeeAlertMessage";
+import { headers } from "../../functions/getHeaders";
 
 interface Task {
   id: number;
@@ -23,10 +24,7 @@ function ClientDashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [sortBy, setSortBy] = useState<string>("created_at");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
+  const [keepTrackChanges, setKeepTrackChanges] = useState<boolean>(false);
   const employee = JSON.parse(localStorage.getItem("employee") || "{}");
 
   useEffect(() => {
@@ -52,7 +50,7 @@ function ClientDashboard() {
     };
 
     fetchTasks();
-  }, [sortBy, sortOrder]); // Update tasks when sortBy or sortOrder changes
+  }, [keepTrackChanges]);
 
   useEffect(() => {
     checkDeadlines(tasks);
@@ -119,6 +117,7 @@ function ClientDashboard() {
       await axiosClient.put(`tasks/${updatedTask.id}`, updatedTask, {
         headers,
       });
+      setKeepTrackChanges((prev) => !prev);
       alert("Task status updated successfully!");
       // You may want to refetch tasks here or update the specific task in the tasks array
     } catch (error) {

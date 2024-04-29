@@ -5,6 +5,7 @@ import { IoPerson } from "react-icons/io5";
 import { FaTasks } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
+import { headers } from "../../functions/getHeaders";
 import UpdateUserDialog from "../../components/UpdateEmployee";
 import EmployeesTasks from "../../components/EmployeesTasks";
 import "../../Styles/ManageEmployee.css";
@@ -32,11 +33,7 @@ function ManageEmployees() {
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
   const [showEmployeesTasks, setShowEmployeesTasks] = useState(false);
   const [selectedUser, setSelectedUser] = useState<Employee | null>(null);
-
-  const headers = {
-    Accept: "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
+  const [keepTrackChanges, setKeepTrackChanges] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -61,6 +58,7 @@ function ManageEmployees() {
         .delete(`/employee/delete/${id}`, { headers })
         .then((res) => alert(res.data.Message))
         .catch((error) => console.error("Error deleting employee:", error));
+      setKeepTrackChanges((prev) => !prev);
     }
   };
 
@@ -138,6 +136,7 @@ function ManageEmployees() {
             show={showUpdateDialog}
             handleClose={() => setShowUpdateDialog(false)}
             user={selectedUser}
+            setKeepTrackChanges={setKeepTrackChanges}
           />
         )}
         {showEmployeesTasks && (

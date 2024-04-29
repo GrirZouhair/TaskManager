@@ -13,9 +13,15 @@ interface Props {
   show: boolean;
   handleClose: () => void;
   user: User | null;
+  setKeepTrackChanges: (arg: any) => void;
 }
 
-const UpdateUserDialog: React.FC<Props> = ({ show, handleClose, user }) => {
+const UpdateUserDialog: React.FC<Props> = ({
+  show,
+  handleClose,
+  user,
+  setKeepTrackChanges,
+}) => {
   const [formData, setFormData] = useState({
     full_name: user?.full_name || "",
     email: user?.email || "",
@@ -40,6 +46,8 @@ const UpdateUserDialog: React.FC<Props> = ({ show, handleClose, user }) => {
       .put(`/employee/update/${user.id}`, formData, { headers })
       .then((res) => alert(res.data.Message))
       .catch((error) => console.error("Error updating employee:", error));
+    setKeepTrackChanges((prev: any) => !prev);
+
     handleClose();
   };
 
@@ -60,7 +68,7 @@ const UpdateUserDialog: React.FC<Props> = ({ show, handleClose, user }) => {
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="full_name" className="form-label">
-                  Full Name
+                  Nom Complete
                 </label>
                 <input
                   type="text"
