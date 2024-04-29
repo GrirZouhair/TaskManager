@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import emailjs from "@emailjs/browser";
 import HeaderEmployee from "../../components/HeaderEmployee";
+import EmployeeAlertMessage from "../../components/EmployeeAlertMessage";
 
 interface Task {
   id: number;
@@ -126,10 +127,10 @@ function ClientDashboard() {
   };
 
   return (
-    <>
-     <HeaderEmployee/>
     <div className="px-2 pt-4 empDashboard-container">
-      <h2 className="tasks--title p-3">
+      <HeaderEmployee />
+      <EmployeeAlertMessage />
+      <h2 className="tasks--title p-3 mt-5">
         {" "}
         Vos Taches{" "}
         <span className="text-light bg-dark rounded-circle px-3 py-2">
@@ -199,7 +200,6 @@ function ClientDashboard() {
         <p>Aucune tache pour le moment</p>
       )}
     </div>
-    </>
   );
 }
 

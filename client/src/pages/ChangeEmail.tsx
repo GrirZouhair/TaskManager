@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 import { axiosClient } from "../Api/axios";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/SideBare";
+import HeaderEmployee from "../components/HeaderEmployee";
 import { useLogedInContext } from "../provider/logedInUser";
 import "../Styles/ChangePassword.css";
 
@@ -12,7 +13,7 @@ const ChangeEmail: React.FC = () => {
     email: "",
     email_confirmation: "",
   });
-  const { logedIn }: String = useLogedInContext();
+  const { logedIn }: any = useLogedInContext();
   const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +63,7 @@ const ChangeEmail: React.FC = () => {
 
   return (
     <div className="row">
-      <Sidebar />
+      {logedIn === "user" ? <Sidebar /> : <HeaderEmployee />}
       <section className="row col-10">
         <div className="col-12 col-md-5 d-flex flex-column p-5 justify-content-center">
           <div className="img-content">

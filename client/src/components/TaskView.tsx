@@ -54,7 +54,7 @@ const TaskView = () => {
   };
 
   return (
-    <div className="parent col-4">
+    <div className="parent col-8 col-lg-4 mx-auto">
       <div
         className="child"
         style={{
