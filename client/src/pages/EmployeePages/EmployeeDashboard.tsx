@@ -7,6 +7,7 @@ import {
   faArrowDownUpAcrossLine,
 } from "@fortawesome/free-solid-svg-icons";
 import emailjs from "@emailjs/browser";
+import HeaderEmployee from "../../components/HeaderEmployee";
 
 interface Task {
   id: number;
@@ -58,7 +59,6 @@ function ClientDashboard() {
 
   const checkDeadlines = (tasks: Task[]) => {
     const today = new Date();
-
     const deadlineApproachingTasks = tasks.filter((task) => {
       const deadlineDate = new Date(task.deadLine);
       const timeDifference = deadlineDate.getTime() - today.getTime();
@@ -126,6 +126,8 @@ function ClientDashboard() {
   };
 
   return (
+    <>
+     <HeaderEmployee/>
     <div className="px-2 pt-4 empDashboard-container">
       <h2 className="tasks--title p-3">
         {" "}
@@ -197,6 +199,7 @@ function ClientDashboard() {
         <p>Aucune tache pour le moment</p>
       )}
     </div>
+    </>
   );
 }
 

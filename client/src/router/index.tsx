@@ -10,6 +10,7 @@ import SignUp from "../pages/AdminPages/SignUp";
 import LogInPage from "../pages/LogInPage";
 import ChangeEmail from "../pages/ChangeEmail";
 
+
 export const router = createBrowserRouter([
   {
     path: "/signup",
@@ -55,4 +56,5 @@ export const router = createBrowserRouter([
     path: "*",
     element: <p>not Found</p>,
   },
+
 ]);
