@@ -136,7 +136,7 @@ const LoginPage: React.FC = () => {
               Retourner
             </button>
             <button type="submit" className="button-56">
-              Continuer
+              Continue
             </button>
           </div>
         </form>

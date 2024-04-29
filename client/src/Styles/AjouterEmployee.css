@@ -20,7 +20,7 @@
   overflow: auto;
 }
 
-input {
+.centerAjoutForm input {
   border: 1px solid black;
   border-radius: 8px;
   background-color: transparent;
@@ -33,37 +33,6 @@ input {
   color: #222;
   outline: none;
   margin: 1em 0;
-}
-
-.button {
-  color: white;
-  text-transform: uppercase;
-  font-size: 10px;
-  opacity: 0.7;
-  transition: 0.3s ease;
-}
-
-#retour {
-  padding: 10px;
-  font-weight: 800;
-  margin-left: 60px;
-  border-radius: 10px;
-}
-
-#continue {
-  padding: 10px;
-  font-weight: 800;
-  margin-left: 90px;
-  border-radius: 10px;
-}
-
-button:hover {
-  background-color: #e6dac9;
-  border-radius: 10px;
-}
-
-.button {
-  margin-top: 10px;
 }
 
 .password-control {

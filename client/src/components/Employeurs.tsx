@@ -22,30 +22,30 @@ function Employeurs() {
   //   }
   // }, [navigate]);
 
-  // useEffect(() => {
-  //   const fetchEmployees = async () => {
-  //     try {
-  //       const res = await axiosClient.get("/firstFiveEmployees", {
-  //         headers,
-  //       });
-  //       setEmployeurs(res.data.employees);
-  //     } catch (error) {
-  //       console.error("Erreur lors de la récupération des employés:", error);
-  //       // Retry the request after a delay (e.g., 5 seconds)
-  //       setTimeout(fetchEmployees, 5000);
-  //       swal({
-  //         title: "Error!",
-  //         text: "something went wrong while fetching employees",
-  //         icon: "error",
-  //         buttons: {
-  //           confirm: {
-  //             text: "OK",
-  //             value: true,
-  //           },
-  //         },
-  //       });
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const res = await axiosClient.get("/firstFiveEmployees", {
+          headers,
+        });
+        setEmployeurs(res.data.employees);
+      } catch (error) {
+        console.error("Error fetching employees:", error);
+        // Retry the request after a delay (e.g., 5 seconds)
+        setTimeout(fetchEmployees, 5000);
+        swal({
+          title: "Error!",
+          text: "something went wrong while fetching employees",
+          icon: "error",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
+      }
+    };
 
   //   fetchEmployees();
   // }, []);

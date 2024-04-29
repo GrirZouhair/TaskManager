@@ -66,7 +66,6 @@ const TaskView = () => {
       return <span>{status}</span>; // Default status
     }
   };
-
   return (
     <div className="parent col-8 col-lg-4 mx-auto">
       <div
@@ -85,27 +84,28 @@ const TaskView = () => {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th scope="col">Nom complet</th>
-                <th scope="col">Créé le</th>
-                <th scope="col">Terminé le</th>
-                <th scope="col">Statut</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Ended At</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
-              {tasks.map((task) => (
-                <tr key={task.id}>
-                  <td className="text-center">{task.full_name}</td>
-                  <td className="text-center">
-                    {formatDateByDays(task.created_at)}
-                  </td>
-                  <td className="text-center">
-                    {formatDateByDays(task.deadLine)}
-                  </td>
-                  <td className="text-center">
-                    {deadLineColor(task.status, task.deadLine)}
-                  </td>
-                </tr>
-              ))}
+              {tasks.length > 0 &&
+                tasks.map((task) => (
+                  <tr key={task.id}>
+                    <td className="text-center">{task.name}</td>
+                    <td className="text-center">
+                      {formatDateByDays(task.created_at)}
+                    </td>
+                    <td className="text-center">
+                      {formatDateByDays(task.deadLine)}
+                    </td>
+                    <td className="text-center">
+                      {deadLineColor(task.status, task.deadLine)}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         ) : (

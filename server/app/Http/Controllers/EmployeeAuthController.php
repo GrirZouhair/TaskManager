@@ -81,11 +81,11 @@ class EmployeeAuthController extends Controller
         $employee = Employee::find($id);
         if ($employee == null) {
             return response()->json([
-                'Messages' => 'Employee pas trouvée'
+                'message' => 'Employee pas trouvée'
             ], 404);
         }
         $employee->delete();
-        return response()->json(['Message' => 'deleted successfully'], 200);
+        return response()->json(['message' => 'deleted successfully'], 200);
     }
     public function store(Request $request)
     {

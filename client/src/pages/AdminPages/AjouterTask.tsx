@@ -157,11 +157,15 @@ function AjouterTask() {
               Retourner
             </button>
             <button type="submit" id="continue" onClick={handelSubmit}>
-              Continuer
+              Continue
             </button>
           </div>
         </div>
-        <img src="image17.png" className="w-100 h-100" alt="Background" />
+        <img
+          src="image17.png"
+          className="w-100 h-100 d-none d-md-block"
+          alt="Background"
+        />
       </div>
     </div>
   );

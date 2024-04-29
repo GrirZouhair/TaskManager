@@ -30,3 +30,20 @@
 .pointer {
   cursor: pointer;
 }
+
+.submit__button {
+  display: block;
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #c35959;
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+  border: none !important;
+  transition: 0.3 ease-in-out;
+  -webkit-transition: 0.3 ease-in-out;
+  -moz-transition: 0.3 ease-in-out;
+  -ms-transition: 0.3 ease-in-out;
+  -o-transition: 0.3 ease-in-out;
+}

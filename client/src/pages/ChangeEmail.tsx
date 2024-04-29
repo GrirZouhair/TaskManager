@@ -15,7 +15,7 @@ const ChangeEmail: React.FC = () => {
     email: "",
     email_confirmation: "",
   });
-  const { logedIn }: any = useLogedInContext();
+  const { logedIn }: string = useLogedInContext() as string;
   const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +56,8 @@ const ChangeEmail: React.FC = () => {
         string,
         AxiosResponse<{ message: string }>
       >(`/${logedIn}/update/${id}`, { email: formData.email }, { headers });
-      localStorage.setItem(logedIn, response.data[`${logedIn}`]);
+      const data = response.data[`${logedIn}`] as string;
+      localStorage.setItem(logedIn, data);
       swal({
         title: "sucessfully",
         text: response.data.message,
@@ -91,9 +92,13 @@ const ChangeEmail: React.FC = () => {
   }, [navigate]);
 
   return (
-    <div className="row">
+    <div className={`row ${logedIn == "employee" && "empDashboard-container"}`}>
       {logedIn === "user" ? <Sidebar /> : <HeaderEmployee />}
-      <section className="row col-10">
+      <section
+        className={`row ${
+          logedIn === "user" ? "col-10" : "col-12 mx-auto mt-5 w-100 gap-5"
+        } `}
+      >
         <div className="col-12 col-md-5 d-flex flex-column p-5 justify-content-center">
           <div className="img-content">
             <img className="img" src="Image142.png" alt="14" />
@@ -134,7 +139,7 @@ const ChangeEmail: React.FC = () => {
                 Retourner
               </button>
               <button type="submit" id="continue">
-                Continuer
+                Continue
               </button>
             </div>
           </form>

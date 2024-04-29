@@ -84,7 +84,7 @@ const AjouterEmployee: React.FC = () => {
   return (
     <div className="row">
       <Sidebar />
-      <section className="grid-container col-10">
+      <section className="grid-container col-10 mx-auto w-10">
         <div className="centerAjoutForm">
           <div className="Images">
             <img className="img2" src="image141.png" alt="Image2" />
@@ -147,14 +147,9 @@ const AjouterEmployee: React.FC = () => {
                 <option value="female">Femme</option>
               </select>
             </div>
-            <div className="button">
-              <button id="retour" type="button">
-                Retourner
-              </button>
-              <button type="submit" id="continue">
-                Continue
-              </button>
-            </div>
+            <button type="submit" className="submit__button">
+              Continue
+            </button>
           </form>
         </div>
       </section>

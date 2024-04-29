@@ -26,21 +26,6 @@ body {
 .control {
   margin: 1em 0; 
 }
-
-#retour {
-  padding: 10px;
-  font-weight: 800;
-  margin-left: 50px;
-  border-radius: 10px;
-}
-
-#continue {
-  padding: 10px;
-  font-weight: 800;
-  margin-left: 45px;
-  border-radius: 10px;
-}
-
 button:hover {
   background-color: #e6dac9;
   border-radius: 10px;

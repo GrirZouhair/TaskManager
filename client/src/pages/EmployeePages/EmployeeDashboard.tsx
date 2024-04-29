@@ -10,6 +10,7 @@ import emailjs from "@emailjs/browser";
 import HeaderEmployee from "../../components/HeaderEmployee";
 import EmployeeAlertMessage from "../../components/EmployeeAlertMessage";
 import { headers } from "../../functions/getHeaders";
+import swal from "sweetalert";
 
 interface Task {
   id: number;
@@ -118,7 +119,7 @@ function ClientDashboard() {
         headers,
       });
       setKeepTrackChanges((prev) => !prev);
-      alert("Statut de la tâche mis à jour avec succès !");
+      alert("Task status updated successfully!");
       // You may want to refetch tasks here or update the specific task in the tasks array
     } catch (error) {
       console.log("Erreur lors de la mise à jour de la tâche :", error);
@@ -155,7 +156,7 @@ function ClientDashboard() {
               className="col-2 text-center pointer"
               onClick={() => handleSort("status")}
             >
-              Statut<FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
+              Status <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
             </div>
             <div
               className="col-1 text-center pointer"
