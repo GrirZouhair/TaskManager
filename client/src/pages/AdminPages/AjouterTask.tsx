@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { axiosClient } from "../../Api/axios";
 import TasksImage from "../../assets/tasksImage.png";
 import Sidebar from "../../components/SideBare";
+import swal from "sweetalert";
+import { headers } from "../../functions/getHeaders";
 
 type FormData = {
   idEmployee: number | string;
@@ -31,12 +33,24 @@ function AjouterTask() {
   const [employees, setEmployees] = useState<Array<Employee>>();
 
   useEffect(() => {
-    const headers = {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    };
-    axiosClient.get("/employees", { headers }).then((response) => {
-      setEmployees(response.data.employee);
-    });
+    try {
+      axiosClient.get("/employees", { headers }).then((response) => {
+        setEmployees(response.data.employee);
+      });
+    } catch (err) {
+      console.log(err);
+      swal({
+        title: "Error!",
+        text: "something went wrong while fetching employee",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
+    }
   }, []);
 
   const handleChange = (
@@ -57,9 +71,30 @@ function AjouterTask() {
       const response = await axiosClient.post("/tasks/store", formData, {
         headers,
       });
-      alert(response.data.message);
+      swal({
+        title: "sucessfully",
+        text: response.data.message,
+        icon: "success",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
     } catch (err) {
       console.log(err);
+      swal({
+        title: "Error!",
+        text: "something went wrong try again",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
     }
   };
 

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/SideBare";
 import HeaderEmployee from "../components/HeaderEmployee";
 import { useLogedInContext } from "../provider/logedInUser";
+import { headers } from "../functions/getHeaders";
+import swal from "sweetalert";
 import "../Styles/ChangePassword.css";
 
 const ChangePassword: React.FC = () => {
@@ -50,12 +52,19 @@ const ChangePassword: React.FC = () => {
       // }
 
       if (formData.password !== formData.password_confirmation) {
-        return alert("Passwords mismatch");
+        swal({
+          title: "warining!",
+          text: "Passwords mismatch",
+          icon: "warning",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
+        return;
       }
-      const headers = {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
       const userItem = localStorage.getItem(logedIn);
       const id = userItem ? JSON.parse(userItem).id : null;
       if (!id) {
@@ -74,9 +83,30 @@ const ChangePassword: React.FC = () => {
         },
         { headers }
       );
-      alert(response.data.message);
+      swal({
+        title: "sucessfully",
+        text: response.data.message,
+        icon: "success",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
     } catch (error) {
       console.error("Erreur lors de la soumission du formulaire :", error);
+      swal({
+        title: "Error!",
+        text: "something went wrong try again",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
     }
   };
 

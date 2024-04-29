@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { axiosClient } from "../Api/axios";
 import { useNavigate } from "react-router-dom";
 import { IoPerson } from "react-icons/io5";
+import { headers } from "../functions/getHeaders";
+import swal from "sweetalert";
 
 interface Employee {
   id: number;
@@ -20,11 +22,6 @@ function Employeurs() {
   //   }
   // }, [navigate]);
 
-  const headers = {
-    Accept: "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
-
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -36,6 +33,17 @@ function Employeurs() {
         console.error("Error fetching employees:", error);
         // Retry the request after a delay (e.g., 5 seconds)
         setTimeout(fetchEmployees, 5000);
+        swal({
+          title: "Error!",
+          text: "something went wrong while fetching employees",
+          icon: "error",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
       }
     };
 

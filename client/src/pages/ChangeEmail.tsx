@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/SideBare";
 import HeaderEmployee from "../components/HeaderEmployee";
 import { useLogedInContext } from "../provider/logedInUser";
+import { headers } from "../functions/getHeaders";
 import "../Styles/ChangePassword.css";
+import swal from "sweetalert";
 
 const ChangeEmail: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -31,12 +33,19 @@ const ChangeEmail: React.FC = () => {
       }
 
       if (formData.email !== formData.email_confirmation) {
-        return alert("Email mismatch");
+        swal({
+          title: "warining!",
+          text: "Email mismatch",
+          icon: "warning",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
+        return;
       }
-      const headers = {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
       const userItem = localStorage.getItem(logedIn);
       const id = userItem ? JSON.parse(userItem).id : null;
       if (!id) {
@@ -48,10 +57,30 @@ const ChangeEmail: React.FC = () => {
         AxiosResponse<{ message: string }>
       >(`/${logedIn}/update/${id}`, { email: formData.email }, { headers });
       localStorage.setItem(logedIn, response.data[`${logedIn}`]);
-      alert(response.data.message);
-      console.log(response.data);
+      swal({
+        title: "sucessfully",
+        text: response.data.message,
+        icon: "success",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
     } catch (error) {
       console.error("Erreur lors de la soumission du formulaire :", error);
+      swal({
+        title: "Error!",
+        text: "something went wrong try again",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
     }
   };
 

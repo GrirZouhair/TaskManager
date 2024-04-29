@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { axiosClient } from "../Api/axios";
 import "../Styles/Modal.css";
+import swal from "sweetalert";
 
 interface Task {
   id: number;
@@ -36,6 +37,17 @@ const EmployeesTasks: React.FC<EmployeesTasksProps> = ({
         setTasks(res.data.task);
       } catch (error) {
         console.error("Error fetching tasks:", error);
+        swal({
+          title: "Error!",
+          text: "something went wrong while fetching tasks",
+          icon: "error",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
       }
     };
 

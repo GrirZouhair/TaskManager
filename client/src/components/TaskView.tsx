@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { finishedTasks } from "../functions/getTasks";
-
+import swal from "sweetalert";
 import "../Styles/TaskView.css";
 
 interface Task {
@@ -25,12 +25,26 @@ const TaskView = () => {
     navigate("/manageTasks");
   };
   useEffect(() => {
-    const fetchData = async () => {
-      const tasks = await finishedTasks();
-      console.log(tasks);
-      setTasks(tasks);
-    };
-    fetchData();
+    try {
+      const fetchData = async () => {
+        const tasks = await finishedTasks();
+        setTasks(tasks);
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Erreur lors de la soumission du formulaire :", error);
+      swal({
+        title: "Error!",
+        text: "something went wrong while fetching tasks",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
+    }
   }, []);
 
   const formatDateByDays = (dateString: string) => {

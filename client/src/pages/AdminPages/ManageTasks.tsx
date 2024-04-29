@@ -10,6 +10,7 @@ import { FiEdit } from "react-icons/fi";
 import { TiDelete } from "react-icons/ti";
 import UpdateTaskDialog from "../../components/UpdateTaskDialog";
 import EmployeesTasks from "../../components/TasksForEmployee"; // Import EmployeesTasks component
+import swal from "sweetalert";
 
 interface Task {
   id: number;
@@ -36,11 +37,26 @@ function ManageTasks() {
   const [keepTrachChanges, setKeepTrachChanges] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const tasks = await fetchTasks();
-      setTasks(tasks);
-    };
-    fetchData();
+    try {
+      const fetchData = async () => {
+        const tasks = await fetchTasks();
+        setTasks(tasks);
+      };
+      fetchData();
+    } catch (e) {
+      console.error("Error fetching tasks:", e);
+      swal({
+        title: "Error!",
+        text: "something went wrong while fetching employee",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
+    }
   }, [keepTrachChanges]);
 
   const shourtenDescription = (desc: string) => {
@@ -75,11 +91,38 @@ function ManageTasks() {
 
   const handleDelete = (id: number) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?")) {
-      axiosClient
-        .delete(`/tasks/${id}`, { headers })
-        .then((res) => alert(res.data.message))
-        .catch((error) => console.error("Error deleting task:", error));
-      setKeepTrachChanges((prev) => !prev);
+      try {
+        axiosClient
+          .delete(`/tasks/${id}`, { headers })
+          .then((res) =>
+            swal({
+              title: "sucessfully",
+              text: res.data.message,
+              icon: "success",
+              buttons: {
+                confirm: {
+                  text: "OK",
+                  value: true,
+                },
+              },
+            })
+          )
+          .catch((error) => console.error("Error deleting task:", error));
+        setKeepTrachChanges((prev) => !prev);
+      } catch (error) {
+        console.error("Error deleting task:", error);
+        swal({
+          title: "Error!",
+          text: "something went wrong while deleting task",
+          icon: "error",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
+      }
     }
   };
 

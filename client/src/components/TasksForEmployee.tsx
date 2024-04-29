@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { axiosClient } from "../Api/axios";
 import "../Styles/Modal.css";
+import swal from "sweetalert";
 
 interface Employee {
   id: number;
@@ -36,6 +37,17 @@ const EmployeesTasks: React.FC<EmployeesTasksProps> = ({
         setEmployee(resEmployee.data.employee);
       } catch (error) {
         console.error("Error fetching tasks and employee:", error);
+        swal({
+          title: "Error!",
+          text: "something went wrong while fetching employee",
+          icon: "error",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
       }
     };
 

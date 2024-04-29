@@ -9,6 +9,7 @@ import { headers } from "../../functions/getHeaders";
 import UpdateUserDialog from "../../components/UpdateEmployee";
 import EmployeesTasks from "../../components/EmployeesTasks";
 import "../../Styles/ManageEmployee.css";
+import swal from "sweetalert";
 
 interface Employee {
   id: number;
@@ -46,18 +47,54 @@ function ManageEmployees() {
         console.error("Error fetching employees:", error);
         // Retry the request after a delay (e.g., 5 seconds)
         setTimeout(fetchEmployees, 5000);
+        swal({
+          title: "Error!",
+          text: "something went wrong while fetching employee",
+          icon: "error",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
       }
     };
 
     fetchEmployees();
-  }, []);
+  }, [keepTrackChanges]);
 
   const handleDelete = (id: number) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cet employé ?")) {
       axiosClient
         .delete(`/employee/delete/${id}`, { headers })
-        .then((res) => alert(res.data.Message))
-        .catch((error) => console.error("Error deleting employee:", error));
+        .then((res) =>
+          swal({
+            title: "sucessfully",
+            text: res.data.message,
+            icon: "success",
+            buttons: {
+              confirm: {
+                text: "OK",
+                value: true,
+              },
+            },
+          })
+        )
+        .catch((error) => {
+          console.error("Error deleting employee:", error);
+          swal({
+            title: "Error!",
+            text: "something went wrong while deleting employee",
+            icon: "error",
+            buttons: {
+              confirm: {
+                text: "OK",
+                value: true,
+              },
+            },
+          });
+        });
       setKeepTrackChanges((prev) => !prev);
     }
   };

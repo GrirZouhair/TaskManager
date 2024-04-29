@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { axiosClient } from "../Api/axios";
 import "../Styles/Modal.css";
+import swal from "sweetalert";
 
 interface User {
   id: number;
@@ -42,13 +43,38 @@ const UpdateUserDialog: React.FC<Props> = ({
       Accept: "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
-    await axiosClient
-      .put(`/employee/update/${user.id}`, formData, { headers })
-      .then((res) => alert(res.data.Message))
-      .catch((error) => console.error("Error updating employee:", error));
-    setKeepTrackChanges((prev: any) => !prev);
-
-    handleClose();
+    try {
+      await axiosClient
+        .put(`/employee/update/${user.id}`, formData, { headers })
+        .then((res) =>
+          swal({
+            title: "sucessfully",
+            text: res.data.message,
+            icon: "success",
+            buttons: {
+              confirm: {
+                text: "OK",
+                value: true,
+              },
+            },
+          })
+        )
+        .catch((error) => console.error("Error updating employee:", error));
+      setKeepTrackChanges((prev: any) => !prev);
+      handleClose();
+    } catch (e) {
+      swal({
+        title: "Error!",
+        text: "something went wrong try again",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
+    }
   };
 
   return (

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { axiosClient } from "../Api/axios";
 import { headers } from "../functions/getHeaders";
 import "../Styles/Modal.css";
+import swal from "sweetalert";
 
 interface Task {
   id: number;
@@ -41,12 +42,39 @@ const UpdateTaskDialog: React.FC<Props> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!task) return;
-    await axiosClient
-      .put(`/tasks/${task.id}`, formData, { headers })
-      .then((res) => alert(res.data.message))
-      .catch((error) => console.error("Error updating task:", error));
-    handleClose();
-    setKeepTrachChanges((prev: boolean) => !prev);
+    try {
+      await axiosClient
+        .put(`/tasks/${task.id}`, formData, { headers })
+        .then((res) =>
+          swal({
+            title: "sucessfully",
+            text: res.data.message,
+            icon: "success",
+            buttons: {
+              confirm: {
+                text: "OK",
+                value: true,
+              },
+            },
+          })
+        )
+        .catch((error) => console.error("Error updating task:", error));
+      handleClose();
+      setKeepTrachChanges((prev: boolean) => !prev);
+    } catch (error) {
+      console.error("Error updating task:", error);
+      swal({
+        title: "Error!",
+        text: "something went wrong while updating task",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
+    }
   };
 
   return (

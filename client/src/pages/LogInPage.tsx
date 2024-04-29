@@ -61,9 +61,31 @@ const LoginPage: React.FC = () => {
         );
         navigate(url === "/user/login" ? "adminDashbord" : "employeeDashboard");
       }
-      alert(response.data.message);
-    } catch (error) {
+      swal({
+        title: "sucessfully",
+        text: response.data.message,
+        icon: "success",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
+    } catch (error: any) {
       console.error("Error in your login:", error);
+      swal({
+        title: "Error!",
+        text: "something went wrong while logging in try again later",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
+      return;
     }
   };
 
