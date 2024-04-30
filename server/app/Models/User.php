@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -53,5 +54,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    // user can create as many employees and assign tasks as they want
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class, "boss_id", "id");
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class, "user_id", "id");
     }
 }

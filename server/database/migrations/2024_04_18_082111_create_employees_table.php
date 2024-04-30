@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('gender');
+            $table->integer('points');
             $table->unsignedBigInteger('boss_id');
             $table->foreign('boss_id')->references('id')->on('users');
             $table->timestamps();

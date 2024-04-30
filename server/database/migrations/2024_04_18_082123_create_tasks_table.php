@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('status');
+            $table->string('prof_document')->nullable();
             $table->date('deadLine');
             $table->date('date_assignment');
             $table->unsignedBigInteger('user_id');
