@@ -5,15 +5,16 @@ import Sidebar from "../../components/SideBare";
 import swal from "sweetalert";
 import { headers } from "../../functions/getHeaders";
 import "../../Styles/AjouterEmployee.css";
+import { userId } from "../../functions/getUserId";
 
 const AjouterEmployee: React.FC = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) {
-  //     navigate("/");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>(new FormData());
@@ -36,6 +37,8 @@ const AjouterEmployee: React.FC = () => {
         "password_confirmation",
         formData.get("password") as string
       );
+      formData.set("boss_id", userId);
+
       if (formData.get("password") !== formData.get("password_confirmation")) {
         swal({
           title: "warning!",

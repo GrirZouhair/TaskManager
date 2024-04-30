@@ -1,16 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Knewave&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Inter;
-  color: black;
-  font-weight: 700;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
 .login-container {
   position: relative;
@@ -23,10 +11,13 @@ body {
 
 .Images {
   margin-bottom: 60px;
-  display: flex;
+  display: inline-flex;
   margin-left: 60px;
 }
-
+.AdminSpace {
+  display: block;
+  margin-right: 40px;
+}
 .img2,
 .img3 {
   width: 80px;
@@ -37,53 +28,38 @@ body {
   border: 2px solid transparent;
 }
 
-.img2:hover {
+.img2:hover,
+.img3:hover,
+.img2.selected,
+.img3.selected {
   transform: scale(1.1);
-  border-color: #ff0000;
 }
 
-.img3:hover {
+.img2:hover + .admin,
+.img2.selected + .admin {
   transform: scale(1.1);
-  border-color: #007bff;
-}
-
-p {
-  margin: 0;
-  text-align: center;
-  transition: transform 0.3s ease, color 0.3s ease;
-  -webkit-transition: transform 0.3s ease, color 0.3s ease;
-  -moz-transition: transform 0.3s ease, color 0.3s ease;
-  -ms-transition: transform 0.3s ease, color 0.3s ease;
-  -o-transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.admin {
-  text-align: center;
-  font-weight: bold;
   color: #ff0000;
 }
-
-.employeur {
-  text-align: center;
-  font-weight: bold;
+.img3:hover + .employeur,
+.img3.selected + .employeur {
+  transform: scale(1.1);
   color: #007bff;
 }
 
-.img2:hover+.admin,
-.img3:hover+.employeur {
-  transform: scale(1.1);
-  color: inherit;
+.admin,
+.employeur {
+  text-align: center;
+  font-weight: bold;
 }
 
-
-
-
-p {
-  position: relative;
-  top: 90px;
-  right: 70px;
+.admin {
+  color: #ff0000;
+  margin-right: 8px;
 }
 
+.employeur {
+  color: #007bff;
+}
 
 .center {
   position: absolute;
@@ -92,7 +68,7 @@ p {
   transform: translate(-50%, -50%);
   background: rgb(244, 241, 241);
   width: 380px;
-  padding: 50px 30px 70px;
+  padding: 50px 30px;
   border-radius: 10px;
   box-shadow: 7px 7px 60px black;
 }
@@ -111,7 +87,6 @@ input {
   outline: none;
   margin: 1em 0;
 }
-
 
 .password-control {
   position: relative;
@@ -138,10 +113,8 @@ input {
   cursor: pointer;
 }
 
-
 .button {
   display: flex;
-
 }
 
 .button-56 {
@@ -179,7 +152,7 @@ input {
   position: absolute;
   top: -2px;
   transform: translate(8px, 8px);
-  transition: transform .2s ease-out;
+  transition: transform 0.2s ease-out;
   z-index: -1;
 }
 
@@ -196,16 +169,11 @@ input {
   outline: 0;
 }
 
-span {
-  color: #C35959;
-  cursor: pointer;
+.img2.selected {
+  border-color: #ff0000 !important;
 }
-
-.link {
-  font-family: Knewave;
-  position: absolute;
-  bottom: 10px;
-  margin-left: 3rem;
+.img3.selected {
+  border-color: #007bff !important;
 }
 
 @media (min-width: 768px) {

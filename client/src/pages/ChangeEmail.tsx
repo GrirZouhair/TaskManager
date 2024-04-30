@@ -134,14 +134,9 @@ const ChangeEmail: React.FC = () => {
               </div>
             ))}
 
-            <div className="button">
-              <button type="button" id="retour">
-                Retourner
-              </button>
-              <button type="submit" id="continue">
-                Continue
-              </button>
-            </div>
+            <button type="submit" className="submit__button">
+              Continuer
+            </button>
           </form>
         </div>
         <img

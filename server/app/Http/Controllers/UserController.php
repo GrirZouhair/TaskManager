@@ -41,7 +41,7 @@ class UserController extends Controller
             return response()->json([
                 'message' => 'Account created successfully',
                 'token' => $token,
-                'status' => 201,
+                'status' => 200,
                 'user' => $user
             ]);
         } catch (\Illuminate\Database\QueryException $e) {

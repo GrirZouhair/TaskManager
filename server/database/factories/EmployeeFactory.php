@@ -22,6 +22,7 @@ class EmployeeFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('password'),
             'gender' => fake()->randomElement(['male', 'female', 'other']),
+            'boss_id' => fake()->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
         ];
     }
 }

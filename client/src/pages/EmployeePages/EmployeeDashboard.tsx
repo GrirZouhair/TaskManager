@@ -34,7 +34,6 @@ function ClientDashboard() {
         const response = await axiosClient.get(`/tasks/${employee.id}`, {
           headers,
         });
-
         // Sort tasks based on sortBy and sortOrder
         const sortedTasks = response.data.task.sort((a: any, b: any) => {
           if (sortOrder === "asc") {
@@ -119,8 +118,17 @@ function ClientDashboard() {
         headers,
       });
       setKeepTrackChanges((prev) => !prev);
-      alert("Task status updated successfully!");
-      // You may want to refetch tasks here or update the specific task in the tasks array
+      swal({
+        title: "sucessfully",
+        text: "Statut de la tâche mis à jour avec succès !",
+        icon: "success",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
     } catch (error) {
       console.log("Erreur lors de la mise à jour de la tâche :", error);
     }
@@ -156,7 +164,8 @@ function ClientDashboard() {
               className="col-2 text-center pointer"
               onClick={() => handleSort("status")}
             >
-              Status <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
+              Statut
+              <FontAwesomeIcon icon={faArrowDownUpAcrossLine} />
             </div>
             <div
               className="col-1 text-center pointer"
@@ -197,7 +206,9 @@ function ClientDashboard() {
           ))}
         </div>
       ) : (
-        <p>Aucune tâche pour le moment.</p>
+        <div className="w-100 mx-auto m-5 fw-bold">
+          Aucune tâche pour le moment.
+        </div>
       )}
     </div>
   );

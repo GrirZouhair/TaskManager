@@ -9,7 +9,7 @@ import ManageTasks from "../pages/AdminPages/ManageTasks";
 import SignUp from "../pages/AdminPages/SignUp";
 import LogInPage from "../pages/LogInPage";
 import ChangeEmail from "../pages/ChangeEmail";
-import Register from "../components/RegisterPage";
+import Register from "../pages/RegisterPage";
 
 export const router = createBrowserRouter([
   {
@@ -55,11 +55,9 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
-  }
-  ,
+  },
   {
     path: "*",
     element: <p>not Found</p>,
   },
-
 ]);

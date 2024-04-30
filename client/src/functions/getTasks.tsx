@@ -1,9 +1,10 @@
 import { axiosClient } from "../Api/axios";
 import { headers } from "./getHeaders";
+import { userId } from "../functions/getUserId";
 
 export const fetchTasks = async () => {
   try {
-    const res = await axiosClient.get("/tasks/all", {
+    const res = await axiosClient.get(`/tasks/all/${userId}`, {
       headers,
     });
     return res.data.task;

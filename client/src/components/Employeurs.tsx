@@ -3,6 +3,7 @@ import { axiosClient } from "../Api/axios";
 import { useNavigate } from "react-router-dom";
 import { IoPerson } from "react-icons/io5";
 import { headers } from "../functions/getHeaders";
+import { userId } from "../functions/getUserId";
 import swal from "sweetalert";
 
 interface Employee {
@@ -16,16 +17,16 @@ function Employeurs() {
   const [employeurs, setEmployeurs] = useState<Employee[]>([]);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) {
-  //     navigate("/");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axiosClient.get("/firstFiveEmployees", {
+        const res = await axiosClient.get(`/firstFiveEmployees/${userId}`, {
           headers,
         });
         setEmployeurs(res.data.employees);
@@ -47,8 +48,8 @@ function Employeurs() {
       }
     };
 
-  //   fetchEmployees();
-  // }, []);
+    fetchEmployees();
+  }, []);
 
   const Redirect = () => {
     navigate("/manageEmployees");

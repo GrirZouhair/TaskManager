@@ -21,18 +21,17 @@ Route::get('/email/{email}/{employee}/{task}/{deadLine}', [EmailController::clas
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
-
     // Create (Store) Task
     Route::post('/tasks/store', [TaskController::class, 'store']);
 
     // Get All Tasks
-    Route::get('/tasks/all', [TaskController::class, 'index']);
+    Route::get('/tasks/all/{user}', [TaskController::class, 'index']);
+
+    // get OverDeadLine Tasks
+    Route::get('/tasks/tasksStatictis/{user}', [TaskController::class, 'tasksStatictis']);
 
     // Get Task by id
     Route::get('/tasks/find/{id}', [TaskController::class, 'find']);
-
-    // get OverDeadLine Tasks
-    Route::get('/tasks/tasksStatictis', [TaskController::class, 'tasksStatictis']);
 
     // Read (Get) Task
     Route::get('/tasks/{idEmpolyee}', [TaskController::class, 'showTask']);
@@ -45,10 +44,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
     // get all employees
-    Route::get('/employees', [EmployeeAuthController::class, 'AllEmployees']);
+    Route::get('/employees/{user}', [EmployeeAuthController::class, 'AllEmployees']);
 
     // get one employees
-    Route::get('/firstFiveEmployees', [EmployeeAuthController::class, 'firstFiveEmployees']);
+    Route::get('/firstFiveEmployees/{user}', [EmployeeAuthController::class, 'firstFiveEmployees']);
 
     // get one employees
     Route::get('/employee/{id}', [EmployeeAuthController::class, 'OneEmployees']);
@@ -57,6 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // update
     Route::put('/employee/update/{id}', [EmployeeAuthController::class, 'update']);
+
     Route::put('/user/update/{id}', [UserController::class, 'update']);
 
     // Route for user logout (POST method)

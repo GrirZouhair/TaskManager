@@ -68,7 +68,6 @@ const ChangePassword: React.FC = () => {
       const userItem = localStorage.getItem(logedIn);
       const id = userItem ? JSON.parse(userItem).id : null;
       if (!id) {
-        // Handle the case where id is null, maybe redirect or show an error message
         navigate("/");
         return;
       }
@@ -191,14 +190,9 @@ const ChangePassword: React.FC = () => {
               </div>
             ))}
 
-            <div className="button">
-              <button type="button" id="retour">
-                Retourner
-              </button>
-              <button type="submit" id="continue">
-                Continue
-              </button>
-            </div>
+            <button type="submit" className="submit__button">
+              Continuer
+            </button>
           </form>
         </div>
         <img

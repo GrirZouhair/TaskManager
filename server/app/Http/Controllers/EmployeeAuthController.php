@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Validator;
 
 class EmployeeAuthController extends Controller
 {
-    public function AllEmployees()
+    public function AllEmployees($user)
     {
-        $employees = Employee::all();
+        $employees = Employee::where('boss_id', $user)->get();
         if (sizeof($employees) == 0) {
             return response()->json([
                 'Messages' => 'pas des Employees '
@@ -21,9 +21,9 @@ class EmployeeAuthController extends Controller
         return response()->json(['employee' => $employees], 200);
     }
 
-    public function firstFiveEmployees()
+    public function firstFiveEmployees($user)
     {
-        $employees = Employee::all()->take(5);
+        $employees = Employee::where('boss_id', $user)->get()->take(5);
         return response()->json(['employees' => $employees], 200);
     }
     public function OneEmployees($id)
@@ -96,6 +96,7 @@ class EmployeeAuthController extends Controller
                 'gender' => 'required',
                 'email' => ['required', 'email', Rule::unique('employees', 'email')],
                 'password' => 'required|confirmed',
+                'boss_id' => 'exists:users,id'
             ]);
 
             if ($validator->fails()) {

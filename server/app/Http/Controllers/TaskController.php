@@ -11,34 +11,39 @@ use Illuminate\Support\Carbon;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index($user)
     {
         $task = DB::table('employees')
             ->join('tasks', 'tasks.idEmployee', '=', 'employees.id')
             ->select('idEmployee', 'tasks.id', 'email', 'full_name', 'gender', 'name', 'description', 'status', 'deadLine', 'tasks.created_at')
+            ->where('tasks.user_id', $user)
             ->get();
         return response()->json(['task' => $task, 'tasksNomber' => sizeof($task)]);
     }
 
-    public function tasksStatictis()
+    public function tasksStatictis($user)
     {
         $today = Carbon::now()->toDateString();
         $OverDeadLine = DB::table('tasks')
             ->join('employees', 'tasks.idEmployee', '=', 'employees.id')
             ->select('tasks.id', 'tasks.name', 'tasks.description', 'tasks.status', 'tasks.deadLine', 'employees.id as idEmployee', 'employees.email', 'employees.full_name', 'employees.gender')
             ->where('tasks.status', '!=', 'fait') // Filter tasks by status, change 'completed' to your actual completed status value
-            ->where('tasks.deadLine', '<', $today) // Filter tasks where deadline is before today
+            ->where('tasks.deadLine', '<', $today)
+            ->where('tasks.user_id', $user)
             ->get();
         $OverDeadLine['number'] = sizeof($OverDeadLine);
 
         $unFinishedTask = Task::where('status', '=', 'a faire')
+            ->where('tasks.user_id', $user)
             ->orWhere('status', '=', 'faire')->get();
         $unFinishedTask['number'] = sizeof($unFinishedTask);
 
-        $finishedTask = Task::where('status', '=', 'fait')->get();
+        $finishedTask = Task::where('status', '=', 'fait')
+            ->where('tasks.user_id', $user)
+            ->get();
         $finishedTask['number'] = sizeof($finishedTask);
 
-        $tasks = Task::all();
+        $tasks = Task::where('tasks.user_id', $user)->get();
 
         return response()->json(['OverDeadLine' => $OverDeadLine, 'unFinishedTask' => $unFinishedTask, 'finishedTask' => $finishedTask, 'numberOfTasks' => sizeof($tasks)]);
     }
@@ -51,6 +56,7 @@ class TaskController extends Controller
             'status' => 'required',
             'deadLine' => 'required|date',
             'date_assignment' => 'required|date',
+            'user_id' => 'required'
         ]);
 
         if ($validator->fails()) {

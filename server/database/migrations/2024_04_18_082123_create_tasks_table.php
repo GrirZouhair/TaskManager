@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('status');
             $table->date('deadLine');
             $table->date('date_assignment');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('idEmployee')->references('id')->on('employees');
             $table->timestamps();
             $table->softDeletes();

@@ -4,6 +4,8 @@ import TasksImage from "../../assets/tasksImage.png";
 import Sidebar from "../../components/SideBare";
 import swal from "sweetalert";
 import { headers } from "../../functions/getHeaders";
+import { userId } from "../../functions/getUserId";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
   idEmployee: number | string;
@@ -12,6 +14,7 @@ type FormData = {
   status: string;
   deadLine: Date | string;
   date_assignment: Date | string;
+  user_id: number;
 };
 
 type Employee = {
@@ -22,6 +25,7 @@ type Employee = {
 };
 
 function AjouterTask() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     idEmployee: "",
     name: "",
@@ -29,12 +33,19 @@ function AjouterTask() {
     status: "a faire",
     deadLine: "",
     date_assignment: new Date().toISOString().slice(0, 10),
+    user_id: userId,
   });
   const [employees, setEmployees] = useState<Array<Employee>>();
 
   useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     try {
-      axiosClient.get("/employees", { headers }).then((response) => {
+      axiosClient.get(`/employees/${userId}`, { headers }).then((response) => {
         setEmployees(response.data.employee);
       });
     } catch (err) {
@@ -62,10 +73,6 @@ function AjouterTask() {
 
   const handelSubmit = async (e: any) => {
     e.preventDefault();
-    const headers = {
-      Accept: "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    };
     try {
       //await axiosClient.get("/sanctum/csrf-cookie");
       const response = await axiosClient.post("/tasks/store", formData, {
@@ -152,14 +159,13 @@ function AjouterTask() {
                 ))}
             </select>
           </div>
-          <div className="button mt-5">
-            <button id="retour" type="button">
-              Retourner
-            </button>
-            <button type="submit" id="continue" onClick={handelSubmit}>
-              Continue
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="submit__button"
+            onClick={handelSubmit}
+          >
+            Continuer
+          </button>
         </div>
         <img
           src="image17.png"

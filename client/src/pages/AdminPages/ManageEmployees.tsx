@@ -10,6 +10,7 @@ import UpdateUserDialog from "../../components/UpdateEmployee";
 import EmployeesTasks from "../../components/EmployeesTasks";
 import "../../Styles/ManageEmployee.css";
 import swal from "sweetalert";
+import { userId } from "../../functions/getUserId";
 
 interface Employee {
   id: number;
@@ -39,7 +40,7 @@ function ManageEmployees() {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axiosClient.get("/employees", {
+        const res = await axiosClient.get(`/employees/${userId}`, {
           headers,
         });
         setEmployeurs(res.data.employee);

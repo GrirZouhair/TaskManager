@@ -24,28 +24,28 @@ const TaskView = () => {
   const Redirect = () => {
     navigate("/manageTasks");
   };
-  // useEffect(() => {
-  //   try {
-  //     const fetchData = async () => {
-  //       const tasks = await finishedTasks();
-  //       setTasks(tasks);
-  //     };
-  //     fetchData();
-  //   } catch (error) {
-  //     console.error("Erreur lors de la soumission du formulaire :", error);
-  //     swal({
-  //       title: "Error!",
-  //       text: "something went wrong while fetching tasks",
-  //       icon: "error",
-  //       buttons: {
-  //         confirm: {
-  //           text: "OK",
-  //           value: true,
-  //         },
-  //       },
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const tasks = await finishedTasks();
+        setTasks(tasks);
+      };
+      fetchData();
+    } catch (error) {
+      console.error("Erreur lors de la soumission du formulaire :", error);
+      swal({
+        title: "Error!",
+        text: "something went wrong while fetching tasks",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "OK",
+            value: true,
+          },
+        },
+      });
+    }
+  }, []);
 
   const formatDateByDays = (dateString: string) => {
     const date = new Date(dateString);
@@ -84,10 +84,10 @@ const TaskView = () => {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th scope="col">Full Name</th>
-                <th scope="col">Created At</th>
-                <th scope="col">Ended At</th>
-                <th scope="col">Status</th>
+                <th scope="col">Nom de tach</th>
+                <th scope="col">Créé le</th>
+                <th scope="col">Terminé le</th>
+                <th scope="col">Statut</th>
               </tr>
             </thead>
             <tbody>

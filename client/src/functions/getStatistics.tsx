@@ -1,9 +1,10 @@
 import { axiosClient } from "../Api/axios";
 import { headers } from "./getHeaders";
+import { userId } from "../functions/getUserId";
 
 export const fetchData = async () => {
   try {
-    const res = await axiosClient.get("/tasks/tasksStatictis", {
+    const res = await axiosClient.get(`/tasks/tasksStatictis/${userId}`, {
       headers,
     });
     return {

@@ -8,11 +8,11 @@ import InfosAboutTasks from "../../components/InfosAboutTasks";
 
 function AdminDashboard() {
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) {
-  //     navigate("/");
-  //   }
-  // });
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  });
   return (
     <>
       <InfosAboutTasks />

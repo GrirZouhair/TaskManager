@@ -30,29 +30,29 @@ const EmployeesTasks: React.FC<EmployeesTasksProps> = ({
 }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  // useEffect(() => {
-  //   const fetchTasks = async () => {
-  //     try {
-  //       const res = await axiosClient.get(`/tasks/${idEmployee}`, { headers });
-  //       setTasks(res.data.task);
-  //     } catch (error) {
-  //       console.error("Error fetching tasks:", error);
-  //       swal({
-  //         title: "Error!",
-  //         text: "something went wrong while fetching tasks",
-  //         icon: "error",
-  //         buttons: {
-  //           confirm: {
-  //             text: "OK",
-  //             value: true,
-  //           },
-  //         },
-  //       });
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const res = await axiosClient.get(`/tasks/${idEmployee}`, { headers });
+        setTasks(res.data.task);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        swal({
+          title: "Error!",
+          text: "something went wrong while fetching tasks",
+          icon: "error",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
+      }
+    };
 
-  //   fetchTasks();
-  // }, [idEmployee, headers]);
+    fetchTasks();
+  }, [idEmployee, headers]);
 
   return (
     <div className={`modal ${show ? "show" : ""}`}>

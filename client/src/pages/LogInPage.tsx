@@ -1,10 +1,11 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, useRef, ChangeEvent, FormEvent } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { axiosClient } from "../Api/axios";
 import "../Styles/Loginpage.css";
 import { useLogedInContext } from "../provider/logedInUser";
 import swal from "sweetalert";
+
 interface UserData {
   email: string;
   password: string;
@@ -17,10 +18,16 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const { setlogedIN }: any = useLogedInContext();
   const navigate = useNavigate();
+  const adminRef = useRef<HTMLImageElement>(null);
+  const employeeRef = useRef<HTMLImageElement>(null);
+  const [selectedRole, setSelectedRole] = useState<string>("");
+
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
   const handleSpaceClick = (role: string) => {
     setlogedIN(role);
     setUrl(role === "user" ? "/user/login" : "/employee/login");
+    setSelectedRole(role);
   };
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -74,8 +81,8 @@ const LoginPage: React.FC = () => {
     } catch (error: any) {
       console.error("Error in your login:", error);
       swal({
-        title: "Error!",
-        text: "something went wrong while logging in try again later",
+        title: "Erreur!",
+        text: "Quelque chose s'est mal passé lors de la connexion. Veuillez réessayer ultérieurement.",
         icon: "error",
         buttons: {
           confirm: {
@@ -92,20 +99,46 @@ const LoginPage: React.FC = () => {
     <section className="login-container">
       <div className="center">
         <div className="Images">
-          <img
-            className="img2"
-            src="Image2.png"
-            alt="Image2"
-            onClick={() => handleSpaceClick("user")}
-          />
-          <p className="admin">Admin</p>
-          <img
-            className="img3"
-            src="Image3.png"
-            alt="Image3"
-            onClick={() => handleSpaceClick("employee")}
-          />
-          <p className="employeur">Employé</p>
+          <div
+            className={`circle ${
+              selectedRole === "user" ? "circle-selected" : ""
+            }`}
+          ></div>
+          <div className="AdminSpace">
+            <img
+              className={`img2 ${selectedRole === "user" ? "selected" : ""}`}
+              ref={adminRef}
+              src="Image2.png"
+              alt="Image2"
+              onClick={() => handleSpaceClick("user")}
+            />
+            <p className={`admin ${selectedRole === "user" ? "selected" : ""}`}>
+              Admin
+            </p>
+          </div>
+          <div className="EmployeSpace">
+            <div
+              className={`circle ${
+                selectedRole === "employee" ? "circle-selected" : ""
+              }`}
+            ></div>
+            <img
+              className={`img3 ${
+                selectedRole === "employee" ? "selected" : ""
+              }`}
+              ref={employeeRef}
+              src="Image3.png"
+              alt="Image3"
+              onClick={() => handleSpaceClick("employee")}
+            />
+            <p
+              className={`employeur ${
+                selectedRole === "employee" ? "selected" : ""
+              }`}
+            >
+              Employé
+            </p>
+          </div>
         </div>
         <form onSubmit={handleLogin}>
           <div className="control">
@@ -118,7 +151,7 @@ const LoginPage: React.FC = () => {
             />
           </div>
           <div className="control password-control">
-            <label>Mot de Passe</label>
+            <label>Mot de passe</label>
             <div className="password-input-container">
               <input
                 type={showPassword ? "text" : "password"}
@@ -127,21 +160,20 @@ const LoginPage: React.FC = () => {
                 onChange={handlePasswordChange}
               />
               <button type="button" onClick={togglePasswordVisibility}>
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
             </div>
           </div>
-          <div className="button">
-            <button type="button" className="button-56">
-              Retourner
-            </button>
-            <button type="submit" className="button-56">
-              Continue
-            </button>
-          </div>
+          <button type="submit" className="submit__button">
+            Continuer
+          </button>
         </form>
-        <div className="link" onClick={() => navigate('/register')}
-        >non inscrit <span>créer un compte</span></div>
+        <div className="register">
+          <p className="signup-image-link">
+            Pas encore inscrit?
+            <span className="p-3" onClick={() => navigate("/register")}>S'inscrire</span>
+          </p>
+        </div>
       </div>
     </section>
   );
