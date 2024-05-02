@@ -80,7 +80,7 @@ const TaskView = () => {
         <h3 className="pointer text-center mb-4" onClick={Redirect}>
           Tâches
         </h3>
-        {tasks.length > 0 ? (
+        {tasks && tasks.length > 0 ? (
           <table className="table table-striped">
             <thead>
               <tr>
@@ -91,7 +91,7 @@ const TaskView = () => {
               </tr>
             </thead>
             <tbody>
-              {tasks.length > 0 &&
+              {tasks && tasks.length > 0 &&
                 tasks.map((task) => (
                   <tr key={task.id}>
                     <td className="text-center">{task.name}</td>
