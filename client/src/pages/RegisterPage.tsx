@@ -61,8 +61,7 @@ const RegisterFormContent = () => {
       if (res.data.status === 200) {
         setlogedIN("user");
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", res.data.user);
-        navigate("adminDashbord");
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         swal({
           title: "Success!",
           text: res.data.message,
@@ -74,6 +73,7 @@ const RegisterFormContent = () => {
             },
           },
         });
+        navigate("/adminDashbord");
       }
     } catch (e) {
       console.log(e);
