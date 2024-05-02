@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 // use Carbon\Carbon;
+
+use App\Models\Employee;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -108,9 +110,22 @@ class TaskController extends Controller
         }
 
         $task->update($validator->validated());
-        Task::find($id)->update([
-            'created_at' => Carbon::now()
-        ]);
+
+        $employee = Employee::where('id', $task->idEmployee)->get();
+
+        if ($task->status == 'fait') {
+            $completionDate = Carbon::parse($task->date_assignment);
+            $deadline = Carbon::parse($task->deadLine);
+
+            // Check if the task was completed within the deadline
+            if ($completionDate->lte($deadline)) {
+                $employee[0]->points += 10; // Add 10 points
+            } else {
+                $employee[0]->points += 5; // Add 5 points
+            }
+            $employee[0]->save();
+            return response()->json(['message' => $employee]);
+        }
 
         return response()->json(['message' => 'Task updated successfully', 'task' => $task]);
     }

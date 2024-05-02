@@ -14,7 +14,7 @@ class Employee extends Model
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
-    protected $fillable = ['full_name', 'email', 'password', 'gender', 'boss_id'];
+    protected $fillable = ['full_name', 'email', 'password', 'gender', 'boss_id', 'points', 'ranking'];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, "boss_id", "id");

@@ -13,19 +13,20 @@ class EmployeeAuthController extends Controller
     public function AllEmployees($user)
     {
         $employees = Employee::where('boss_id', $user)->get();
-        if (sizeof($employees) == 0) {
-            return response()->json([
-                'Messages' => 'pas des Employees '
-            ], 404);
-        }
         return response()->json(['employee' => $employees], 200);
     }
 
     public function firstFiveEmployees($user)
     {
-        $employees = Employee::where('boss_id', $user)->get()->take(5);
+        $employees = Employee::where('boss_id', $user)
+            ->orderBy('points', 'desc')
+            ->orderBy('created_at', 'asc')
+            ->take(5) // Take the first five employees
+            ->get();
+
         return response()->json(['employees' => $employees], 200);
     }
+
     public function OneEmployees($id)
     {
         $employee = Employee::find($id);
@@ -102,7 +103,6 @@ class EmployeeAuthController extends Controller
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
-
             // Get the validated data
             $validatedData = $validator->validated();
 

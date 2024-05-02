@@ -36,6 +36,7 @@ function ManageEmployees() {
   const [showEmployeesTasks, setShowEmployeesTasks] = useState(false);
   const [selectedUser, setSelectedUser] = useState<Employee | null>(null);
   const [keepTrackChanges, setKeepTrackChanges] = useState<boolean>(false);
+  const emojis = ["🥇", "🥈", "🥉", "🎖️"];
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -135,13 +136,13 @@ function ManageEmployees() {
           />
         </div>
         {filteredEmployees.length > 0 ? (
-          filteredEmployees.map((employee) => (
+          filteredEmployees.map((employee, index) => (
             <div
               className="employee-container row align-items-center justify-content-center"
               key={employee.id}
             >
               <div className="col-2 icon pointer">
-                <IoPerson />
+                <IoPerson /> {emojis[index] || "🎖️"}
               </div>
               <div className="col-2">{employee.full_name}</div>
               <div className="col-2">

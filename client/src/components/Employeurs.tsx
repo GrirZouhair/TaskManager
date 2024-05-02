@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { axiosClient } from "../Api/axios";
 import { useNavigate } from "react-router-dom";
 import { IoPerson } from "react-icons/io5";
@@ -10,6 +10,7 @@ interface Employee {
   id: number;
   full_name: string;
   email: string;
+  points: number;
   // Add other properties as needed
 }
 
@@ -55,6 +56,9 @@ function Employeurs() {
     navigate("/manageEmployees");
   };
 
+  // Define emojis for different rankings
+  const emojis = ["🥇", "🥈", "🥉", "🎖️"];
+
   return (
     <div className="parent col-8 col-lg-4">
       <div
@@ -65,16 +69,15 @@ function Employeurs() {
           Employeurs
         </h3>
         {employeurs.length > 0 &&
-          employeurs.map((employeur) => (
-            <>
+          employeurs.map((employeur, index) => (
+            <div className="row" key={employeur.id}>
               <div className="col-3 icon pointer">
                 <IoPerson onClick={Redirect} />
               </div>
-              <div className="col-3" key={employeur.id}>
-                {employeur.full_name}
-              </div>
-              <div className="col-3">{employeur.email}</div>
-            </>
+              <div className="col-4">{employeur.full_name}</div>
+              <div className="col-3">{employeur.points} pt</div>
+              <div className="col-2">{emojis[index] || "🎖️"}</div>
+            </div>
           ))}
       </div>
     </div>
