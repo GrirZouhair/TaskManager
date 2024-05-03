@@ -23,15 +23,19 @@ function TaskCompletionChart(): JSX.Element {
         const res: AxiosResponse<{ employees: Employee[] }> =
           await axiosClient.get(`/firstFiveEmployees/${userId}`, { headers });
 
-        const labels = res.data.employees.map((employee) => employee.full_name);
+        const labels = res.data.employees.map((employee) => {
+          if (employee.points !== 0) return employee.full_name;
+        });
         const data = res.data.employees.map((employee) => {
           // Calculate the number of completed tasks based on points
-          const tasksCompleted = Math.floor(employee.points / 10); // 1 point = 1 task completed within deadline
-          return tasksCompleted;
+          if (employee.points !== 0) {
+            const tasksCompleted = Math.floor(employee.points / 10); // 1 point = 1 task completed within deadline
+            return tasksCompleted;
+          }
         });
 
         if (chartRef.current !== null) {
-          const newChart = new Chart(chartRef.current, {
+          const newChart: any = new Chart(chartRef.current, {
             type: "bar",
             data: {
               labels: labels,
