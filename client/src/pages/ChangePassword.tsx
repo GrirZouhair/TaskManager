@@ -10,6 +10,14 @@ import swal from "sweetalert";
 import "../Styles/ChangePassword.css";
 
 const ChangePassword: React.FC = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const [formData, setFormData] = useState({
     actuelPassword: "",
     password: "",
@@ -19,7 +27,6 @@ const ChangePassword: React.FC = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
   const { logedIn }: any = useLogedInContext();
-  const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -46,10 +53,10 @@ const ChangePassword: React.FC = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      // if (!token) {
-      //   navigate("/");
-      //   return;
-      // }
+      if (!token) {
+        navigate("/");
+        return;
+      }
 
       if (formData.password !== formData.password_confirmation) {
         swal({

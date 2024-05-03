@@ -11,6 +11,7 @@ import { TiDelete } from "react-icons/ti";
 import UpdateTaskDialog from "../../components/UpdateTaskDialog";
 import EmployeesTasks from "../../components/TasksForEmployee"; // Import EmployeesTasks component
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 interface Task {
   id: number;
@@ -35,6 +36,12 @@ function ManageTasks() {
   const [showEmployeesTasks, setShowEmployeesTasks] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
   const [keepTrachChanges, setKeepTrachChanges] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     try {

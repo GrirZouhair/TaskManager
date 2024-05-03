@@ -76,7 +76,7 @@ function Employeurs() {
               </div>
               <div className="col-4">{employeur.full_name}</div>
               <div className="col-3">{employeur.points} pt</div>
-              <div className="col-2">{emojis[index] || "🎖️"}</div>
+              <div className="col-2">{employeur.points === 0 ? "" : emojis[index] || "🎖️"}</div>
             </div>
           ))}
       </div>

@@ -5,14 +5,14 @@ import TaskView from "../../components/TaskView";
 import Sidebar from "../../components/SideBare";
 import StatisticsChart from "../../components/StatisticsChart";
 import InfosAboutTasks from "../../components/InfosAboutTasks";
-
+import TaskCompletionChart from "../../components/EmployeeStatistics";
 function AdminDashboard() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/");
     }
-  });
+  }, [navigate]);
   return (
     <>
       <InfosAboutTasks />
@@ -21,7 +21,10 @@ function AdminDashboard() {
         <Employeurs />
         <TaskView />
       </div>
-      <StatisticsChart />
+      <div className="row justify-content-center align-items-center">
+        <StatisticsChart />
+        <TaskCompletionChart />
+      </div>
     </>
   );
 }

@@ -11,6 +11,7 @@ import HeaderEmployee from "../../components/HeaderEmployee";
 import EmployeeAlertMessage from "../../components/EmployeeAlertMessage";
 import { headers } from "../../functions/getHeaders";
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 interface Task {
   id: number;
@@ -27,7 +28,12 @@ function ClientDashboard() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [keepTrackChanges, setKeepTrackChanges] = useState<boolean>(false);
   const employee = JSON.parse(localStorage.getItem("employee") || "{}");
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate]);
   useEffect(() => {
     const fetchTasks = async () => {
       try {

@@ -17,6 +17,7 @@ interface Employee {
   full_name: string;
   email: string | null;
   gender: string | null;
+  points: number;
 }
 
 interface EmployeesTasksProps {
@@ -142,7 +143,7 @@ function ManageEmployees() {
               key={employee.id}
             >
               <div className="col-2 icon pointer">
-                <IoPerson /> {emojis[index] || "🎖️"}
+                <IoPerson /> {employee.points == 0 ? "" : emojis[index] || "🎖️"}
               </div>
               <div className="col-2">{employee.full_name}</div>
               <div className="col-2">

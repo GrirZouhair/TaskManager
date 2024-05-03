@@ -6,16 +6,11 @@ import AjouterTask from "../pages/AdminPages/AjouterTask";
 import ChangePassword from "../pages/ChangePassword";
 import ManageEmployees from "../pages/AdminPages/ManageEmployees";
 import ManageTasks from "../pages/AdminPages/ManageTasks";
-import SignUp from "../pages/AdminPages/SignUp";
 import LogInPage from "../pages/LogInPage";
 import ChangeEmail from "../pages/ChangeEmail";
 import Register from "../pages/RegisterPage";
 
 export const router = createBrowserRouter([
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
   {
     path: "/changePassword",
     element: <ChangePassword />,

@@ -12,7 +12,9 @@ class EmployeeAuthController extends Controller
 {
     public function AllEmployees($user)
     {
-        $employees = Employee::where('boss_id', $user)->get();
+        $employees = Employee::where('boss_id', $user)
+            ->orderBy('points', 'desc')
+            ->get();
         return response()->json(['employee' => $employees], 200);
     }
 

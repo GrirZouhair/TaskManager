@@ -85,7 +85,7 @@ function StatisticsChart() {
   };
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 col-10 col-md-4">
       {tasksStatistics && (
         <canvas id="doughnutChart" width={400} height={400}></canvas>
       )}
