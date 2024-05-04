@@ -41,11 +41,21 @@ const ForgotPassword = () => {
         setIsLoading(true);
 
         try {
-            const response = await emailjs.sendForm('service_wgax0zh', 'template_88bivwv', e.target, 'd2-lxAAFU3LtpwZxO');
+            const response = await emailjs.send(
+                'service_wgax0zh',
+                'template_88bivwv',
+                {
+                    to_name: employee?.full_name || 'User',
+                    email: enteredEmail,
+                    password: employee?.password || 'YourTemporaryPassword'
+                },
+                'd2-lxAAFU3LtpwZxO'
+            );
+
             console.log('Email sent:', response);
             alert('Password reset email sent successfully!');
         } catch (error) {
-            // console.error('Error sending email:', error);
+            console.error('Error sending email:', error);
             alert('Failed to send password reset email. Please try again later.');
         }
 

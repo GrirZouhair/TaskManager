@@ -15,6 +15,9 @@ Route::post('/user/store', [UserController::class, 'store']);
 
 // Route for employee login (POST method)
 Route::post('/employee/login', [EmployeeAuthController::class, 'login']);
+// Route to check email if exist
+// Add this route to check if the email exists and return employee data
+Route::get('/employees/email/{email}', [EmployeeAuthController::class, 'checkEmail']);
 
 // test email
 Route::get('/email/{email}/{employee}/{task}/{deadLine}', [EmailController::class, 'send']);
