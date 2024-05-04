@@ -192,7 +192,7 @@ function ClientDashboard() {
                   className={`col-2 form-select border__color mx-4 p-2 text-center ${
                     task.status === "a faire"
                       ? "task__new"
-                      : task.status === "fait"
+                      : task.status === "revoir"
                       ? "task__done"
                       : ""
                   }`}
@@ -201,7 +201,7 @@ function ClientDashboard() {
                 >
                   <option value="a faire">a faire</option>
                   <option value="faire">faire</option>
-                  <option value="fait">fait</option>
+                  <option value="revoir">revoir</option>
                 </select>
                 <div className="col-2">{task.deadLine}</div>
                 <div className="col-1 text-center p-2 submit__task pointer">

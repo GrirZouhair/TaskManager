@@ -16,6 +16,6 @@ export const fetchTasks = async () => {
 export const finishedTasks = async () => {
   const tasks = await fetchTasks();
   const finishedTasks =
-    tasks && tasks.filter((task: any) => task.status === "fait");
+    tasks && tasks.filter((task: any) => task.status === "revoir");
   return finishedTasks;
 };

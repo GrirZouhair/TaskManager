@@ -11,7 +11,21 @@
   transition: opacity 0.3s ease, visibility 0.3s ease;
   overflow: auto; /* Add overflow for scrolling if modal content exceeds viewport */
 }
-
+.model--EmployeeRanking {
+  position: fixed;
+  top: 150px;
+  right: 0px;
+  height: auto;
+  z-index: 9999;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  overflow: auto;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  text-align: center;
+  -webkit-transition: opacity 0.3s ease, visibility 0.3s ease;
+  -moz-transition: opacity 0.3s ease, visibility 0.3s ease;
+  -ms-transition: opacity 0.3s ease, visibility 0.3s ease;
+  -o-transition: opacity 0.3s ease, visibility 0.3s ease;
+}
 .modal.show {
   display: flex;
   align-items: center;

@@ -9,6 +9,17 @@
   box-sizing: border-box;
 }
 
+.highlighted__employee {
+  background-color: #f7f7f8;
+  padding-top: 20px;
+  margin-bottom: 10px;
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+}
+
 .container-1 {
   margin: 0 16px;
   display: flex;
@@ -24,8 +35,8 @@
 }
 
 .gearIcon {
-  width: 52px;
-  height: 52px;
+  width: 42px;
+  height: 42px;
 }
 
 .image-34 {

@@ -131,6 +131,7 @@ const UpdateTaskDialog: React.FC<Props> = ({
                   <option value="">Sélectionner un état</option>
                   <option value="a faire">a faire</option>
                   <option value="faire">faire</option>
+                  <option value="revoir">revoir</option>
                   <option value="fait">fait</option>
                 </select>
               </div>

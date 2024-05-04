@@ -91,7 +91,8 @@ const TaskView = () => {
               </tr>
             </thead>
             <tbody>
-              {tasks && tasks.length > 0 &&
+              {tasks &&
+                tasks.length > 0 &&
                 tasks.map((task) => (
                   <tr key={task.id}>
                     <td className="text-center">{task.name}</td>

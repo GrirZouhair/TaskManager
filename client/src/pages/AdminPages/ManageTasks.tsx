@@ -178,6 +178,7 @@ function ManageTasks() {
               <option value="">Tous les statuts</option>
               <option value="a faire">A Faire</option>
               <option value="faire">En Cours</option>
+              <option value="revoir">revoir</option>
               <option value="fait">Fait</option>
             </select>{" "}
           </div>
