@@ -9,11 +9,15 @@ import ManageTasks from "../pages/AdminPages/ManageTasks";
 import LogInPage from "../pages/LogInPage";
 import ChangeEmail from "../pages/ChangeEmail";
 import Register from "../pages/RegisterPage";
-
+import ForgottenPassword from "../pages/ForgottenPassword";
 export const router = createBrowserRouter([
   {
     path: "/changePassword",
     element: <ChangePassword />,
+  },
+  {
+    path: "/forgottenpassword",
+    element: <ForgottenPassword />,
   },
   {
     path: "/changeEmail",
