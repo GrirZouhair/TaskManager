@@ -142,8 +142,8 @@ function ClientDashboard() {
 
   return (
     <div className="px-2 pt-4 empDashboard-container">
-      <HeaderEmployee />
       <EmployeeAlertMessage />
+      <HeaderEmployee />
       <h2 className="tasks--title p-3 mt-5">
         {" "}
         Vos Taches{" "}

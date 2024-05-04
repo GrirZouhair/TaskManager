@@ -1,30 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const AlertMessage: React.FC = () => {
-  const [messageVisible, setMessageVisible] = useState<boolean>(true);
+const EmployeeAlertMessage: React.FC = () => {
+    useEffect(() => {
+        notifyError();
+    }, []);
 
-  const handleImageClick = (): void => {
-    setMessageVisible(false);
-  };
+    const notifyError = () => toast.error("Dans le cas où la date limite d'une tâche est proche, un e-mail vous sera envoyé à titre de rappel");
 
-  return (
-    <div className="container alert--container m-5">
-      {messageVisible && (
-        <>
-          <img
-            className="x-icon pointer"
-            src="Image33.png"
-            alt="Image33"
-            onClick={handleImageClick}
-          />
-          <div className="rappel-msg p-5">
-            Dans le cas où la date limite d'une tâche est proche, un e-mail vous
-            sera envoyé à titre de rappel
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
+    return (
+        <ToastContainer />
+    );
+}
 
-export default AlertMessage;
+export default EmployeeAlertMessage;
