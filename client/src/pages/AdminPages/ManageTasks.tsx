@@ -12,6 +12,7 @@ import UpdateTaskDialog from "../../components/UpdateTaskDialog";
 import EmployeesTasks from "../../components/TasksForEmployee"; // Import EmployeesTasks component
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
+import { GrDocumentVerified } from "react-icons/gr";
 
 interface Task {
   id: number;
@@ -21,6 +22,7 @@ interface Task {
   deadLine: string;
   created_at: string;
   idEmployee: number;
+  prof_document: string;
 }
 
 function ManageTasks() {
@@ -195,34 +197,54 @@ function ManageTasks() {
               <thead>
                 <tr>
                   <th scope="col">Nom</th>
-                  <th scope="col">Description</th>
                   <th scope="col">Date d'assignation </th>
                   <th scope="col">Statut</th>
                   <th scope="col">Date limite</th>
+                  <th scope="col"></th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 {sortedTasks.map((task) => (
                   <tr key={task.id}>
-                    <td>{task.name}</td>
-                    <td title={task.description}>
-                      {shourtenDescription(task.description)}
+                    <td>
+                      <p>{task.name}</p>
+                      <p title={task.description}>
+                        {shourtenDescription(task.description)}
+                      </p>
                     </td>
                     <td>{task.created_at}</td>
                     <td>{task.status}</td>
                     <td>{task.deadLine}</td>
-                    <td className="d-flex gap-4">
+                    <td>
+                      {task.prof_document && (
+                        <a
+                          href={
+                            "http://localhost:8000/storage/documents/" +
+                            task.prof_document
+                          }
+                          className="pointer"
+                          target="_blank"
+                        >
+                          <GrDocumentVerified className="h-100 w-100 pointer text-info" />
+                        </a>
+                      )}
+                    </td>
+                    <td className="">
                       <BsFillPersonVcardFill
-                        className="col-2 icon pointer text-info"
+                        className="icon pointer text-info"
                         onClick={() => handleEmployeesTasks(task)}
                       />
+                    </td>
+                    <td>
                       <FiEdit
-                        className="col-2 icon pointer text-primary"
+                        className="icon pointer text-primary"
                         onClick={() => handleEditTask(task)}
                       />
+                    </td>
+                    <td>
                       <TiDelete
-                        className="col-2 icon pointer text-danger"
+                        className="icon pointer text-danger"
                         onClick={() => handleDelete(task.id)}
                       />
                     </td>

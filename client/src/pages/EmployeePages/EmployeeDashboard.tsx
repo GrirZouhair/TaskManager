@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { axiosClient } from "../../Api/axios";
 import "../../Styles/EmployeeDashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +28,8 @@ function ClientDashboard() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [keepTrackChanges, setKeepTrackChanges] = useState<boolean>(false);
   const employee = JSON.parse(localStorage.getItem("employee") || "{}");
+  const [selectedTask, setSelectedTask] = useState<Task>();
+  const fileRef: any = useRef();
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -140,10 +142,101 @@ function ClientDashboard() {
     }
   };
 
+  const handelUploadFileCall = (task: Task) => {
+    setSelectedTask(task);
+    fileRef.current.click();
+  };
+
+  const handelFileChange = async () => {
+    const file = fileRef.current.files[0]; // Get the uploaded file
+    if (!file) return; // Exit if no file selected
+
+    // Read the file as a data URL (Base64 encoded)
+    const reader: any = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = async () => {
+      const fileData = reader.result.split(",")[1]; // Extract base64 data
+      const allowedExtensions = [
+        "png",
+        "jpeg",
+        "svg",
+        "jpg",
+        "pdf",
+        "xls",
+        "xlsx",
+      ];
+      const fileExtension = file.name.split(".").pop().toLowerCase(); // Extract file extension
+
+      if (!allowedExtensions.includes(fileExtension)) {
+        swal({
+          title: "warining!",
+          text: "file extenstion is not accepted",
+          icon: "warning",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
+        return;
+      }
+      const payload = {
+        prof_document: fileData,
+        fileExtension: fileExtension, // Pass the file extension to the backend
+      };
+
+      try {
+        const response = await axiosClient.put(
+          `/task/upload/${selectedTask?.id}`,
+          payload, // Pass the payload with Base64 data and file extension
+          {
+            headers: {
+              ...headers,
+              "Content-Type": "application/json", // Use JSON content type
+            },
+          }
+        );
+        swal({
+          title: "sucessfully",
+          text: "le document est mis à jour avec succès !",
+          icon: "success",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
+        // Perform any additional actions after successful file upload
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        swal({
+          title: "Error!",
+          text: "something went wrong try again",
+          icon: "error",
+          buttons: {
+            confirm: {
+              text: "OK",
+              value: true,
+            },
+          },
+        });
+      }
+    };
+  };
+
   return (
     <div className="px-2 pt-4 empDashboard-container">
       <HeaderEmployee />
       <EmployeeAlertMessage />
+      <input
+        type="file"
+        ref={fileRef}
+        className="d-none"
+        onChange={handelFileChange}
+      />
       <h2 className="tasks--title p-3 mt-5">
         {" "}
         Vos Taches{" "}
@@ -205,7 +298,10 @@ function ClientDashboard() {
                 </select>
                 <div className="col-2">{task.deadLine}</div>
                 <div className="col-1 text-center p-2 submit__task pointer">
-                  <FontAwesomeIcon icon={faArrowRight} />
+                  <FontAwesomeIcon
+                    icon={faArrowRight}
+                    onClick={() => handelUploadFileCall(task)}
+                  />
                 </div>
               </div>
             </div>
