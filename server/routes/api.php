@@ -5,7 +5,10 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmployeeAuthController;
+use App\Http\Controllers\getAcc;
 
+
+Route::get('/employees/email/{email}', [getAcc::class, 'checkEmail']);
 
 // Route for user login (POST method)
 Route::post('/user/login', [UserController::class, 'login']);
@@ -15,9 +18,9 @@ Route::post('/user/store', [UserController::class, 'store']);
 
 // Route for employee login (POST method)
 Route::post('/employee/login', [EmployeeAuthController::class, 'login']);
-// Route to check email if exist
-// Add this route to check if the email exists and return employee data
-Route::get('/employees/email/{email}', [EmployeeAuthController::class, 'checkEmail']);
+
+
+// Route::get('/employees/email/{email}', [EmployeeAuthController::class, 'checkEmail']);
 
 // test email
 Route::get('/email/{email}/{employee}/{task}/{deadLine}', [EmailController::class, 'send']);

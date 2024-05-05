@@ -3,16 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import "../Styles/forgottenpassword.css";
 import emailjs from "emailjs-com";
-import axios from 'axios';
+import { axiosClient } from '../Api/axios';
 
 interface Employee {
     email: string;
     full_name: string;
     password: string;
-    gender: string;
-    boss_id: string;
-    points: string;
-    ranking: string;
 }
 
 const ForgotPassword = () => {
@@ -20,14 +16,15 @@ const ForgotPassword = () => {
     const [enteredEmail, setEnteredEmail] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const checkEmail = async () => {
+    const checkEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         try {
-            const response = await axios.get(`/employees/email/${enteredEmail}`);
+            const response = await axiosClient.get(`/employees/email/${enteredEmail}`);
+            console.log(response.data);
             if (response.data.success) {
-                // Email exists, allow user to proceed
                 setEmployee(response.data.employee);
+                sendEmail(response.data.employee);
             } else {
-                // Email does not exist, display error message
                 alert("Email not found.");
             }
         } catch (error) {
@@ -36,18 +33,17 @@ const ForgotPassword = () => {
         }
     };
 
-    const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const sendEmail = async (employeeData: Employee) => {
         setIsLoading(true);
-
         try {
+            const decryptedPassword = await decryptPassword(employeeData.password);
             const response = await emailjs.send(
                 'service_wgax0zh',
                 'template_88bivwv',
                 {
-                    to_name: employee?.full_name || 'User',
+                    to_name: employeeData.full_name,
                     email: enteredEmail,
-                    password: employee?.password || 'YourTemporaryPassword'
+                    password: decryptedPassword
                 },
                 'd2-lxAAFU3LtpwZxO'
             );
@@ -57,9 +53,16 @@ const ForgotPassword = () => {
         } catch (error) {
             console.error('Error sending email:', error);
             alert('Failed to send password reset email. Please try again later.');
+        } finally {
+            setIsLoading(false); // Reset loading state after email send attempt
         }
+    };
 
-        setIsLoading(false);
+    const decryptPassword = async (encryptedPassword: string | undefined) => {
+        // Implement your decryption logic here
+        // For example, using a decryption library or custom decryption function
+        // Ensure to handle errors and edge cases appropriately
+        return encryptedPassword; // Placeholder for demo purposes
     };
 
     return (
@@ -70,7 +73,7 @@ const ForgotPassword = () => {
                     <h2 className="text-center">Forgot Password?</h2>
                     <p>You can reset your password here.</p>
                     <div className="panel-body">
-                        <form onSubmit={sendEmail} className="form" method="post">
+                        <form onSubmit={checkEmail} className="form" method="post">
                             <div className="form-group">
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-envelope color-blue"></i></span>
@@ -87,9 +90,8 @@ const ForgotPassword = () => {
                             </div>
                             <div className="form-group">
                                 <button
-                                    type="button"
+                                    type="submit"
                                     className="btn btn-lg btn-primary btn-block"
-                                    onClick={checkEmail}
                                     disabled={isLoading}
                                 >
                                     {isLoading ? 'Checking Email...' : 'Reset Password'}
