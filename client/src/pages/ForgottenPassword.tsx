@@ -5,11 +5,13 @@ import "../Styles/forgottenpassword.css";
 import emailjs from "@emailjs/browser";
 import { axiosClient } from "../Api/axios";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 interface TempParams {
   email: string;
   secureCode: number | undefined;
 }
+
 const ForgotPassword = () => {
   const [enteredEmail, setEnteredEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -27,14 +29,44 @@ const ForgotPassword = () => {
         } else if (response.data.user) {
           sendUserEmail(response.data.secureCode);
         } else {
-          alert("Account not found.");
+          swal({
+            title: "Error!",
+            text: "Account not found.",
+            icon: "error",
+            buttons: {
+              confirm: {
+                text: "ok",
+                value: true,
+              },
+            },
+          });
         }
       } else {
-        alert("Account not found.");
+        swal({
+          title: "Error!",
+          text: "Account not found.",
+          icon: "error",
+          buttons: {
+            confirm: {
+              text: "ok",
+              value: true,
+            },
+          },
+        });
       }
     } catch (error) {
       console.error("Error checking email:", error);
-      alert("Failed to check email. Please try again later.");
+      swal({
+        title: "Error!",
+        text: "Failed to check email. Please try again later.",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "ok",
+            value: true,
+          },
+        },
+      });
     }
   };
 
@@ -48,17 +80,47 @@ const ForgotPassword = () => {
         "d2-lxAAFU3LtpwZxO"
       );
       console.log("Email sent: " + response);
-      alert("Password reset email sent successfully!");
+      swal({
+        title: "sucessfully",
+        text: "Password reset email sent successfully!",
+        icon: "success",
+        buttons: {
+          confirm: {
+            text: "ok",
+            value: true,
+          },
+        },
+      });
     } catch (error) {
       console.error("Error sending email:", error);
-      alert("Failed to send password reset email. Please try again later.");
+      swal({
+        title: "Error!",
+        text: "Failed to send password reset email. Please try again later.",
+        icon: "error",
+        buttons: {
+          confirm: {
+            text: "ok",
+            value: true,
+          },
+        },
+      });
     } finally {
       setIsLoading(false);
       const securityCode = Number(prompt("Enter Your Secure Code : "));
 
       Number(templateParams.secureCode) === securityCode
         ? navigate(`/update-password/${enteredEmail}`) // Redirect to update password page
-        : alert("Security code mismatch");
+        : swal({
+            title: "warining!",
+            text: "Security code mismatch",
+            icon: "warning",
+            buttons: {
+              confirm: {
+                text: "OK",
+                value: true,
+              },
+            },
+          });
     }
   };
 
