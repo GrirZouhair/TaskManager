@@ -4,7 +4,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\GetAccountController;
 use App\Http\Controllers\EmployeeAuthController;
+
+
+// Route for checking email and sending reset link
+Route::get('/accounts/email/{email}', [GetAccountController::class, 'checkEmail']);
+
+// Route for updating password
+Route::put('/update-password', [GetAccountController::class, 'updatePassword']);
+
+
 
 
 // Route for user login (POST method)
@@ -15,6 +25,9 @@ Route::post('/user/store', [UserController::class, 'store']);
 
 // Route for employee login (POST method)
 Route::post('/employee/login', [EmployeeAuthController::class, 'login']);
+
+
+// Route::get('/employees/email/{email}', [EmployeeAuthController::class, 'checkEmail']);
 
 // test email
 Route::get('/email/{email}/{employee}/{task}/{deadLine}', [EmailController::class, 'send']);
