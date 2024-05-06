@@ -33,6 +33,8 @@ Route::post('/employee/login', [EmployeeAuthController::class, 'login']);
 Route::get('/email/{email}/{employee}/{task}/{deadLine}', [EmailController::class, 'send']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    // upload task proof
+    Route::put('/task/upload/{id}', [TaskController::class, 'uploadFile']);
 
     // Create (Store) Task
     Route::post('/tasks/store', [TaskController::class, 'store']);

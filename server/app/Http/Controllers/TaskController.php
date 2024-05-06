@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -17,7 +18,7 @@ class TaskController extends Controller
     {
         $task = DB::table('employees')
             ->join('tasks', 'tasks.idEmployee', '=', 'employees.id')
-            ->select('idEmployee', 'tasks.id', 'email', 'full_name', 'gender', 'name', 'description', 'status', 'deadLine', 'tasks.created_at')
+            ->select('idEmployee', 'tasks.id', 'email', 'full_name', 'gender', 'prof_document', 'name', 'description', 'status', 'deadLine', 'tasks.created_at')
             ->where('tasks.user_id', $user)
             ->get();
         return response()->json(['task' => $task, 'tasksNomber' => sizeof($task)]);
@@ -129,6 +130,34 @@ class TaskController extends Controller
 
         return response()->json(['message' => 'Task updated successfully', 'task' => $task]);
     }
+
+    public function uploadFile(Request $request, $id,)
+    {
+        $task = Task::findOrFail($id);
+        $base64Data = $request->input('prof_document');
+        // if the task already have a document
+        if ($task->prof_document) {
+            // Delete the file from storage
+            Storage::disk('public')->delete('documents/' . $task->prof_document);
+        }
+        if ($base64Data) {
+            // Decode the Base64 data
+            $fileData = base64_decode($base64Data);
+            $file_name = 'uploaded_file_' . time() . '.' . $request->fileExtension; // Example file name
+
+            // Store the file in the storage/app/documents directory
+            Storage::disk('public')->put('documents/' . $file_name, $fileData);
+
+            $task->prof_document = $file_name;
+            $task->save();
+
+            return response()->json(['message' => 'File uploaded successfully', 'task' => $task]);
+        }
+
+        return response()->json(['message' => 'Please upload documentation']);
+    }
+
+
     public function SoftDelete($id)
     {
         $delete = Task::find($id)->delete();
@@ -148,6 +177,10 @@ class TaskController extends Controller
                 return response()->json([
                     'message' => 'Task not found'
                 ], 404);
+            }
+            if ($task->prof_document) {
+                // Delete the file from storage
+                Storage::disk('public')->delete('documents/' . $task->prof_document);
             }
             $task->delete();
             return response()->json(['message' => 'Task deleted successfully']);
