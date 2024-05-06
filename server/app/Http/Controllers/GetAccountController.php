@@ -13,9 +13,17 @@ class GetAccountController extends Controller
     {
         $employee = Employee::where('email', $email)->first();
         $user = User::where('email', $email)->first();
+        $randomNumber = random_int(20000, 99999);
 
         if ($employee || $user) {
-            return response()->json(['success' => true, 'employee' => $employee, 'user' => $user]);
+            if ($user) {
+                $user['securecode'] = $randomNumber;
+                $user->save();
+            } else {
+                $employee['securecode'] = $randomNumber;
+                $employee->save();
+            }
+            return response()->json(['success' => true, 'employee' => $employee, 'user' => $user, 'secureCode' => $randomNumber]);
         } else {
             return response()->json(['success' => false, 'message' => 'Email not found'], 404);
         }
@@ -40,7 +48,7 @@ class GetAccountController extends Controller
             return response()->json(['success' => true, 'message' => 'Password updated successfully'], 200);
         } catch (\Exception $e) {
             // Log the exception for debugging
-            return response()->json(['success' => false, 'message' => 'Failed to update password. Please try again later '.$e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => 'Failed to update password. Please try again later ' . $e->getMessage()], 500);
         }
     }
 }

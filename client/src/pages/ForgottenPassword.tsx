@@ -18,6 +18,10 @@ interface User {
     password: string;
 }
 
+interface TempParams {
+    email: string;
+    secureCode: number | undefined;
+}
 const ForgotPassword = () => {
     const [enteredEmail, setEnteredEmail] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,11 +32,12 @@ const ForgotPassword = () => {
         setIsLoading(true);
         try {
             const response = await axiosClient.get(`/accounts/email/${enteredEmail}`);
+            console.log(response.data)
             if (response.data.success) {
                 if (response.data.employee) {
-                    sendEmployeeEmail(response.data.employee);
+                    sendEmployeeEmail(response.data.secureCode);
                 } else if (response.data.user) {
-                    sendUserEmail(response.data.user);
+                    sendUserEmail(response.data.secureCode);
                 } else {
                     alert("Account not found.");
                 }
@@ -45,35 +50,39 @@ const ForgotPassword = () => {
         }
     };
 
-    const sendEmail = async (templateId: string, templateParams: Record<string, string>) => {
+    const sendEmail = async (templateId: string, templateParams: any) => {
         setIsLoading(true);
         try {
-            // const response = await emailjs.send('service_wgax0zh', templateId, templateParams, 'd2-lxAAFU3LtpwZxO');
-            console.log('Email sent:');
+            const response = await emailjs.send('service_wgax0zh', templateId, templateParams, 'd2-lxAAFU3LtpwZxO');
+            console.log('Email sent: ' + response);
             alert('Password reset email sent successfully!');
         } catch (error) {
             console.error('Error sending email:', error);
             alert('Failed to send password reset email. Please try again later.');
         } finally {
             setIsLoading(false);
-            navigate(`/update-password/${enteredEmail}`); // Redirect to update password page
+            const securityCode = Number(prompt("Enter Your Secure Code : "));
+
+            Number(templateParams.secureCode) === securityCode
+                ? navigate(`/update-password/${enteredEmail}`) // Redirect to update password page
+                : alert("Security code mismatch");
         }
     };
 
-    const sendEmployeeEmail = async (employeeData: Employee) => {
+    const sendEmployeeEmail = async (securecode: number) => {
         const templateId = 'template_88bivwv';
-        const templateParams = {
-            to_name: employeeData.full_name,
+        const templateParams: TempParams = {
             email: enteredEmail,
-            password: employeeData.password,
+            secureCode: securecode,
         };
         await sendEmail(templateId, templateParams);
     };
 
-    const sendUserEmail = async (userData: User) => {
+    const sendUserEmail = async (code: number) => {
         const templateId = 'template_88bivwv';
         const templateParams = {
             email: enteredEmail,
+            secureCode: code,
         };
         await sendEmail(templateId, templateParams);
     };

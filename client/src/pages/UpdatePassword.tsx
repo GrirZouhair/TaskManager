@@ -11,7 +11,7 @@ function UpdatePassword() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { email } = useParams();
-    console.log(email);
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
