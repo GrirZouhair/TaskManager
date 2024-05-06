@@ -11,10 +11,16 @@ import ChangeEmail from "../pages/ChangeEmail";
 import Register from "../pages/RegisterPage";
 import ForgottenPassword from "../pages/ForgottenPassword";
 import UpdatePassword from "../pages/UpdatePassword";
+import Logout from "../components/Logout";
+
 export const router = createBrowserRouter([
   {
     path: "/update-password/:email",
-    element: <UpdatePassword />
+    element: <UpdatePassword />,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
   },
   {
     path: "/changePassword",

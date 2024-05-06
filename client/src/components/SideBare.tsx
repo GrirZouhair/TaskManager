@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -11,14 +10,12 @@ import {
   faSignOutAlt,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
-import { useLogedInContext } from "../provider/logedInUser";
-import { LogOut } from "../functions/logOut";
 import "../Styles/SideBare.css";
 import { useNavigate } from "react-router-dom";
+
 export default function Sidebar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const { logedIn }: any = useLogedInContext();
   const handleTrigger = () => setIsOpen(!isOpen);
 
   return (
@@ -68,7 +65,7 @@ export default function Sidebar() {
             <span>change Email</span>
           </div>
 
-          <div className="sidebar-position" onClick={() => LogOut(logedIn)}>
+          <div className="sidebar-position" onClick={() => navigate("/logout")}>
             <FontAwesomeIcon icon={faSignOutAlt} />
             <span>Logout</span>
           </div>

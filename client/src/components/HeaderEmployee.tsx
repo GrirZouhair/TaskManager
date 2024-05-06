@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
-import { LogOut } from "../functions/logOut";
+import LogOut from "./Logout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faTable } from "@fortawesome/free-solid-svg-icons";
 import EmployeeRanking from "./EmployeeRanking";
@@ -96,7 +96,7 @@ const HeaderEmployee: React.FC = () => {
           <div className="sidebar-item" onClick={handleSidebarPassword}>
             Changer le mot de passe
           </div>
-          <div className="sidebar-item" onClick={() => LogOut("employee")}>
+          <div className="sidebar-item" onClick={() => navigate("/logout")}>
             Déconnexion
           </div>
         </div>
