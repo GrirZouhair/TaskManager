@@ -4,6 +4,8 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { axiosClient } from '../Api/axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import swal from 'sweetalert';
+
 
 function UpdatePassword() {
     const [newPassword, setNewPassword] = useState("");
@@ -15,7 +17,17 @@ function UpdatePassword() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
-            alert("Passwords do not match.");
+            swal({
+                title: "Error!",
+                text: "Passwords do not match.",
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        text: "ok",
+                        value: true,
+                    },
+                },
+            });
             return;
         }
 
@@ -23,15 +35,45 @@ function UpdatePassword() {
             setIsLoading(true);
             const response = await axiosClient.put('/update-password', { password: newPassword, email: email });
             if (response.data.success) {
-                alert("Password updated successfully!");
+                swal({
+                    title: "sucessfully",
+                    text: "Password updated successfully!",
+                    icon: "success",
+                    buttons: {
+                        confirm: {
+                            text: "ok",
+                            value: true,
+                        },
+                    },
+                });
                 setIsLoading(false);
                 navigate('/'); // Redirect to home page or login page after updating password
             } else {
-                alert("error");
+                swal({
+                    title: "Error!",
+                    text: "Failed to update password",
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            text: "ok",
+                            value: true,
+                        },
+                    },
+                });
             }
         } catch (error) {
             console.error("Error updating password:", error);
-            alert("Failed to update password. Please try again later.");
+            swal({
+                title: "Error!",
+                text: "Failed to update password. Please try again later.",
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        text: "ok",
+                        value: true,
+                    },
+                },
+            });
             setIsLoading(false);
         }
     };
