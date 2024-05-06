@@ -4,6 +4,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import "../Styles/forgottenpassword.css";
 import emailjs from "emailjs-com";
 import { axiosClient } from '../Api/axios';
+import { useNavigate } from 'react-router-dom';
 
 interface Employee {
     email: string;
@@ -11,21 +12,32 @@ interface Employee {
     password: string;
 }
 
+interface User {
+    email: string;
+    name: string;
+    password: string;
+}
+
 const ForgotPassword = () => {
-    const [employee, setEmployee] = useState<Employee | null>(null);
     const [enteredEmail, setEnteredEmail] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const checkEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
-            const response = await axiosClient.get(`/employees/email/${enteredEmail}`);
-            console.log(response.data);
+            const response = await axiosClient.get(`/accounts/email/${enteredEmail}`);
             if (response.data.success) {
-                setEmployee(response.data.employee);
-                sendEmail(response.data.employee);
+                if (response.data.employee) {
+                    sendEmployeeEmail(response.data.employee);
+                } else if (response.data.user) {
+                    sendUserEmail(response.data.user);
+                } else {
+                    alert("Account not found.");
+                }
             } else {
-                alert("Email not found.");
+                alert("Account not found.");
             }
         } catch (error) {
             console.error("Error checking email:", error);
@@ -33,36 +45,37 @@ const ForgotPassword = () => {
         }
     };
 
-    const sendEmail = async (employeeData: Employee) => {
+    const sendEmail = async (templateId: string, templateParams: Record<string, string>) => {
         setIsLoading(true);
         try {
-            const decryptedPassword = await decryptPassword(employeeData.password);
-            const response = await emailjs.send(
-                'service_wgax0zh',
-                'template_88bivwv',
-                {
-                    to_name: employeeData.full_name,
-                    email: enteredEmail,
-                    password: decryptedPassword
-                },
-                'd2-lxAAFU3LtpwZxO'
-            );
-
-            console.log('Email sent:', response);
+            // const response = await emailjs.send('service_wgax0zh', templateId, templateParams, 'd2-lxAAFU3LtpwZxO');
+            console.log('Email sent:');
             alert('Password reset email sent successfully!');
         } catch (error) {
             console.error('Error sending email:', error);
             alert('Failed to send password reset email. Please try again later.');
         } finally {
-            setIsLoading(false); // Reset loading state after email send attempt
+            setIsLoading(false);
+            navigate(`/update-password/${enteredEmail}`); // Redirect to update password page
         }
     };
 
-    const decryptPassword = async (encryptedPassword: string | undefined) => {
-        // Implement your decryption logic here
-        // For example, using a decryption library or custom decryption function
-        // Ensure to handle errors and edge cases appropriately
-        return encryptedPassword; // Placeholder for demo purposes
+    const sendEmployeeEmail = async (employeeData: Employee) => {
+        const templateId = 'template_88bivwv';
+        const templateParams = {
+            to_name: employeeData.full_name,
+            email: enteredEmail,
+            password: employeeData.password,
+        };
+        await sendEmail(templateId, templateParams);
+    };
+
+    const sendUserEmail = async (userData: User) => {
+        const templateId = 'template_88bivwv';
+        const templateParams = {
+            email: enteredEmail,
+        };
+        await sendEmail(templateId, templateParams);
     };
 
     return (

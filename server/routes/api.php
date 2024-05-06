@@ -4,11 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\GetAccountController;
 use App\Http\Controllers\EmployeeAuthController;
-use App\Http\Controllers\getAcc;
 
 
-Route::get('/employees/email/{email}', [getAcc::class, 'checkEmail']);
+// Route for checking email and sending reset link
+Route::get('/accounts/email/{email}', [GetAccountController::class, 'checkEmail']);
+
+// Route for updating password
+Route::put('/update-password', [GetAccountController::class, 'updatePassword']);
+
+
+
 
 // Route for user login (POST method)
 Route::post('/user/login', [UserController::class, 'login']);
