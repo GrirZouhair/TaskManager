@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
-import LogOut from "./Logout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faTable } from "@fortawesome/free-solid-svg-icons";
 import EmployeeRanking from "./EmployeeRanking";

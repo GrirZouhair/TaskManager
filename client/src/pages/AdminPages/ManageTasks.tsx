@@ -220,7 +220,7 @@ function ManageTasks() {
                       {task.prof_document && (
                         <a
                           href={
-                            "http://localhost:8000/storage/documents/" +
+                            "https://taskmanagerapi-production-a5e3.up.railway.app/storage/documents/" +
                             task.prof_document
                           }
                           className="pointer"

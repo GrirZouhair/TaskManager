@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { Component, ErrorInfo, ReactNode } from "react";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -8,31 +8,29 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-function ErrorBoundary(props: ErrorBoundaryProps) {
-  const [state, setState] = useState<ErrorBoundaryState>({ hasError: false });
-
-  useEffect(() => {
-    const handleError = (event: ErrorEvent) => {
-      console.error("ErrorBoundary caught an error:", event.error);
-      setState({ hasError: true });
-    };
-
-    window.addEventListener("error", handleError);
-    return () => window.removeEventListener("error", handleError);
-  }, []);
-
-  if (state.hasError) {
-    return (
-      <div className="alert alert-danger alert-dismissible fade show" role="alert">
-        <h4 className="alert-heading"><i className="bi-exclamation-octagon-fill"></i> Oops ! Quelque chose s'est mal passé.</h4>
-        <p>Il semble qu'une erreur se soit produite sur cette page</p>
-        <hr />
-        <p className="mb-0">Nous vous invitons à recharger la page ou retourner à la page de connexion</p>
-      </div>
-    );
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
   }
 
-  return props.children;
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // You can log the error here
+    console.error("Error caught by ErrorBoundary:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render an error message or fallback UI here
+      return <div>Error: Something went wrong.</div>;
+    }
+
+    return this.props.children;
+  }
 }
 
 export default ErrorBoundary;

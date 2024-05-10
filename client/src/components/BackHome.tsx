@@ -1,4 +1,3 @@
-import React from "react";
 import { AiFillHome } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 function BackHome() {

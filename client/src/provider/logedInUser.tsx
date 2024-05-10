@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState, createContext, useContext } from "react";
 
-const LogedIn = React.createContext();
+// Create a context with a specific type
+interface LogedInContext {
+  logedIn: string;
+  setlogedIN: (value: string) => void;
+}
 
-function LogedInUser({ children }: any) {
-  const [logedIn, setlogedIN] = React.useState<String>("");
+const LogedIn = createContext<LogedInContext | null>(null);
+
+function LogedInUser({ children }: { children: React.ReactNode }) {
+  const [logedIn, setlogedIN] = useState<string>("");
+
   return (
     <LogedIn.Provider
       value={{
@@ -16,5 +23,5 @@ function LogedInUser({ children }: any) {
   );
 }
 
-export const useLogedInContext = () => React.useContext(LogedIn);
+export const useLogedInContext = () => useContext(LogedIn);
 export default LogedInUser;

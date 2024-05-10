@@ -15,7 +15,7 @@ const ChangeEmail: React.FC = () => {
     email: "",
     email_confirmation: "",
   });
-  const { logedIn }: any = useLogedInContext() as string;
+  const { logedIn }: any = useLogedInContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,10 +57,10 @@ const ChangeEmail: React.FC = () => {
         return;
       }
       const response = await axiosClient.put<
-        string,
-        AxiosResponse<{ message: string }>
+        { [key: string]: string },
+        AxiosResponse<{ message: string; [key: string]: string }>
       >(`/${logedIn}/update/${id}`, { email: formData.email }, { headers });
-      const data = response.data[`${logedIn}`] as string;
+      const data = response.data[logedIn];
       localStorage.setItem(logedIn, data);
       swal({
         title: "sucessfully",
