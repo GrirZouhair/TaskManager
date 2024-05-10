@@ -20,16 +20,6 @@ interface Employee {
   points: number;
 }
 
-interface EmployeesTasksProps {
-  show: boolean;
-  handleClose: () => void;
-  idEmployee: number;
-  headers: {
-    Accept: string;
-    Authorization: string;
-  };
-}
-
 function ManageEmployees() {
   const [employeurs, setEmployeurs] = useState<Employee[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
