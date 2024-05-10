@@ -15,8 +15,12 @@ const ChangeEmail: React.FC = () => {
     email: "",
     email_confirmation: "",
   });
-  const { logedIn }: string = useLogedInContext() as string;
+  const { logedIn }: any = useLogedInContext() as string;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    !logedIn && navigate("/");
+  }, []);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

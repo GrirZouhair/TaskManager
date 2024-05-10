@@ -12,6 +12,7 @@ import EmployeeAlertMessage from "../../components/EmployeeAlertMessage";
 import { headers } from "../../functions/getHeaders";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
+import { useLogedInContext } from "../../provider/logedInUser";
 
 interface Task {
   id: number;
@@ -31,10 +32,13 @@ function ClientDashboard() {
   const [selectedTask, setSelectedTask] = useState<Task>();
   const fileRef: any = useRef();
   const navigate = useNavigate();
+  const { setlogedIN }: any = useLogedInContext();
+
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/");
     }
+    setlogedIN("employee");
   }, [navigate]);
   useEffect(() => {
     const fetchTasks = async () => {

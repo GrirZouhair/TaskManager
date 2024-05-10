@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Employeurs from "../../components/Employeurs";
 import { useNavigate } from "react-router-dom";
 import TaskView from "../../components/TaskView";
@@ -6,12 +6,16 @@ import Sidebar from "../../components/SideBare";
 import StatisticsChart from "../../components/StatisticsChart";
 import InfosAboutTasks from "../../components/InfosAboutTasks";
 import TaskCompletionChart from "../../components/EmployeeStatistics";
+import { useLogedInContext } from "../../provider/logedInUser";
+
 function AdminDashboard() {
   const navigate = useNavigate();
+  const { setlogedIN }: any = useLogedInContext();
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/");
     }
+    setlogedIN("user");
   }, [navigate]);
   return (
     <>

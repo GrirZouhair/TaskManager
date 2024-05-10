@@ -33,6 +33,10 @@ const ChangePassword: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  useEffect(() => {
+    !logedIn && navigate("/");
+  }, []);
+
   const togglePasswordVisibility = (type: string) => {
     switch (type) {
       case "actuelPassword":
