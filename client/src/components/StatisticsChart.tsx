@@ -1,5 +1,5 @@
 import Chart from "chart.js/auto";
-import { ChartConfiguration, ChartData } from "chart.js";
+import { ChartData } from "chart.js";
 import { useEffect, useState } from "react";
 import { fetchData } from "../functions/getStatistics";
 
@@ -57,7 +57,7 @@ function StatisticsChart() {
       ],
     };
 
-    const chartOptions: ChartConfiguration = {
+    const chartOptions: any = {
       type: "doughnut",
       data: chartData,
       options: {

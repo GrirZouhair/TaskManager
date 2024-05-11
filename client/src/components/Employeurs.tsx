@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { axiosClient } from "../Api/axios";
 import { useNavigate } from "react-router-dom";
 import { IoPerson } from "react-icons/io5";

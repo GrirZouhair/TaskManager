@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import { AxiosResponse } from "axios";
 import { axiosClient } from "../Api/axios";

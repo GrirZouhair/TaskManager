@@ -17,7 +17,7 @@ const AjouterEmployee: React.FC = () => {
   }, [navigate]);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [formData, setFormData] = useState<FormData>(new FormData());
+  const formData = new FormData();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);

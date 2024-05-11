@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "../Styles/RegisterPage.css";
 import register from "../assets/register.png";
 import { useNavigate } from "react-router-dom";

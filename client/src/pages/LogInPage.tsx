@@ -6,8 +6,6 @@ import "../Styles/Loginpage.css";
 import { useLogedInContext } from "../provider/logedInUser";
 import swal from "sweetalert";
 
-
-
 interface UserData {
   email: string;
   password: string;

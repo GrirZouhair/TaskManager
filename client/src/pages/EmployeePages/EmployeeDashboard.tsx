@@ -192,7 +192,7 @@ function ClientDashboard() {
       };
 
       try {
-        const response = await axiosClient.put(
+        await axiosClient.put(
           `/task/upload/${selectedTask?.id}`,
           payload, // Pass the payload with Base64 data and file extension
           {
