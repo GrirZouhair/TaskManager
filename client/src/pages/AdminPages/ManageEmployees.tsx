@@ -5,12 +5,10 @@ import { IoPerson } from "react-icons/io5";
 import { FaTasks } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
-import { headers } from "../../functions/getHeaders";
 import UpdateUserDialog from "../../components/UpdateEmployee";
 import EmployeesTasks from "../../components/EmployeesTasks";
 import "../../Styles/ManageEmployee.css";
 import swal from "sweetalert";
-import { userId } from "../../functions/getUserId";
 
 interface Employee {
   id: number;
@@ -28,10 +26,16 @@ function ManageEmployees() {
   const [selectedUser, setSelectedUser] = useState<Employee | null>(null);
   const [keepTrackChanges, setKeepTrackChanges] = useState<boolean>(false);
   const emojis = ["🥇", "🥈", "🥉", "🎖️"];
+  const headers = {
+    Accept: "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
+        const userItem = localStorage.getItem("user");
+        const userId = userItem ? JSON.parse(userItem).id : null;
         const res = await axiosClient.get(`/employees/${userId}`, {
           headers,
         });

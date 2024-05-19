@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { axiosClient } from "../Api/axios";
-import { headers } from "../functions/getHeaders";
 import "../Styles/Modal.css";
 import swal from "sweetalert";
 
@@ -42,6 +41,10 @@ const UpdateTaskDialog: React.FC<Props> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!task) return;
+    const headers = {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
     try {
       await axiosClient
         .put(`/tasks/${task.id}`, formData, { headers })

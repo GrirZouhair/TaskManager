@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDownUpAcrossLine } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "../../components/SideBare";
-import { fetchTasks } from "../../functions/getTasks";
 import { axiosClient } from "../../Api/axios";
-import { headers } from "../../functions/getHeaders";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { TiDelete } from "react-icons/ti";
@@ -39,6 +37,14 @@ function ManageTasks() {
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
   const [keepTrachChanges, setKeepTrachChanges] = useState(false);
   const navigate = useNavigate();
+
+  const headers = {
+    Accept: "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+  const userItem = localStorage.getItem("user");
+  const userId = userItem ? JSON.parse(userItem).id : null;
+
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/");
@@ -48,8 +54,14 @@ function ManageTasks() {
   useEffect(() => {
     try {
       const fetchData = async () => {
-        const tasks = await fetchTasks();
-        setTasks(tasks);
+        try {
+          const res = await axiosClient.get(`/tasks/all/${userId}`, {
+            headers,
+          });
+          setTasks(res.data.task);
+        } catch (error) {
+          console.error("Erreur lors de la récupération des employés:", error);
+        }
       };
       fetchData();
     } catch (e) {
