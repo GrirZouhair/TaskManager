@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchData } from "../functions/getStatistics";
+import { axiosClient } from "../Api/axios";
 import "../Styles/InfosAboutTasks.css";
 
 interface TaskStatistics {
@@ -27,8 +27,30 @@ const DashboardAdmin: React.FC = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const data: any = await fetchData();
-      setTaskStatistics(data);
+      const userItem = localStorage.getItem("user");
+      const userId = userItem ? JSON.parse(userItem).id : null;
+      const token = localStorage.getItem("token");
+
+      const headers = {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      try {
+        const res = await axiosClient.get(`/tasks/tasksStatictis/${userId}`, {
+          headers,
+        });
+        setTaskStatistics({
+          OverDeadLine: res.data.OverDeadLine.number,
+          finishedTask: res.data.finishedTask.number,
+          unFinishedTask: res.data.unFinishedTask.number,
+          numberOfTasks: res.data.numberOfTasks,
+        });
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des statistiques:",
+          error
+        );
+      }
     };
     fetch();
   }, []);

@@ -111,7 +111,7 @@ const RegisterFormContent = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="pass">Password</label>
+          <label htmlFor="pass">Mot de passe</label>
           <input
             type="password"
             name="password"
@@ -121,7 +121,7 @@ const RegisterFormContent = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="re-pass">Password confirmation</label>
+          <label htmlFor="re-pass">Mot de passe confirmation</label>
           <input
             type="password"
             name="password_confirmation"
@@ -152,7 +152,7 @@ const RegisterImage = () => {
         <img src={register} alt="sign up image" />
       </figure>
       <div className="signup-image-link" onClick={() => navigate("/")}>
-        You Already Have An Account? <span>Log in</span>
+        Avez vous déjà un compte? <span>Log in</span>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { axiosClient } from "../Api/axios";
-import { headers } from "../functions/getHeaders";
 import { useLogedInContext } from "../provider/logedInUser";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +8,10 @@ const LogOut = () => {
   const { logedIn }: any = useLogedInContext();
   !logedIn && navigate("/");
   useEffect(() => {
+    const headers = {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
     try {
       axiosClient
         .post(`/${logedIn}/logout`, {}, { headers })

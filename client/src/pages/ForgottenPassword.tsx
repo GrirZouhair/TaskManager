@@ -30,8 +30,8 @@ const ForgotPassword = () => {
           sendUserEmail(response.data.secureCode);
         } else {
           swal({
-            title: "Error!",
-            text: "Account not found.",
+            title: "Erreur!",
+            text: "Compte introuvable.",
             icon: "error",
             buttons: {
               confirm: {
@@ -43,8 +43,8 @@ const ForgotPassword = () => {
         }
       } else {
         swal({
-          title: "Error!",
-          text: "Account not found.",
+          title: "Erreur!",
+          text: "Compte introuvable.",
           icon: "error",
           buttons: {
             confirm: {
@@ -55,10 +55,10 @@ const ForgotPassword = () => {
         });
       }
     } catch (error) {
-      console.error("Error checking email:", error);
+      console.error("Erreur lors de la vérification de l'email:", error);
       swal({
-        title: "Error!",
-        text: "Failed to check email. Please try again later.",
+        title: "Erreur!",
+        text: "Impossible de vérifier l'email. Veuillez réessayer plus tard.",
         icon: "error",
         buttons: {
           confirm: {
@@ -79,10 +79,10 @@ const ForgotPassword = () => {
         templateParams,
         "d2-lxAAFU3LtpwZxO"
       );
-      console.log("Email sent: " + response);
+      console.log("Email envoyé : " + response);
       swal({
-        title: "sucessfully",
-        text: "Password reset email sent successfully!",
+        title: "Succès",
+        text: "Email de réinitialisation du mot de passe envoyé avec succès!",
         icon: "success",
         buttons: {
           confirm: {
@@ -92,10 +92,10 @@ const ForgotPassword = () => {
         },
       });
     } catch (error) {
-      console.error("Error sending email:", error);
+      console.error("Erreur lors de l'envoi de l'email:", error);
       swal({
-        title: "Error!",
-        text: "Failed to send password reset email. Please try again later.",
+        title: "Erreur!",
+        text: "Impossible d'envoyer l'email de réinitialisation du mot de passe. Veuillez réessayer plus tard.",
         icon: "error",
         buttons: {
           confirm: {
@@ -106,13 +106,13 @@ const ForgotPassword = () => {
       });
     } finally {
       setIsLoading(false);
-      const securityCode = Number(prompt("Enter Your Secure Code : "));
+      const securityCode = Number(prompt("Entrez votre code de sécurité : "));
 
       Number(templateParams.secureCode) === securityCode
-        ? navigate(`/update-password/${enteredEmail}`) // Redirect to update password page
+        ? navigate(`/update-password/${enteredEmail}`) // Rediriger vers la page de réinitialisation du mot de passe
         : swal({
-            title: "warining!",
-            text: "Security code mismatch",
+            title: "Attention!",
+            text: "Code de sécurité incorrect",
             icon: "warning",
             buttons: {
               confirm: {
@@ -149,8 +149,8 @@ const ForgotPassword = () => {
           <h3>
             <FontAwesomeIcon icon={faLock} size="4x" />
           </h3>
-          <h2 className="text-center">Forgot Password?</h2>
-          <p>You can reset your password here.</p>
+          <h2 className="text-center">Mot de Passe Oublié?</h2>
+          <p>Vous pouvez réinitialiser votre mot de passe ici.</p>
           <div className="panel-body">
             <form onSubmit={checkEmail} className="form" method="post">
               <div className="form-group">
@@ -161,7 +161,7 @@ const ForgotPassword = () => {
                   <input
                     id="email"
                     name="email"
-                    placeholder="email address"
+                    placeholder="adresse email"
                     className="form-control"
                     type="email"
                     value={enteredEmail}
@@ -175,7 +175,7 @@ const ForgotPassword = () => {
                   className="btn btn-lg btn-primary btn-block"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Checking Email..." : "Reset Password"}
+                  {isLoading ? "Vérification de l'email..." : "Réinitialiser le Mot de Passe"}
                 </button>
               </div>
               <input

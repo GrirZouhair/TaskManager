@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { finishedTasks } from "../functions/getTasks";
+import { axiosClient } from "../Api/axios";
 import swal from "sweetalert";
 import "../Styles/TaskView.css";
 
@@ -26,11 +26,33 @@ const TaskView = () => {
   };
   useEffect(() => {
     try {
-      const fetchData = async () => {
-        const tasks = await finishedTasks();
-        setTasks(tasks);
+      const userItem = localStorage.getItem("user");
+      const userId = userItem ? JSON.parse(userItem).id : null;
+      const token = localStorage.getItem("token");
+
+      const headers = {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       };
-      fetchData();
+
+      const fetchTasks = async () => {
+        try {
+          const res = await axiosClient.get(`/tasks/all/${userId}`, {
+            headers,
+          });
+          return res.data.task;
+        } catch (error) {
+          console.error("Erreur lors de la récupération des employés:", error);
+        }
+      };
+      const finishedTasks = async () => {
+        const tasks = await fetchTasks();
+        const finishedTasks =
+          tasks && tasks.filter((task: any) => task.status === "revoir");
+        setTasks(finishedTasks);
+      };
+
+      finishedTasks();
     } catch (error) {
       console.error("Erreur lors de la soumission du formulaire :", error);
       swal({

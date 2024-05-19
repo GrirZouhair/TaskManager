@@ -9,7 +9,6 @@ import {
 import emailjs from "@emailjs/browser";
 import HeaderEmployee from "../../components/HeaderEmployee";
 import EmployeeAlertMessage from "../../components/EmployeeAlertMessage";
-import { headers } from "../../functions/getHeaders";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import { useLogedInContext } from "../../provider/logedInUser";
@@ -33,6 +32,11 @@ function ClientDashboard() {
   const fileRef: any = useRef();
   const navigate = useNavigate();
   const { setlogedIN }: any = useLogedInContext();
+
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+    "Content-Type": "application/json",
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
