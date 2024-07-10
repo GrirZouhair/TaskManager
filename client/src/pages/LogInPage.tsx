@@ -22,8 +22,6 @@ const LoginPage: React.FC = () => {
   const employeeRef = useRef<HTMLImageElement>(null);
   const [selectedRole, setSelectedRole] = useState<string>("");
 
-
-
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const handleSpaceClick = (role: string) => {
@@ -102,8 +100,9 @@ const LoginPage: React.FC = () => {
       <div className="center">
         <div className="Images">
           <div
-            className={`circle ${selectedRole === "user" ? "circle-selected" : ""
-              }`}
+            className={`circle ${
+              selectedRole === "user" ? "circle-selected" : ""
+            }`}
           ></div>
           <div className="AdminSpace">
             <img
@@ -119,20 +118,23 @@ const LoginPage: React.FC = () => {
           </div>
           <div className="EmployeSpace">
             <div
-              className={`circle ${selectedRole === "employee" ? "circle-selected" : ""
-                }`}
+              className={`circle ${
+                selectedRole === "employee" ? "circle-selected" : ""
+              }`}
             ></div>
             <img
-              className={`img3 ${selectedRole === "employee" ? "selected" : ""
-                }`}
+              className={`img3 ${
+                selectedRole === "employee" ? "selected" : ""
+              }`}
               ref={employeeRef}
               src="Image3.png"
               alt="Image3"
               onClick={() => handleSpaceClick("employee")}
             />
             <p
-              className={`employeur ${selectedRole === "employee" ? "selected" : ""
-                }`}
+              className={`employeur ${
+                selectedRole === "employee" ? "selected" : ""
+              }`}
             >
               Employé
             </p>
@@ -162,7 +164,12 @@ const LoginPage: React.FC = () => {
               </button>
             </div>
           </div>
-          <span className="forget__password" onClick={() => navigate('/forgottenpassword')}>Forgotten Password? Rset it</span>
+          <span
+            className="forget__password"
+            onClick={() => navigate("/forgottenpassword")}
+          >
+            Mot de passe oublié? Réinitialisez-le{" "}
+          </span>
           <button type="submit" className="submit__button">
             Continuer
           </button>
@@ -170,7 +177,9 @@ const LoginPage: React.FC = () => {
         <div className="register">
           <p className="signup-image-link">
             Pas encore inscrit?
-            <span className="p-3" onClick={() => navigate("/register")}>S'inscrire</span>
+            <span className="p-3" onClick={() => navigate("/register")}>
+              S'inscrire
+            </span>
           </p>
         </div>
       </div>

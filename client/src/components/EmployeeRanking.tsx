@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { axiosClient } from "../Api/axios";
 import { useNavigate } from "react-router-dom";
 import { IoPerson } from "react-icons/io5";
-import { headers } from "../functions/getHeaders";
 import swal from "sweetalert";
 
 interface Employee {
@@ -25,6 +24,10 @@ function EmployeeRanking({ userId, idEmployee }: any) {
 
   useEffect(() => {
     const fetchEmployees = async () => {
+      const headers = {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }
       try {
         const res = await axiosClient.get(`/firstFiveEmployees/${userId}`, {
           headers,

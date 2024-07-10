@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { axiosClient } from "../../Api/axios";
 import Sidebar from "../../components/SideBare";
 import swal from "sweetalert";
-import { headers } from "../../functions/getHeaders";
 import "../../Styles/AjouterEmployee.css";
-import { userId } from "../../functions/getUserId";
 
 const AjouterEmployee: React.FC = () => {
   const navigate = useNavigate();
@@ -32,6 +30,12 @@ const AjouterEmployee: React.FC = () => {
 
   const handleAddEmployee = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const headers = {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
+    const userItem = localStorage.getItem("user");
+    const userId = userItem ? JSON.parse(userItem).id : null;
     try {
       formData.append(
         "password_confirmation",

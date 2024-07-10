@@ -3,8 +3,6 @@ import { axiosClient } from "../../Api/axios";
 import TasksImage from "../../assets/tasksImage.png";
 import Sidebar from "../../components/SideBare";
 import swal from "sweetalert";
-import { headers } from "../../functions/getHeaders";
-import { userId } from "../../functions/getUserId";
 import { useNavigate } from "react-router-dom";
 
 type FormData = {
@@ -25,6 +23,12 @@ type Employee = {
 };
 
 function AjouterTask() {
+  const headers = {
+    Accept: "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+  const userItem = localStorage.getItem("user");
+  const userId = userItem ? JSON.parse(userItem).id : null;
   const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     idEmployee: "",

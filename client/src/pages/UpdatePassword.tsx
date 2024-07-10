@@ -18,8 +18,8 @@ function UpdatePassword() {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
             swal({
-                title: "Error!",
-                text: "Passwords do not match.",
+                title: "Erreur!",
+                text: "Les mots de passe ne correspondent pas.",
                 icon: "error",
                 buttons: {
                     confirm: {
@@ -36,8 +36,8 @@ function UpdatePassword() {
             const response = await axiosClient.put('/update-password', { password: newPassword, email: email });
             if (response.data.success) {
                 swal({
-                    title: "sucessfully",
-                    text: "Password updated successfully!",
+                    title: "Succès",
+                    text: "Mot de passe mis à jour avec succès!",
                     icon: "success",
                     buttons: {
                         confirm: {
@@ -47,11 +47,11 @@ function UpdatePassword() {
                     },
                 });
                 setIsLoading(false);
-                navigate('/'); // Redirect to home page or login page after updating password
+                navigate('/'); // Rediriger vers la page d'accueil ou la page de connexion après la mise à jour du mot de passe
             } else {
                 swal({
-                    title: "Error!",
-                    text: "Failed to update password",
+                    title: "Erreur!",
+                    text: "Impossible de mettre à jour le mot de passe",
                     icon: "error",
                     buttons: {
                         confirm: {
@@ -62,10 +62,10 @@ function UpdatePassword() {
                 });
             }
         } catch (error) {
-            console.error("Error updating password:", error);
+            console.error("Erreur lors de la mise à jour du mot de passe:", error);
             swal({
-                title: "Error!",
-                text: "Failed to update password. Please try again later.",
+                title: "Erreur!",
+                text: "Impossible de mettre à jour le mot de passe. Veuillez réessayer plus tard.",
                 icon: "error",
                 buttons: {
                     confirm: {
@@ -83,8 +83,8 @@ function UpdatePassword() {
             <div className="container">
                 <div className="text-center">
                     <h3><FontAwesomeIcon icon={faLock} size="4x" /></h3>
-                    <h2 className="text-center">Update Your Password?</h2>
-                    <p>You can create another password here.</p>
+                    <h2 className="text-center">Mettre à Jour Votre Mot de Passe?</h2>
+                    <p>Vous pouvez créer un autre mot de passe ici.</p>
                     <div className="panel-body">
                         <form onSubmit={handleSubmit} className="form" method="post">
                             <div className="form-group">
@@ -93,7 +93,7 @@ function UpdatePassword() {
                                     <input
                                         id="newPassword"
                                         name="password"
-                                        placeholder="Enter New Password"
+                                        placeholder="Entrez le Nouveau Mot de Passe"
                                         className="form-control"
                                         type="password"
                                         value={newPassword}
@@ -107,7 +107,7 @@ function UpdatePassword() {
                                     <input
                                         id="confirmPassword"
                                         name="password"
-                                        placeholder="Confirm New Password"
+                                        placeholder="Confirmez le Nouveau Mot de Passe"
                                         className="form-control"
                                         type="password"
                                         value={confirmPassword}
@@ -121,7 +121,7 @@ function UpdatePassword() {
                                     className="btn btn-lg btn-primary btn-block"
                                     disabled={isLoading}
                                 >
-                                    {isLoading ? 'Updating...' : 'Update'}
+                                    {isLoading ? 'Mise à Jour...' : 'Mettre à Jour'}
                                 </button>
                             </div>
                             <input type="hidden" className="hide" name="token" id="token" value="" />

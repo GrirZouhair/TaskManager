@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/SideBare";
 import HeaderEmployee from "../components/HeaderEmployee";
 import { useLogedInContext } from "../provider/logedInUser";
-import { headers } from "../functions/getHeaders";
 import swal from "sweetalert";
 import "../Styles/ChangePassword.css";
 
@@ -55,6 +54,10 @@ const ChangePassword: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const headers = {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -64,8 +67,8 @@ const ChangePassword: React.FC = () => {
 
       if (formData.password !== formData.password_confirmation) {
         swal({
-          title: "warining!",
-          text: "Passwords mismatch",
+          title: "Attention!",
+          text: "Les mots de passe ne correspondent pas",
           icon: "warning",
           buttons: {
             confirm: {
@@ -94,7 +97,7 @@ const ChangePassword: React.FC = () => {
         { headers }
       );
       swal({
-        title: "sucessfully",
+        title: "Succès",
         text: response.data.message,
         icon: "success",
         buttons: {
@@ -107,8 +110,8 @@ const ChangePassword: React.FC = () => {
     } catch (error) {
       console.error("Erreur lors de la soumission du formulaire :", error);
       swal({
-        title: "Error!",
-        text: "something went wrong try again",
+        title: "Erreur!",
+        text: "Quelque chose s'est mal passé, veuillez réessayer",
         icon: "error",
         buttons: {
           confirm: {
@@ -187,15 +190,15 @@ const ChangePassword: React.FC = () => {
                   >
                     {input.name === "actuelPassword"
                       ? showActuelPassword
-                        ? "Hide"
-                        : "Show"
+                        ? "Masquer"
+                        : "Afficher"
                       : input.name === "password"
                       ? showNewPassword
-                        ? "Hide"
-                        : "Show"
+                        ? "Masquer"
+                        : "Afficher"
                       : showConfirmNewPassword
-                      ? "Hide"
-                      : "Show"}
+                      ? "Masquer"
+                      : "Afficher"}
                   </button>
                 </div>
               </div>
@@ -207,7 +210,7 @@ const ChangePassword: React.FC = () => {
           </form>
         </div>
         <img
-          src="/public/Image201.png"
+          src="Image201.png"
           className="main-psw col-md-5 d-md-block d-none"
         />
       </section>
